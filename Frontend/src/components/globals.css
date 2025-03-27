@@ -1,3 +1,9 @@
+/* styles.css or global.css */
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+
 /* Layout */
 .login-container {
   display: flex;
@@ -28,21 +34,27 @@
 /* Logo */
 .logo {
   text-align: center;
-  font-size: 24px;
+  font-size: 40px;
   font-weight: 500;
-  color: #0d9488; /* Tailwind teal-600 */
   margin-bottom: 2rem;
 }
 
+.logo span:first-child {
+  color: #187795; 
+}
+
+.logo span:last-child {
+  color: black;
+}
 /* Sign-in heading */
 .signin-heading {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: #1f2937; /* Tailwind gray-900 */
 }
 
 .signin-subtext {
-  color: #4b5563; /* Tailwind gray-600 */
+  color: #a9aaac; /* Tailwind gray-600 */
   margin-top: 0.5rem;
 }
 
@@ -56,8 +68,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 10px;
   padding: 0.5rem;
-  border: 1px solid #d1d5db; /* Tailwind gray-300 */
+  border: 1px solid #187795; /* Tailwind gray-300 */
   background-color: white;
   color: #374151; /* Tailwind gray-700 */
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);

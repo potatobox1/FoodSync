@@ -7,7 +7,10 @@ export default function LoginPage() {
       <div className="login-form">
         <div className="form-content">
           {/* Logo */}
-          <h1 className="logo">FoodSync</h1>
+          <h1 className="logo">
+            <span className="text-black">Food</span>
+            <span className="text-teal-600">Sync</span>
+          </h1>
 
           {/* Sign in heading */}
           <h2 className="signin-heading">Sign in</h2>
