@@ -1,5 +1,5 @@
 import type React from "react"
-import "./globals.css"
+// import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
