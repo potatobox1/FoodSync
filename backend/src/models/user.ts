@@ -1,0 +1,23 @@
+import mongoose, { Schema, Document } from 'mongoose';
+
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  contact_no: string;
+  user_type: 'restaurant' | 'food_bank';
+  location_id: mongoose.Types.ObjectId;
+  created_at: Date;
+}
+
+const UserSchema: Schema = new Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  contact_no: { type: String, required: true },
+  user_type: { type: String, enum: ['restaurant', 'food_bank'], required: true },
+  location_id: { type: Schema.Types.ObjectId, ref: 'Location', required: true },
+  created_at: { type: Date, default: Date.now }
+});
+
+export const User = mongoose.model<IUser>('User', UserSchema);
