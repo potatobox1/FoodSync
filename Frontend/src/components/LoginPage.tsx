@@ -1,19 +1,26 @@
-
+import { useNavigate } from "react-router-dom";
 import { doSignInWithGoogle } from "../../../backend/src/firebase/auth";
 import "../styles/LoginPage.css"; // Import the new CSS file
 
-
-
 export default function LoginPage() {
+  const navigate = useNavigate(); // React Router hook for navigation
+
   const handleGoogleSignIn = async () => {
     try {
-      const userCredential = await doSignInWithGoogle();
-      console.log("User signed in:", userCredential.user);
-      // Redirect or handle login success
+      const { user, isNewUser } = await doSignInWithGoogle(); // Destructure correctly
+      console.log("User signed in:", user);
+  
+      // Redirect based on new user status
+      if (isNewUser) {
+        navigate("/register"); // Redirect new users to registration
+      } else {
+        navigate("/dashboard"); // Redirect existing users
+      }
     } catch (error) {
       console.error("Google sign-in error:", error);
     }
   };
+  
 
   return (
     <div className="login-container">
