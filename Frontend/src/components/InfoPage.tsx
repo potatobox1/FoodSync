@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import "../styles/InfoPage.css"; // Import the new CSS file
+import { signUp } from "../services/sign_up";
 
 // Define types
 interface Location {
@@ -163,19 +164,16 @@ const RegisterForm: React.FC = () => {
     setMessage({ text: "", type: "" })
 
     try {
-      // In a real application, you would send this data to your API
-      // const response = await fetch('/api/register', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // });
+      const response = await signUp({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        contact_no: formData.contact_no,
+        user_type: formData.user_type,
+        location_id: formData.location_id
+      })
 
-      // if (!response.ok) throw new Error('Registration failed');
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      console.log("Form submitted successfully:", formData)
+      console.log("Form submitted successfully:", response)
       setMessage({
         text: "Registration successful! Your account has been created.",
         type: "success",

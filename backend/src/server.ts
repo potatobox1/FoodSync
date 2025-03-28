@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import connectDB from './db';
 import cors from "cors";
 import userRoutes from "./routes/userRoutes";
+import authRoutes from "./routes/authRoutes"; // New import for auth routes
+
 // Load environment variables
 dotenv.config();
 
@@ -24,6 +26,7 @@ connectDB(MONGO_URI);
 
 // Sample route
 app.use("/api/users", userRoutes); // Attach user routes
+app.use("/api/auth", authRoutes); // Add auth routes
 
 // Start the server
 app.listen(PORT, () => {

@@ -2,6 +2,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "firebase": "^11.5.0",
     "mongoose": "^8.13.0"
   },
   "devDependencies": {
