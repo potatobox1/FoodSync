@@ -1,4 +1,4 @@
-import "../styles/globals.css"; // Import the new CSS file
+import "../styles/LoginPage.css"; // Import the new CSS file
 
 
 
