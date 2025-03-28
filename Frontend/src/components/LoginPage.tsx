@@ -1,5 +1,7 @@
-import "../styles/globals.css"; // Import the new CSS file
+
 import { doSignInWithGoogle } from "../../../backend/src/firebase/auth";
+import "../styles/LoginPage.css"; // Import the new CSS file
+
 
 
 export default function LoginPage() {
