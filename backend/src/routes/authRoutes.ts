@@ -1,6 +1,6 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import {User} from '../models/user';
+import { User } from '../models/user';
 import { Location } from '../models/location';
 
 const router = Router();
@@ -10,12 +10,15 @@ router.post('/signup', async (req: any, res: any) => {
     const { 
       name, 
       email, 
-      password, 
       contact_no, 
       user_type, 
-      location_id 
+      address, 
+      city, 
+      country, 
+      latitude, 
+      longitude 
     } = req.body;
-    
+
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -24,38 +27,44 @@ router.post('/signup', async (req: any, res: any) => {
         error: true 
       });
     }
-    const defaultLocation = await Location.findOne();
-    if (!defaultLocation) {
-      return res.status(500).json({ message: 'No default location found', error: true });
-    }
-    // Create new user
+
+    // Create a new location
+    const newLocation = new Location({
+      address,
+      city,
+      country,
+      latitude,
+      longitude
+    });
+
+    await newLocation.save();
+
+    // Create a new user with the location reference
     const newUser = new User({
       name,
       email,
-      password,
       contact_no,
       user_type,
-      location_id: defaultLocation._id // using default for now
+      location_id: newLocation._id
     });
 
-    // Save user to database
     await newUser.save();
 
-    // Respond with success message
-    res.status(201).json({
+    return res.status(201).json({
       message: 'User registered successfully',
       user: {
         id: newUser._id,
         name: newUser.name,
         email: newUser.email,
-        user_type: newUser.user_type
+        contact_no: newUser.contact_no,
+        user_type: newUser.user_type,
+        location_id: newUser.location_id
       }
     });
 
   } catch (error) {
     console.error('Signup error:', error);
 
-    // Handle validation errors
     if (error instanceof mongoose.Error.ValidationError) {
       const messages = Object.values(error.errors).map(err => err.message);
       return res.status(400).json({ 
@@ -64,8 +73,7 @@ router.post('/signup', async (req: any, res: any) => {
       });
     }
 
-    // Generic server error
-    res.status(500).json({ 
+    return res.status(500).json({ 
       message: 'Server error during registration',
       error: true 
     });

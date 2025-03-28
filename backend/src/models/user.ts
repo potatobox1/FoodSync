@@ -13,7 +13,6 @@ export interface IUser extends Document {
 const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
   contact_no: { type: String, required: true },
   user_type: { type: String, enum: ['restaurant', 'food_bank'], required: true },
   location_id: { type: Schema.Types.ObjectId, ref: 'Location', required: true },

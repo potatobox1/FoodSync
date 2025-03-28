@@ -1,31 +1,29 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
-import "../styles/InfoPage.css"; // Import the new CSS file
-import { signUp } from "../services/sign_up";
-
-// Define types
-interface Location {
-  id: string
-  name: string
-}
+import { useState } from "react"
+import "../styles/InfoPage.css"
+import { signUp } from "../services/sign_up"
 
 interface FormData {
   name: string
   email: string
-  password: string
   contact_no: string
   user_type: "restaurant" | "food_bank"
-  location_id: string
+  address: string
+  city: string
+  country: string
 }
 
 interface FormErrors {
   name: string
   email: string
-  password: string
   contact_no: string
-  location_id: string
+  address: string
+  city: string
+  country: string
+  latitude: string
+  longitude: string
 }
 
 interface Message {
@@ -33,56 +31,33 @@ interface Message {
   type: "success" | "error" | ""
 }
 
-// Mock locations data (replace with API call in production)
-const mockLocations: Location[] = [
-  { id: "1", name: "Downtown" },
-  { id: "2", name: "Uptown" },
-  { id: "3", name: "Midtown" },
-  { id: "4", name: "West End" },
-  { id: "5", name: "East Side" },
-]
-
 const RegisterForm: React.FC = () => {
-  // Form state
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
-    password: "",
     contact_no: "",
     user_type: "restaurant",
-    location_id: "",
+    address: "",
+    city: "",
+    country: "",
   })
 
-  // Error state
   const [errors, setErrors] = useState<FormErrors>({
     name: "",
     email: "",
-    password: "",
     contact_no: "",
-    location_id: "",
+    address: "",
+    city: "",
+    country: "",
+    latitude: "",
+    longitude: ""
   })
 
-  // Loading state
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [message, setMessage] = useState<Message>({ text: "", type: "" })
-  const [locations, setLocations] = useState<Location[]>(mockLocations)
+  const [latitude, setLatitude] = useState<string>("")
+  const [longitude, setLongitude] = useState<string>("")
 
-  // In a real application, you would fetch locations from your API
-  useEffect(() => {
-    // Example API call:
-    // const fetchLocations = async () => {
-    //   try {
-    //     const response = await fetch('/api/locations')
-    //     const data = await response.json()
-    //     setLocations(data)
-    //   } catch (error) {
-    //     console.error('Failed to fetch locations:', error)
-    //   }
-    // }
-    // fetchLocations()
-  }, [])
-
-  // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData({
@@ -90,7 +65,6 @@ const RegisterForm: React.FC = () => {
       [name]: value,
     })
 
-    // Clear error when user types
     if (errors[name as keyof FormErrors]) {
       setErrors({
         ...errors,
@@ -99,12 +73,10 @@ const RegisterForm: React.FC = () => {
     }
   }
 
-  // Validate form
   const validateForm = (): boolean => {
     let valid = true
     const newErrors = { ...errors }
 
-    // Validate name
     if (!formData.name.trim()) {
       newErrors.name = "Name is required"
       valid = false
@@ -113,7 +85,6 @@ const RegisterForm: React.FC = () => {
       valid = false
     }
 
-    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!formData.email.trim()) {
       newErrors.email = "Email is required"
@@ -123,16 +94,6 @@ const RegisterForm: React.FC = () => {
       valid = false
     }
 
-    // Validate password
-    if (!formData.password) {
-      newErrors.password = "Password is required"
-      valid = false
-    } else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters"
-      valid = false
-    }
-
-    // Validate contact number
     if (!formData.contact_no.trim()) {
       newErrors.contact_no = "Contact number is required"
       valid = false
@@ -141,9 +102,28 @@ const RegisterForm: React.FC = () => {
       valid = false
     }
 
-    // Validate location
-    if (!formData.location_id) {
-      newErrors.location_id = "Please select a location"
+    if (!formData.address.trim()) {
+      newErrors.address = "Address is required"
+      valid = false
+    }
+
+    if (!formData.city.trim()) {
+      newErrors.city = "City is required"
+      valid = false
+    }
+
+    if (!formData.country.trim()) {
+      newErrors.country = "Country is required"
+      valid = false
+    }
+
+    if (!latitude) {
+      newErrors.latitude = "Latitude is required"
+      valid = false
+    }
+
+    if (!longitude) {
+      newErrors.longitude = "Longitude is required"
       valid = false
     }
 
@@ -151,11 +131,9 @@ const RegisterForm: React.FC = () => {
     return valid
   }
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // Validate form
     if (!validateForm()) {
       return
     }
@@ -167,10 +145,13 @@ const RegisterForm: React.FC = () => {
       const response = await signUp({
         name: formData.name,
         email: formData.email,
-        password: formData.password,
         contact_no: formData.contact_no,
         user_type: formData.user_type,
-        location_id: formData.location_id
+        address: formData.address,
+        city: formData.city,
+        country: formData.country,
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
       })
 
       console.log("Form submitted successfully:", response)
@@ -179,18 +160,20 @@ const RegisterForm: React.FC = () => {
         type: "success",
       })
 
-      // Reset form after successful submission
       setFormData({
         name: "",
         email: "",
-        password: "",
         contact_no: "",
         user_type: "restaurant",
-        location_id: "",
+        address: "",
+        city: "",
+        country: "",
       })
 
-      // Redirect to login page or dashboard
-      window.location.href = '/dashboard';
+      setLatitude("")
+      setLongitude("")
+
+      window.location.href = "/dashboard"
     } catch (error) {
       console.error("Registration error:", error)
       setMessage({
@@ -242,20 +225,6 @@ const RegisterForm: React.FC = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Create a password"
-              className={errors.password ? "error" : ""}
-            />
-            {errors.password && <span className="error-message">{errors.password}</span>}
-          </div>
-
-          <div className="form-group">
             <label htmlFor="contact_no">Contact Number</label>
             <input
               type="text"
@@ -296,24 +265,98 @@ const RegisterForm: React.FC = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="location_id">Location</label>
-            <select
-              id="location_id"
-              name="location_id"
-              value={formData.location_id}
+            <label>Address</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
               onChange={handleChange}
-              className={errors.location_id ? "error" : ""}
-            >
-              <option value="">Select a location</option>
-              {locations.map((location) => (
-                <option key={location.id} value={location.id}>
-                  {location.name}
-                </option>
-              ))}
-            </select>
-            {errors.location_id && <span className="error-message">{errors.location_id}</span>}
-            <small>Select the location where you operate.</small>
+              placeholder="Enter your address"
+              className={errors.address ? "error" : ""}
+            />
+            {errors.address && <span className="error-message">{errors.address}</span>}
           </div>
+
+          <div className="form-group">
+            <label>City</label>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              placeholder="Enter your city"
+              className={errors.city ? "error" : ""}
+            />
+            {errors.city && <span className="error-message">{errors.city}</span>}
+          </div>
+
+          <div className="form-group">
+            <label>Country</label>
+            <input
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              placeholder="Enter your country"
+              className={errors.country ? "error" : ""}
+            />
+            {errors.country && <span className="error-message">{errors.country}</span>}
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Latitude</label>
+              <input
+                type="text"
+                value={latitude}
+                readOnly
+                placeholder="Latitude"
+                className={errors.latitude ? "error" : ""}
+              />
+              {errors.latitude && <span className="error-message">{errors.latitude}</span>}
+            </div>
+            <div className="form-group">
+              <label>Longitude</label>
+              <input
+                type="text"
+                value={longitude}
+                readOnly
+                placeholder="Longitude"
+                className={errors.longitude ? "error" : ""}
+              />
+              {errors.longitude && <span className="error-message">{errors.longitude}</span>}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="submit-button"
+            onClick={() => {
+              if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                    setLatitude(position.coords.latitude.toString())
+                    setLongitude(position.coords.longitude.toString())
+
+                    // Clear previous errors
+                    setErrors((prev) => ({
+                      ...prev,
+                      latitude: "",
+                      longitude: ""
+                    }))
+                  },
+                  (error) => {
+                    console.error("Error getting location:", error)
+                    alert("Failed to get your location. Please allow location access.")
+                  }
+                )
+              } else {
+                alert("Geolocation is not supported by your browser.")
+              }
+            }}
+          >
+            Get Location
+          </button>
 
           <button type="submit" className="submit-button" disabled={isLoading}>
             {isLoading ? "Registering..." : "Register"}
@@ -325,4 +368,3 @@ const RegisterForm: React.FC = () => {
 }
 
 export default RegisterForm
-

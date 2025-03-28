@@ -56,7 +56,7 @@ export default function LoginPage() {
 
       {/* Right column - Image */}
       <div className="image-container">
-        <img src="/children-eating.jpg" alt="Children enjoying food" />
+        <img src="images/children-eating.jpg" alt="Children enjoying food" />
       </div>
     </div>
   );

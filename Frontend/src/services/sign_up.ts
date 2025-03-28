@@ -5,10 +5,13 @@ const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 export const signUp = async (userData: {
   name: string;
   email: string;
-  password: string;
   contact_no: string;
   user_type: "restaurant" | "food_bank";
-  location_id: string;
+  address: string,
+  city: string,
+  country: string,
+  latitude: number,
+  longitude: number,
 }) => {
   try {
     const response = await API.post("/api/auth/signup", userData);
