@@ -1,8 +1,18 @@
 import "../styles/globals.css"; // Import the new CSS file
-
+import { doSignInWithGoogle } from "../../../backend/src/firebase/auth";
 
 
 export default function LoginPage() {
+  const handleGoogleSignIn = async () => {
+    try {
+      const userCredential = await doSignInWithGoogle();
+      console.log("User signed in:", userCredential.user);
+      // Redirect or handle login success
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+    }
+  };
+
   return (
     <div className="login-container">
       {/* Left column - Login form */}
@@ -22,7 +32,7 @@ export default function LoginPage() {
 
           {/* Google Sign in button */}
           <div className="google-signin">
-            <button className="google-button">
+            <button className="google-button" onClick={handleGoogleSignIn}>
               <img src="/google-logo.svg" alt="Google logo" className="google-logo" />
               Sign in with Google
             </button>
