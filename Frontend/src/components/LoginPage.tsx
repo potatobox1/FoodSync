@@ -1,4 +1,6 @@
-import "./globals.css"; // Import the new CSS file
+import "../styles/globals.css"; // Import the new CSS file
+
+
 
 export default function LoginPage() {
   return (

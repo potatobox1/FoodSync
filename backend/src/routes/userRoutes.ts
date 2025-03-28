@@ -13,4 +13,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Testing
+router.get("/testing", async (req, res) => {
+  try {
+   
+    res.json({"message":"Backend working"
+
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;
