@@ -190,7 +190,7 @@ const RegisterForm: React.FC = () => {
       })
 
       // Redirect to login page or dashboard
-      // window.location.href = '/login';
+      window.location.href = '/dashboard';
     } catch (error) {
       console.error("Registration error:", error)
       setMessage({
