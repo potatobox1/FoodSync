@@ -4,6 +4,7 @@ import connectDB from './db';
 import cors from "cors";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes"; // New import for auth routes
+import inventoryRoutes from "./routes/inventoryRoutes"
 
 // Load environment variables
 dotenv.config();
@@ -24,9 +25,10 @@ if (!MONGO_URI) {
 
 connectDB(MONGO_URI);
 
-// Sample route
+// Routes
 app.use("/api/users", userRoutes); // Attach user routes
 app.use("/api/auth", authRoutes); // Add auth routes
+app.use("/api/inventory", inventoryRoutes) // Inventory routes
 
 // Start the server
 app.listen(PORT, () => {
