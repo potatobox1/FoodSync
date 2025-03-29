@@ -1,12 +1,12 @@
 import React from "react";
 // import UserList from "./components/table";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./components/LoginPage";
-import InfoPage from "./components/InfoPage";
-import Dashboard from "./components/dashboard";
-import Landing from "./components/landing"
-import Learn from "./components/learn-more"
-import Contact from "./components/contact"
+import LoginPage from "./pages/LoginPage";
+import InfoPage from "./pages/InfoPage";
+import Dashboard from "./pages/dashboard";
+import Landing from "./pages/landing"
+import Learn from "./pages/learn-more"
+import Contact from "./pages/contact"
 
 
 const App: React.FC = () => {
@@ -27,13 +27,17 @@ const App: React.FC = () => {
 export default App;
 
 
-// import React from "react";
-// // import UserList from "./components/table";
+
+// import MainInventory from "./pages/MainInventory";
+
 // const App: React.FC = () => {
 //   return (
-//     <div><LoginPage/></div>
+//     <BrowserRouter>
+//       <MainInventory />
+//     </BrowserRouter>
 //   );
 // };
 
 // export default App;
+
 
