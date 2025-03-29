@@ -1,35 +1,16 @@
 import type { FoodItem } from "../types/food-item";
+// import "../styles/main_inventory.css"; // Import the new CSS file
 
 interface FoodCardProps {
   item: FoodItem;
 }
 
 export default function FoodCard({ item }: FoodCardProps) {
-  // Define category-based image paths
-  const categoryImages: Record<string, string> = {
-    Sweet: "/images/sweet.jpg",
-    Savory: "/images/savory.jpg",
-    Beverage: "/images/beverage.jpg",
-  };
-
-  // Determine the correct image
-  let imageSrc = item.image || "/images/beverage.svg"; // Default to item.image if available
-
-  if (!item.image) {
-    if (item.category === "Food") {
-      imageSrc = categoryImages[item.subCategory] || "/images/placeholder.svg";
-    } else if (item.category === "Beverage") {
-      imageSrc = categoryImages["Beverage"];
-    }
-  }
-
-  console.log(`Category: ${item.category}, Subcategory: ${item.subCategory}, Image: ${imageSrc}`);
-
   return (
     <div className="rounded-lg overflow-hidden border border-gray-200 bg-white">
       <div className="relative">
         <img
-          src={imageSrc}
+          src={item.image || "/placeholder.svg"}
           alt={item.name}
           width={300}
           height={200}
