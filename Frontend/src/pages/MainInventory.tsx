@@ -19,6 +19,7 @@ export default function MainInventory() {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [minQuantity, setMinQuantity] = useState<number>(0)
   const [sortByLocation, setSortByLocation] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true) // Added loading state
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number }>({
     latitude: 40.7128,
     longitude: -74.006,
@@ -38,6 +39,7 @@ export default function MainInventory() {
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true)
       try {
         const inventory = await fetchInventory()
         const itemsWithDetails = await Promise.all(
@@ -66,6 +68,8 @@ export default function MainInventory() {
         setFoodItems(itemsWithDetails)
       } catch (error) {
         console.error("Error fetching data:", error)
+      } finally {
+        setLoading(false)
       }
     }
     fetchData()
@@ -136,8 +140,12 @@ export default function MainInventory() {
               </button>
             </div>
 
-            <FoodListings items={sortedItems} />
-          </div>
+            {loading ? ( // Show loading state
+              <div className="text-center text-gray-500">Loading...</div>
+            ) : (
+              <FoodListings items={sortedItems} />
+            )}
+            </div>
         </div>
       </div>
     </main>
