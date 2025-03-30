@@ -1,60 +1,94 @@
 "use client"
-import "../styles/main_inventory.css"; // Import the new CSS file
 
 import { useState, useEffect } from "react"
 import Header from "../components/header"
 import CategoryFilter from "../components/category-filter"
 import FoodListings from "../components/food-listings"
 import FilterSidebar from "../components/filter-sidebar"
-import type { FoodItem } from "../types/food-item"
+import { type FoodItem, type Restaurant, determineSubCategory, formatExpiryTime } from "../types/food-item"
+import "../styles/main_inventory.css"
 
-// Sample data with location information
-const initialFoodItems: FoodItem[] = [
+// Sample restaurant data with location information
+const restaurants: Restaurant[] = [
   {
-    id: 1,
-    name: "Palao",
-    category: "Food",
-    subCategory: "Savoury",
-    image: "/images/savory.jpg",
-    expiresIn: "6h",
-    restaurant: "Italian Corner Restaurant",
-    quantity: 12,
+    _id: "1",
+    name: "Italian Corner Restaurant",
     location: { latitude: 40.7128, longitude: -74.006 },
   },
   {
-    id: 2,
-    name: "Daal",
-    category: "Food",
-    subCategory: "Savoury",
-    image: "/images/savory.jpg",
-    expiresIn: "6h",
-    restaurant: "Italian Corner Restaurant",
-    quantity: 30,
+    _id: "2",
+    name: "Spice Garden",
     location: { latitude: 40.758, longitude: -73.9855 },
   },
   {
-    id: 3,
-    name: "Lemonade",
-    category: "Beverage",
-    subCategory: "Sweet",
-    image: "/images/beverage.jpg",
-    expiresIn: "6h",
-    restaurant: "Italian Corner Restaurant",
-    quantity: 50,
+    _id: "3",
+    name: "Sweet Delights",
     location: { latitude: 40.7308, longitude: -73.9973 },
   },
   {
-    id: 4,
-    name: "Halwa",
-    category: "Food",
-    subCategory: "Sweet",
-    image: "/images/sweet.jpg",
-    expiresIn: "6h",
-    restaurant: "Italian Corner Restaurant",
-    quantity: 25,
+    _id: "4",
+    name: "Fresh Brews Cafe",
     location: { latitude: 40.7448, longitude: -73.9867 },
   },
 ]
+
+// Sample food items data based on the MongoDB schema
+const rawFoodItems = [
+  {
+    _id: "1",
+    restaurant_id: "1",
+    quantity: 12,
+    expiration_date: new Date(Date.now() + 6 * 60 * 60 * 1000), // 6 hours from now
+    name: "Palao",
+    category: "Rice",
+    status: "available",
+    created_at: new Date(),
+  },
+  {
+    _id: "2",
+    restaurant_id: "2",
+    quantity: 30,
+    expiration_date: new Date(Date.now() + 6 * 60 * 60 * 1000), // 6 hours from now
+    name: "Daal",
+    category: "Curry",
+    status: "available",
+    created_at: new Date(),
+  },
+  {
+    _id: "3",
+    restaurant_id: "3",
+    quantity: 50,
+    expiration_date: new Date(Date.now() + 6 * 60 * 60 * 1000), // 6 hours from now
+    name: "Lemonade",
+    category: "Beverage",
+    status: "available",
+    created_at: new Date(),
+  },
+  {
+    _id: "4",
+    restaurant_id: "4",
+    quantity: 25,
+    expiration_date: new Date(Date.now() + 6 * 60 * 60 * 1000), // 6 hours from now
+    name: "Halwa",
+    category: "Dessert",
+    status: "available",
+    created_at: new Date(),
+  },
+]
+
+// Process the raw food items to include restaurant data and derived properties
+const initialFoodItems: FoodItem[] = rawFoodItems.map((item) => {
+  const restaurant = restaurants.find((r) => r._id === item.restaurant_id) || restaurants[0]
+  const subCategory = determineSubCategory(item.category)
+  const expiresIn = formatExpiryTime(item.expiration_date)
+
+  return {
+    ...item,
+    restaurant,
+    subCategory,
+    expiresIn,
+  } as FoodItem
+})
 
 export default function MainInventory() {
   const [foodItems, setFoodItems] = useState<FoodItem[]>(initialFoodItems)
@@ -84,30 +118,30 @@ export default function MainInventory() {
     .filter((item) => {
       // Filter by category
       if (selectedCategory === "All Items") return true
-      if (selectedCategory === "Beverage") return item.category === "Beverage"
+      if (selectedCategory === "Beverage") return item.subCategory === "Beverage"
       if (selectedCategory === "Savoury") return item.subCategory === "Savoury"
       if (selectedCategory === "Sweet") return item.subCategory === "Sweet"
       return true
     })
     .filter((item) => item.quantity >= minQuantity)
 
-  // Sort by location if enabled
+  // Sort by restaurant location if enabled
   const sortedItems = [...filteredItems].sort((a, b) => {
     if (!sortByLocation) return 0
 
-    // Calculate distance from user location
+    // Calculate distance from user location to restaurant location
     const distanceA = calculateDistance(
       userLocation.latitude,
       userLocation.longitude,
-      a.location.latitude,
-      a.location.longitude,
+      a.restaurant.location.latitude,
+      a.restaurant.location.longitude,
     )
 
     const distanceB = calculateDistance(
       userLocation.latitude,
       userLocation.longitude,
-      b.location.latitude,
-      b.location.longitude,
+      b.restaurant.location.latitude,
+      b.restaurant.location.longitude,
     )
 
     return distanceA - distanceB
@@ -131,12 +165,12 @@ export default function MainInventory() {
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen">
       <Header />
-      <div className="container mx-auto px-4 py-6">
-        <h1 className="text-2xl font-bold mb-6">Available Food Donations</h1>
+      <div className="container main-content">
+        <h1 className="page-title">Available Food Donations</h1>
 
-        <div className="flex flex-col md:flex-row gap-6">
+        <div className="flex flex-col md-flex-row gap-6">
           {isFilterOpen && (
             <FilterSidebar
               minQuantity={minQuantity}
@@ -149,10 +183,7 @@ export default function MainInventory() {
           <div className="flex-1">
             <div className="flex justify-between items-center mb-6">
               <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-              <button
-                onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className="flex items-center gap-2 px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200"
-              >
+              <button onClick={() => setIsFilterOpen(!isFilterOpen)} className="filter-button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -163,7 +194,7 @@ export default function MainInventory() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-5 h-5"
+                  className="filter-icon"
                 >
                   <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                 </svg>
