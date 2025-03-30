@@ -46,7 +46,18 @@ export default function Dashboard() {
           {foodItems.length > 0 ? (
             foodItems.map((item) => (
               <div className="food-card" key={item._id}>
-                <img src={item.image || "/placeholder.svg"} alt={item.name} />
+                <img
+                  src={
+                    item.category === "Savoury"
+                      ? "/images/savory.jpg"
+                      : item.category === "Sweet"
+                      ? "/images/sweet.jpg"
+                      : item.category === "Beverage"
+                      ? "/images/beverage.jpg"
+                      : "/placeholder.svg"
+                  }
+                  alt={item.name}
+                />
                 <div className="food-info">
                   <div
                     style={{
