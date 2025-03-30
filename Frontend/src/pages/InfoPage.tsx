@@ -4,6 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import "../styles/InfoPage.css"
 import { signUp } from "../services/sign_up"
+import { useLocation } from "react-router-dom";
 
 interface FormData {
   name: string
@@ -32,6 +33,10 @@ interface Message {
 }
 
 const RegisterForm: React.FC = () => {
+  const location = useLocation();
+  const uid = location.state?.uid || null;
+  console.log("Inside Info-Page: ",uid)
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -143,6 +148,7 @@ const RegisterForm: React.FC = () => {
 
     try {
       const response = await signUp({
+        uid,
         name: formData.name,
         email: formData.email,
         contact_no: formData.contact_no,

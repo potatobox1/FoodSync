@@ -8,11 +8,12 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     try {
       const { user, isNewUser } = await doSignInWithGoogle(); // Destructure correctly
-      console.log("User signed in:", user);
+      const uid = user.user.uid;
+      console.log("User signed in:", user.user.uid);
   
       // Redirect based on new user status
       if (isNewUser) {
-        navigate("/register"); // Redirect new users to registration
+        navigate("/register",{ state: { uid } }); // Redirect new users to registration
       } else {
         navigate("/dashboard"); // Redirect existing users
       }
