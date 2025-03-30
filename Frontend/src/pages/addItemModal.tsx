@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/AddItemModal.css";
-import { addFoodItem } from "../services/foodItemsByRID";
+import { addFoodItem } from "../services/foodItems";
 
 interface AddItemModalProps {
   isOpen: boolean;

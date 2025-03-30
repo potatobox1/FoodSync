@@ -8,9 +8,9 @@ import FilterSidebar from "../components/filter-sidebar"
 import { type FoodItem, determineSubCategory, formatExpiryTime } from "../types/food-item"
 import "../styles/main_inventory.css"
 import { fetchInventory } from "../services/inventory";
-import { fetchRestaurantById } from "../services/restaurantByID";
-import { fetchUserById } from "../services/userByID";
-import { fetchLocationById } from "../services/locationByID";
+import { fetchRestaurantById } from "../services/restaurant";
+import { fetchUserById } from "../services/user";
+import { fetchLocationById } from "../services/location";
 // import axios from "axios";
 
 export default function MainInventory() {

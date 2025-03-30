@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "../styles/RestaurantDashboard.css";
 import AddItemModal from "./addItemModal";
-import { fetchFoodItemsByRestaurant } from "../services/foodItemsByRID";
+import { fetchFoodItemsByRestaurant } from "../services/foodItems";
 
 export default function Dashboard() {
   const restaurantId: string = "67e88d5621be484ff7f3cd73";
