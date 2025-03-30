@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss"
-console.log('Tailwind config loaded!');
 
 const config: Config = {
   darkMode: ["class"],
@@ -26,20 +25,20 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#187795",
-          foreground: "#ffffff",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "#d6d6d6",
-          foreground: "#444444",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "#828282",
-          foreground: "#444444",
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
@@ -52,6 +51,18 @@ const config: Config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        cyan: {
+          50: "#e0f7fa",
+          100: "#b2ebf2",
+          200: "#80deea",
+          300: "#4dd0e1",
+          400: "#26c6da",
+          500: "#00bcd4",
+          600: "#00acc1",
+          700: "#0097a7",
+          800: "#00838f",
+          900: "#006064",
         },
       },
       borderRadius: {
@@ -75,7 +86,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 }
 
 export default config
