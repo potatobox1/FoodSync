@@ -1,16 +1,11 @@
-export interface FoodItem {
-    id: number
-    name: string
-    category: string
-    subCategory: string
-    image: string
-    expiresIn: string
-    restaurant: string
-    quantity: number
-    location: {
-      latitude: number
-      longitude: number
-    }
-  }
-  
-  
+export type FoodItem = {
+  _id: string;
+  restaurant_id: string;
+  quantity: number;
+  expiration_date: Date;
+  name: string;
+  category: string;
+  status: "available" | "expired";
+  created_at: Date;
+  location?: { latitude: number; longitude: number };
+};

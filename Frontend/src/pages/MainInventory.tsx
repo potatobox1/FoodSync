@@ -7,127 +7,93 @@ import CategoryFilter from "../components/category-filter"
 import FoodListings from "../components/food-listings"
 import FilterSidebar from "../components/filter-sidebar"
 import type { FoodItem } from "../types/food-item"
+import { fetchInventory } from "../services/inventory";
+import { fetchRestaurantById } from "../services/restaurantByID";
+import { fetchUserById } from "../services/userByID";
+import { fetchLocationById } from "../services/locationByID";
 
-// Sample data with location information
-const initialFoodItems: FoodItem[] = [
-  {
-    id: 1,
-    name: "Palao",
-    category: "Food",
-    subCategory: "Savoury",
-    image: "/images/savory.jpg",
-    expiresIn: "6h",
-    restaurant: "Italian Corner Restaurant",
-    quantity: 12,
-    location: { latitude: 40.7128, longitude: -74.006 },
-  },
-  {
-    id: 2,
-    name: "Daal",
-    category: "Food",
-    subCategory: "Savoury",
-    image: "/images/savory.jpg",
-    expiresIn: "6h",
-    restaurant: "Italian Corner Restaurant",
-    quantity: 30,
-    location: { latitude: 40.758, longitude: -73.9855 },
-  },
-  {
-    id: 3,
-    name: "Lemonade",
-    category: "Beverage",
-    subCategory: "Sweet",
-    image: "/images/beverage.jpg",
-    expiresIn: "6h",
-    restaurant: "Italian Corner Restaurant",
-    quantity: 50,
-    location: { latitude: 40.7308, longitude: -73.9973 },
-  },
-  {
-    id: 4,
-    name: "Halwa",
-    category: "Food",
-    subCategory: "Sweet",
-    image: "/images/sweet.jpg",
-    expiresIn: "6h",
-    restaurant: "Italian Corner Restaurant",
-    quantity: 25,
-    location: { latitude: 40.7448, longitude: -73.9867 },
-  },
-]
 
 export default function MainInventory() {
-  const [foodItems, setFoodItems] = useState<FoodItem[]>(initialFoodItems)
-  const [selectedCategory, setSelectedCategory] = useState<string>("All Items")
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [minQuantity, setMinQuantity] = useState<number>(0)
-  const [sortByLocation, setSortByLocation] = useState<boolean>(false)
+  const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All Items");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [minQuantity, setMinQuantity] = useState<number>(0);
+  const [sortByLocation, setSortByLocation] = useState<boolean>(false);
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number }>({
     latitude: 40.7128,
     longitude: -74.006,
-  })
+  });
 
   // Get user's location on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const inventory = await fetchInventory(true);
+        const itemsWithLocation = await Promise.all(
+          inventory.map(async (item: FoodItem) => {
+            const location = await fetchLocationByFoodItem(item.restaurant_id);
+            return { ...item, location };
+          })
+        );
+        setFoodItems(itemsWithLocation);
+      } catch (error) {
+        console.error("Error fetching food items:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         setUserLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-        })
-      })
+        });
+      });
     }
-  }, [])
+  }, []);
+
+  const fetchLocationByFoodItem = async (restaurantId: string) => {
+    try {
+      const restaurant = await fetchRestaurantById(restaurantId);
+      const user = await fetchUserById(restaurant.user_id);
+      const location = await fetchLocationById(user.location_id);
+      return { 
+        latitude: location?.latitude || 0, 
+        longitude: location?.longitude || 0 
+      };
+      } catch (error) {
+      console.error("Error fetching location:", error);
+      return { latitude: 0, longitude: 0 };
+    }
+  };
 
   // Filter items based on selected category and minimum quantity
-  const filteredItems = initialFoodItems
-    .filter((item) => {
-      // Filter by category
-      if (selectedCategory === "All Items") return true
-      if (selectedCategory === "Beverage") return item.category === "Beverage"
-      if (selectedCategory === "Savoury") return item.subCategory === "Savoury"
-      if (selectedCategory === "Sweet") return item.subCategory === "Sweet"
-      return true
-    })
-    .filter((item) => item.quantity >= minQuantity)
+  const filteredItems = foodItems
+    .filter((item) => item.status === "available")
+    .filter((item) => selectedCategory === "All Items" || item.category === selectedCategory)
+    .filter((item) => item.quantity >= minQuantity);
 
-  // Sort by location if enabled
   const sortedItems = [...filteredItems].sort((a, b) => {
-    if (!sortByLocation) return 0
+    if (!sortByLocation) return 0;
+    return calculateDistance(userLocation, a.location) - calculateDistance(userLocation, b.location);
+  });
 
-    // Calculate distance from user location
-    const distanceA = calculateDistance(
-      userLocation.latitude,
-      userLocation.longitude,
-      a.location.latitude,
-      a.location.longitude,
-    )
-
-    const distanceB = calculateDistance(
-      userLocation.latitude,
-      userLocation.longitude,
-      b.location.latitude,
-      b.location.longitude,
-    )
-
-    return distanceA - distanceB
-  })
-
-  // Calculate distance between two coordinates using Haversine formula
-  function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
-    const R = 6371 // Radius of the earth in km
-    const dLat = deg2rad(lat2 - lat1)
-    const dLon = deg2rad(lon2 - lon1)
+  function calculateDistance(userLoc: { latitude: number; longitude: number }, loc?: { latitude: number; longitude: number }) {
+    if (!loc) return Number.MAX_SAFE_INTEGER;
+    const R = 6371;
+    const dLat = deg2rad(loc.latitude - userLoc.latitude);
+    const dLon = deg2rad(loc.longitude - userLoc.longitude);
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    const d = R * c // Distance in km
-    return d
+      Math.cos(deg2rad(userLoc.latitude)) * Math.cos(deg2rad(loc.latitude)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
   function deg2rad(deg: number) {
-    return deg * (Math.PI / 180)
+    return deg * (Math.PI / 180);
   }
 
   return (
