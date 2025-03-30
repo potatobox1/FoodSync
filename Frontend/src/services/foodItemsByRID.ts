@@ -2,12 +2,33 @@ import axios from "axios";
 
 const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 
+// Fetch food items by restaurant ID
+interface FoodItemRequest {
+    restaurant_id: string;
+    quantity: number;
+    expiration_date: string; // Keeping it as string to ensure correct formatting when sending JSON
+    name: string;
+    category: string;
+   
+  }
+
 export const fetchFoodItemsByRestaurant = async (restaurantId: string) => {
   try {
     const response = await API.get(`/api/fooditems/${restaurantId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching food items:", error);
+    throw error;
+  }
+};
+
+// Add a new food item
+export const addFoodItem = async (foodItemData:FoodItemRequest) => {
+  try {
+    const response = await API.post("/api/fooditems/additem", foodItemData);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding food item:", error);
     throw error;
   }
 };
