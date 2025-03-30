@@ -18,7 +18,7 @@ export default function FoodListings({ items }: FoodListingsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {items.map((item) => (
-        <FoodCard key={item.id} item={item} />
+        <FoodCard key={item._id} item={item} />
       ))}
     </div>
   )

@@ -8,4 +8,6 @@ export type FoodItem = {
   status: "available" | "expired";
   created_at: Date;
   location?: { latitude: number; longitude: number };
+  restaurantName?: string;
+  expiresIn?: string;
 };
