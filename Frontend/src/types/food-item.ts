@@ -17,7 +17,6 @@ export interface FoodItem {
   category: string
   status: "available" | "expired"
   created_at: Date
-  // Derived properties for UI
   expiresIn: string
   subCategory: "Savoury" | "Sweet" | "Beverage"
 }
@@ -28,7 +27,7 @@ export interface FoodItem {
 export function getCategoryImage(subCategory: string): string {
   switch (subCategory) {
     case "Savoury":
-      return "/images/savory.jpg" 
+      return "/images/savoury.jpg" 
     case "Sweet":
       return "/images/sweet.jpg" 
     case "Beverage":
