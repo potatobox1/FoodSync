@@ -7,6 +7,8 @@ import Dashboard from "./pages/dashboard";
 import Landing from "./pages/landing"
 import Learn from "./pages/learn-more"
 import Contact from "./pages/contact"
+import RestaurantDashboard from "./pages/RestaurantDashboard"
+
 
 
 const App: React.FC = () => {
@@ -19,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/learn-more" element={<Learn />} />
+        <Route path="/restaurant-dashboard" element={<RestaurantDashboard />} />
       </Routes>
     </BrowserRouter>
   );
