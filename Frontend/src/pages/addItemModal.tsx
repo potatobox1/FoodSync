@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "../styles/AddItemModal.css";
+import { addFoodItem } from "../services/foodItemsByRID";
 
 interface AddItemModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onItemAdded: () => void;  // <-- new
 }
 
-export default function AddItemModal({ isOpen, onClose }: AddItemModalProps) {
+export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemModalProps) {
   const [formData, setFormData] = useState({
     quantity: "",
     expiration: "",
@@ -41,7 +43,7 @@ export default function AddItemModal({ isOpen, onClose }: AddItemModalProps) {
     return !isNaN(num) && num > 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const newErrors = {
@@ -66,8 +68,36 @@ export default function AddItemModal({ isOpen, onClose }: AddItemModalProps) {
 
     if (hasErrors) return;
 
-    console.log("Form submitted:", formData);
-    onClose();
+    try {
+      const restaurant_id = "67e88d5621be484ff7f3cd73"; // TODO: Replace with dynamic if needed
+
+      const formattedDate = new Date(formData.expiration).toISOString(); // Ensures format like 2025-03-21T00:16:22.461Z
+
+      await addFoodItem({
+        restaurant_id,
+        name: formData.name,
+        quantity: Number(formData.quantity),
+        expiration_date: formattedDate,
+        category: formData.category,
+      });
+
+      console.log("Food item added successfully.");
+
+      onItemAdded();
+
+      // Reset form and close modal
+      setFormData({
+        quantity: "",
+        expiration: "",
+        name: "",
+        category: "",
+      });
+
+      onClose();
+    } catch (error) {
+      console.error("Failed to add food item:", error);
+      // Optional: show error to user
+    }
   };
 
   if (!isOpen) return null;
@@ -131,7 +161,7 @@ export default function AddItemModal({ isOpen, onClose }: AddItemModalProps) {
             )}
           </div>
 
-          {/* Category (Dropdown) */}
+          {/* Category Dropdown */}
           <div className="form-group">
             <label htmlFor="category">Category</label>
             <select
@@ -151,6 +181,7 @@ export default function AddItemModal({ isOpen, onClose }: AddItemModalProps) {
             )}
           </div>
 
+          {/* Submit / Cancel Buttons */}
           <div className="modal-actions">
             <button type="button" onClick={onClose} className="cancel-btn">
               Cancel

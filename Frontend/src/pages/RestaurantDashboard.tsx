@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../styles/RestaurantDashboard.css";
 import AddItemModal from "./addItemModal";
-import { fetchFoodItemsByRestaurant } from "../services/foodItemsByRID"; // Adjust path if needed
+import { fetchFoodItemsByRestaurant } from "../services/foodItemsByRID";
 
 export default function Dashboard() {
   const restaurantId: string = "67e88d5621be484ff7f3cd73";
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [foodItems, setFoodItems] = useState<any[]>([]);
 
-  useEffect(() => {
-    const loadFoodItems = async () => {
-      try {
-        const response = await fetchFoodItemsByRestaurant(restaurantId);
-        console.log(response);
-        setFoodItems(response || []); // Ensure API returns { items: [...] }
-      } catch (error) {
-        console.error("Failed to fetch food items:", error);
-      }
-    };
-
-    loadFoodItems();
+  // Fetch items wrapped in useCallback so it can be passed as prop
+  const loadFoodItems = useCallback(async () => {
+    try {
+      const response = await fetchFoodItemsByRestaurant(restaurantId);
+      const sortedItems = (response || []).sort((a:any, b:any) => {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      });
+      setFoodItems(sortedItems);
+    } catch (error) {
+      console.error("Failed to fetch food items:", error);
+    }
   }, [restaurantId]);
+
+  useEffect(() => {
+    loadFoodItems();
+  }, [loadFoodItems]);
 
   return (
     <div className="dashboard-container">
-      {/* Header */}
       <header className="dashboard-header">
         <div className="logo">FoodSync</div>
         <nav className="nav-links">
@@ -38,7 +40,6 @@ export default function Dashboard() {
         <div className="user-icon">👤</div>
       </header>
 
-      {/* Main */}
       <div className="food-section">
         <h2 className="dashboard-title">Orders Dashboard</h2>
 
@@ -91,9 +92,11 @@ export default function Dashboard() {
         </button>
       </div>
 
+      {/* Pass refresh function to modal */}
       <AddItemModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onItemAdded={loadFoodItems}
       />
     </div>
   );
