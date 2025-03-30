@@ -1,9 +1,9 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {
+  uid: string; // Firebase UID
   name: string;
   email: string;
-  password: string;
   contact_no: string;
   user_type: 'restaurant' | 'food_bank';
   location_id: mongoose.Types.ObjectId;
@@ -11,6 +11,7 @@ export interface IUser extends Document {
 }
 
 const UserSchema: Schema = new Schema({
+  uid: { type: String, required: true, unique: true }, // Firebase UID (Unique Identifier)
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   contact_no: { type: String, required: true },

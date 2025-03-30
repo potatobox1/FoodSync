@@ -3,15 +3,16 @@ import axios from "axios";
 const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 
 export const signUp = async (userData: {
+  uid: string; // Added Firebase UID
   name: string;
   email: string;
   contact_no: string;
   user_type: "restaurant" | "food_bank";
-  address: string,
-  city: string,
-  country: string,
-  latitude: number,
-  longitude: number,
+  address: string;
+  city: string;
+  country: string;
+  latitude: number;
+  longitude: number;
 }) => {
   try {
     const response = await API.post("/api/auth/signup", userData);
