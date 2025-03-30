@@ -8,6 +8,7 @@ import inventoryRoutes from "./routes/inventoryRoutes"
 import restaurantRoutes from "./routes/restaurantRoutes"
 import userbyID from "./routes/userByID";
 import locationRoutes from "./routes/locationRoutes";
+import footitem from "./routes/fooditem"
 
 // Load environment variables
 dotenv.config();
@@ -35,6 +36,7 @@ app.use("/api/inventory", inventoryRoutes) // Inventory routes
 app.use("/api/restaurant", restaurantRoutes) // Inventory routes
 app.use("/api/userbyid", userbyID);
 app.use("/api/locationbyid", locationRoutes);
+app.use("/api/fooditems", footitem)
 
 // Start the server
 app.listen(PORT, () => {
