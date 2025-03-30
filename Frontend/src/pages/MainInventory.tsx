@@ -97,7 +97,7 @@ export default function MainInventory() {
   const [minQuantity, setMinQuantity] = useState<number>(0)
   const [sortByLocation, setSortByLocation] = useState<boolean>(false)
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number }>({
-    latitude: 40.7128,
+    latitude: 40.7128, // Default to NYC coordinates
     longitude: -74.006,
   })
 
@@ -202,11 +202,17 @@ export default function MainInventory() {
               </button>
             </div>
 
-            <FoodListings items={sortedItems} />
+              {sortedItems.length > 0 ? (
+                <FoodListings items={sortedItems} />
+              ) : (
+                <div className="text-center py-8 bg-gray-50 rounded-lg">
+                  <p className="text-gray-500">No food donations match your filters.</p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   )
 }
-
