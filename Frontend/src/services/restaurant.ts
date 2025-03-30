@@ -14,7 +14,7 @@ export const fetchRestaurantById = async (restaurantId: string) => {
 
 export const fetchRestaurants = async () => {
   try {
-    const response = await API.get("/api/restaurants");
+    const response = await API.get("/api/restaurant");
     return response.data;
   } catch (error) {
     console.error("Error fetching restaurants:", error);

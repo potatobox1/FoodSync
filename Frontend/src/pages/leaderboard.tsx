@@ -1,9 +1,43 @@
-import "../styles/leaderboard.css"
+import { useEffect, useState } from "react";
+import { fetchRestaurants } from "../services/restaurant";
+import { fetchUserById } from "../services/user";
+import "../styles/leaderboard.css";
+
+type Restaurant = {
+  user_id: string;
+  total_donations: number;
+  points?: number; // This will be added dynamically
+  name?: string; // This will be added dynamically
+  
+};
 
 function App() {
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+
+  useEffect(() => {
+    const loadRestaurants = async () => {
+      try {
+        const restaurantData = await fetchRestaurants();
+        const enrichedData = await Promise.all(
+          restaurantData.map(async (restaurant: Restaurant) => {
+            const user = await fetchUserById(restaurant.user_id);
+            return {
+              name: user.name,
+              points: restaurant.total_donations,
+            };
+          })
+        );
+        enrichedData.sort((a, b) => b.points - a.points);
+        setRestaurants(enrichedData);
+      } catch (error) {
+        console.error("Error loading restaurants:", error);
+      }
+    };
+    loadRestaurants();
+  }, []);
+
   return (
     <div className="app">
-      {/* Navigation Bar */}
       <header className="navbar">
         <div className="container">
           <div className="logo">
@@ -12,99 +46,47 @@ function App() {
           </div>
           <nav className="nav-menu">
             <ul>
-              <li>
-                <a href="#">Home</a>
-              </li>
-              <li>
-                <a href="#">Dashboard</a>
-              </li>
-              <li>
-                <a href="#">Inventory</a>
-              </li>
-              <li>
-                <a href="#">Orders</a>
-              </li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/inventory">Inventory</a></li>
+              <li><a href="restaurant-dashboard">Orders</a></li>
             </ul>
           </nav>
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="container">
         <h1 className="page-title">Leaderboard</h1>
 
-        {/* Top 3 Leaders */}
         <div className="top-leaders">
-          {/* PC-Lahore */}
-          <div className="leader-card">
-            <div className="leader-image gold-border">
-              <img src="https://via.placeholder.com/160" alt="PC-Lahore" />
+          {restaurants.slice(0, 3).map((restaurant, index) => (
+            <div key={index} className={`leader-card ${index === 0 ? "gold" : index === 1 ? "silver" : "bronze"}` }>
+              <div className="leader-image">
+                <img src="https://via.placeholder.com/160" alt={restaurant.name} />
+              </div>
+              <div className="leader-info">
+                <h3>{restaurant.name}</h3>
+                <p>{restaurant.points} Points</p>
+              </div>
             </div>
-            <div className="leader-info gold">
-              <h3>PC-Lahore</h3>
-              <p>2055 Points</p>
-            </div>
-          </div>
-
-          {/* DHA Club J */}
-          <div className="leader-card">
-            <div className="leader-image silver-border">
-              <img src="https://via.placeholder.com/160" alt="DHA Club J" />
-            </div>
-            <div className="leader-info silver">
-              <h3>DHA Club J</h3>
-              <p>2006 Points</p>
-            </div>
-          </div>
-
-          {/* KFC Phase 6 */}
-          <div className="leader-card">
-            <div className="leader-image bronze-border">
-              <img src="https://via.placeholder.com/160" alt="KFC Phase 6" />
-            </div>
-            <div className="leader-info bronze">
-              <h3>KFC Phase 6</h3>
-              <p>1098 Points</p>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Leaderboard List */}
         <div className="leaderboard-list">
-          {/* DHA Club Isl */}
-          <div className="list-item light-blue">
-            <span className="rank">3</span>
-            <div className="user-image">
-              <img src="https://via.placeholder.com/64" alt="DHA Club Isl" />
+          {restaurants.slice(3).map((restaurant, index) => (
+            <div key={index} className="list-item light-blue">
+              <span className="rank">{index + 4}</span>
+              <div className="user-image">
+                <img src="https://via.placeholder.com/64" alt={restaurant.name} />
+              </div>
+              <span className="user-name">{restaurant.name}</span>
+              <span className="points">{restaurant.points} Points</span>
             </div>
-            <span className="user-name">DHA Club Isl</span>
-            <span className="points">1098 Points</span>
-          </div>
-
-          {/* You */}
-          <div className="list-item teal">
-            <span className="rank">4</span>
-            <div className="user-image">
-              <img src="https://via.placeholder.com/64" alt="You" />
-            </div>
-            <span className="user-name">You</span>
-            <span className="points">1098 Points</span>
-          </div>
-
-          {/* Cheezious */}
-          <div className="list-item light-blue">
-            <span className="rank">5</span>
-            <div className="user-image">
-              <img src="https://via.placeholder.com/64" alt="Cheezious" />
-            </div>
-            <span className="user-name">Cheezious</span>
-            <span className="points">1098 Points</span>
-          </div>
+          ))}
         </div>
       </main>
     </div>
-  )
+  );
 }
 
-export default App
-
+export default App;
