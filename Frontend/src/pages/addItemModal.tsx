@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/AddItemModal.css"; // Ensure path is correct
+import "../styles/AddItemModal.css";
 
 interface AddItemModalProps {
   isOpen: boolean;
@@ -21,24 +21,44 @@ export default function AddItemModal({ isOpen, onClose }: AddItemModalProps) {
     category: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error on input
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
+  };
+
+  const isValidDate = (dateString: string) => {
+    return !isNaN(Date.parse(dateString));
+  };
+
+  const isValidNumber = (value: string) => {
+    const num = Number(value);
+    return !isNaN(num) && num > 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const newErrors = {
-      quantity: formData.quantity.trim() ? "" : "Quantity is required",
-      expiration: formData.expiration.trim() ? "" : "Expiration is required",
+      quantity:
+        formData.quantity.trim() === ""
+          ? "Quantity is required"
+          : !isValidNumber(formData.quantity)
+          ? "Quantity must be a valid number"
+          : "",
+      expiration:
+        formData.expiration.trim() === ""
+          ? "Expiration is required"
+          : !isValidDate(formData.expiration)
+          ? "Enter a valid date"
+          : "",
       name: formData.name.trim() ? "" : "Name is required",
-      category: formData.category.trim() ? "" : "Category is required",
+      category: formData.category.trim() ? "" : "Please select a category",
     };
 
     const hasErrors = Object.values(newErrors).some((err) => err !== "");
@@ -63,26 +83,73 @@ export default function AddItemModal({ isOpen, onClose }: AddItemModalProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="modal-form">
-          {["quantity", "expiration", "name", "category"].map((field) => (
-            <div className="form-group" key={field}>
-              <label htmlFor={field}>
-                {field.charAt(0).toUpperCase() + field.slice(1)}
-              </label>
-              <input
-                id={field}
-                name={field}
-                type="text"
-                value={formData[field as keyof typeof formData]}
-                onChange={handleChange}
-                className={errors[field as keyof typeof errors] ? "error" : ""}
-              />
-              {errors[field as keyof typeof errors] && (
-                <span className="error-message">
-                  {errors[field as keyof typeof errors]}
-                </span>
-              )}
-            </div>
-          ))}
+          {/* Quantity */}
+          <div className="form-group">
+            <label htmlFor="quantity">Quantity</label>
+            <input
+              id="quantity"
+              name="quantity"
+              type="number"
+              value={formData.quantity}
+              onChange={handleChange}
+              className={errors.quantity ? "error" : ""}
+            />
+            {errors.quantity && (
+              <span className="error-message">{errors.quantity}</span>
+            )}
+          </div>
+
+          {/* Expiration */}
+          <div className="form-group">
+            <label htmlFor="expiration">Expiration</label>
+            <input
+              id="expiration"
+              name="expiration"
+              type="date"
+              value={formData.expiration}
+              onChange={handleChange}
+              className={errors.expiration ? "error" : ""}
+            />
+            {errors.expiration && (
+              <span className="error-message">{errors.expiration}</span>
+            )}
+          </div>
+
+          {/* Name */}
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleChange}
+              className={errors.name ? "error" : ""}
+            />
+            {errors.name && (
+              <span className="error-message">{errors.name}</span>
+            )}
+          </div>
+
+          {/* Category (Dropdown) */}
+          <div className="form-group">
+            <label htmlFor="category">Category</label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className={errors.category ? "error" : ""}
+            >
+              <option value="">-- Select Category --</option>
+              <option value="Beverage">Beverage</option>
+              <option value="Sweet">Sweet</option>
+              <option value="Savoury">Savoury</option>
+            </select>
+            {errors.category && (
+              <span className="error-message">{errors.category}</span>
+            )}
+          </div>
 
           <div className="modal-actions">
             <button type="button" onClick={onClose} className="cancel-btn">
