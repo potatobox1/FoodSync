@@ -126,7 +126,7 @@
   }
   
   .submit-button:hover {
-    background-color: #4338ca;
+    background-color: #043746;
   }
   
   .submit-button:disabled {
@@ -174,5 +174,4 @@
   .form-row .form-group {
     flex: 1;
   }
-  
   

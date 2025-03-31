@@ -23,4 +23,33 @@ export const signUp = async (userData: {
   }
 };
 
+
+// Registers a restaurant in the database.
+export const registerRestaurant = async (restaurantData: {
+  uid: string; // Firebase UID
+  cuisine_type: string;
+}) => {
+  try {
+    const response = await API.post("/api/auth/addrestaurant", restaurantData);
+    return response.data;
+  } catch (error) {
+    console.error("Error registering restaurant:", error);
+    throw error;
+  }
+};
+
+ //Registers a food bank in the database. 
+export const registerFoodBank = async (foodBankData: {
+  uid: string; // Firebase UID
+  transportation_notes?: string; // Optional
+}) => {
+  try {
+    const response = await API.post("/api/auth/addfoodbank", foodBankData);
+    return response.data;
+  } catch (error) {
+    console.error("Error registering food bank:", error);
+    throw error;
+  }
+};
+
 export default API;

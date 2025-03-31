@@ -7,7 +7,7 @@ export interface IFoodBank extends Document {
 
 const FoodBankSchema: Schema = new Schema({
   user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  transportation_notes: { type: String, required: true }
+  transportation_notes: { type: String,default:"" }
 });
 
 export const FoodBank = mongoose.model<IFoodBank>('FoodBank', FoodBankSchema);

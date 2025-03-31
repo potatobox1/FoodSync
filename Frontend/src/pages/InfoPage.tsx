@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import "../styles/InfoPage.css"
-import { signUp } from "../services/sign_up"
+import { signUp,registerFoodBank,registerRestaurant } from "../services/sign_up"
 import { useLocation } from "react-router-dom";
 
 interface FormData {
@@ -14,7 +14,9 @@ interface FormData {
   address: string
   city: string
   country: string
+  cuisine_type?: string;
 }
+
 
 interface FormErrors {
   name: string
@@ -26,6 +28,19 @@ interface FormErrors {
   latitude: string
   longitude: string
 }
+
+const cuisineOptions = [
+  "Italian",
+  "Chinese",
+  "Indian",
+  "Pakistani",
+  "Mexican",
+  "American",
+  "French",
+  "Japanese",
+  "Mediterranean",
+  "Other",
+];
 
 interface Message {
   text: string
@@ -159,7 +174,24 @@ const RegisterForm: React.FC = () => {
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude),
       })
+      console.log("User Registered:", response);
 
+      if (formData.user_type === "restaurant") {
+        if (!formData.cuisine_type) {
+          throw new Error("Cuisine type is required for restaurants.");
+        }
+        await registerRestaurant({
+          uid,
+          cuisine_type: formData.cuisine_type,
+        });
+        console.log("Restaurant Registered");
+      } else {
+        await registerFoodBank({
+          uid,
+          transportation_notes: "", // Add input field for this if needed
+        });
+        console.log("Food Bank Registered");
+      }
       console.log("Form submitted successfully:", response)
       setMessage({
         text: "Registration successful! Your account has been created.",
@@ -269,6 +301,25 @@ const RegisterForm: React.FC = () => {
               </label>
             </div>
           </div>
+
+          {formData.user_type === "restaurant" && (
+            <div className="form-group">
+              <label htmlFor="cuisine_type">Cuisine Type</label>
+              <select
+                id="cuisine_type"
+                name="cuisine_type"
+                value={formData.cuisine_type}
+                onChange={handleChange}
+              >
+                <option value="">Select Cuisine Type</option>
+                {cuisineOptions.map((cuisine) => (
+                  <option key={cuisine} value={cuisine}>
+                    {cuisine}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="form-group">
             <label>Address</label>
