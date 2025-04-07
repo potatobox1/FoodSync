@@ -8,7 +8,7 @@ import Landing from "./pages/landing"
 import Learn from "./pages/learn-more"
 import Contact from "./pages/contact"
 import RestaurantDashboard from "./pages/RestaurantDashboard"
-
+import Leaderboard from "./pages/leaderboard"
 import Inventory from "./pages/MainInventory"
 import OrdersPage from "./pages/OrdersPage";
 
@@ -25,7 +25,7 @@ const App: React.FC = () => {
         <Route path="/learn-more" element={<Learn />} />
         <Route path="/restaurant-dashboard" element={<RestaurantDashboard />} />
         <Route path="/inventory" element={<Inventory />} />
-        <Route path="/OrdersPage" element={<OrdersPage />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </BrowserRouter>
   );

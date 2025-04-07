@@ -63,6 +63,7 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
   const userData = [
     // Restaurant users
     {
+      uid: "1",
       name: "Italian Bistro",
       email: "italian@example.com",
       password: "hashedPassword1",
@@ -71,6 +72,25 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
       location_id: locations[0]._id as unknown as mongoose.Types.ObjectId,
     },
     {
+      uid: "2",
+      name: "Zaan",
+      email: "zaan@example.com",
+      password: "hashedPassword10",
+      contact_no: "123134890",
+      user_type: "restaurant" as const,
+      location_id: locations[1]._id as unknown as mongoose.Types.ObjectId,
+    },
+    {
+      uid: "3",
+      name: "Jammin Java",
+      email: "jammin@example.com",
+      password: "hashedPassword9",
+      contact_no: "12213140",
+      user_type: "restaurant" as const,
+      location_id: locations[2]._id as unknown as mongoose.Types.ObjectId,
+    },
+    {
+      uid: "4",
       name: "Sushi Palace",
       email: "sushi@example.com",
       password: "hashedPassword2",
@@ -79,6 +99,7 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
       location_id: locations[2]._id as unknown as mongoose.Types.ObjectId,
     },
     {
+      uid: "5",
       name: "Taco Heaven",
       email: "tacos@example.com",
       password: "hashedPassword3",
@@ -88,6 +109,7 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
     },
     // Food bank users
     {
+      uid: "6",
       name: "NYC Food Bank",
       email: "nycfoodbank@example.com",
       password: "hashedPassword4",
@@ -96,6 +118,7 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
       location_id: locations[0]._id as unknown as mongoose.Types.ObjectId,
     },
     {
+      uid: "7",
       name: "LA Community Pantry",
       email: "lapantry@example.com",
       password: "hashedPassword6",
@@ -104,6 +127,7 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
       location_id: locations[2]._id as unknown as mongoose.Types.ObjectId,
     },
     {
+      uid: "8",
       name: "SF Hunger Relief",
       email: "sfrelief@example.com",
       password: "hashedPassword7",

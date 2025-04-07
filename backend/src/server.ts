@@ -33,9 +33,9 @@ connectDB(MONGO_URI);
 app.use("/api/users", userRoutes); // Attach user routes
 app.use("/api/auth", authRoutes); // Add auth routes
 app.use("/api/inventory", inventoryRoutes) // Inventory routes
-app.use("/api/restaurantbyid", restaurantRoutes) // Inventory routes
-app.use("/api/userbyid", userbyID);
-app.use("/api/locationbyid", locationRoutes);
+app.use("/api/restaurant", restaurantRoutes) // Inventory routes
+app.use("/api/user", userbyID);
+app.use("/api/location", locationRoutes);
 app.use("/api/fooditems", footitem)
 
 // Start the server

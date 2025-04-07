@@ -3,7 +3,18 @@ import { Restaurant } from "../models/restaurant";
 
 const router = express.Router();
 
-// GET /api/restaurants/:id - Fetch a restaurant by ID
+// GET api/restaurant
+router.get("/", async (req: Request, res: Response) => {
+    try {
+        const restaurants = await Restaurant.find();
+        res.json(restaurants);
+    } catch (error) {
+        console.error("Error fetching restaurants:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// GET /api/restaurant/:id - Fetch a restaurant by ID
 router.get("/:id", async (req: any, res: any) => {
     try {
         const { id } = req.params;

@@ -65,18 +65,20 @@ export function determineSubCategory(category: string): "Savoury" | "Sweet" | "B
 /**
  * Formats the expiration date into a human-readable string
  */
-export function formatExpiryTime(expirationDate: Date): string {
-  const now = new Date()
-  const diffMs = expirationDate.getTime() - now.getTime()
-  const diffHrs = Math.round(diffMs / (1000 * 60 * 60))
+export function formatExpiryTime(expirationDate: Date | string): string {
+  const expDate = expirationDate instanceof Date ? expirationDate : new Date(expirationDate);
+  const now = new Date();
+  const diffMs = expDate.getTime() - now.getTime();
+  const diffHrs = Math.round(diffMs / (1000 * 60 * 60));
 
   if (diffHrs < 1) {
-    return "Less than 1h"
+    return "Less than 1h";
   } else if (diffHrs < 24) {
-    return `${diffHrs}h`
+    return `${diffHrs}h`;
   } else {
-    const days = Math.floor(diffHrs / 24)
-    return `${days}d`
+    const days = Math.floor(diffHrs / 24);
+    return `${days}d`;
   }
 }
+
 
