@@ -10,6 +10,7 @@ import Contact from "./pages/contact"
 import RestaurantDashboard from "./pages/RestaurantDashboard"
 
 import Inventory from "./pages/MainInventory"
+import OrdersPage from "./pages/OrdersPage";
 
 
 const App: React.FC = () => {
@@ -24,6 +25,7 @@ const App: React.FC = () => {
         <Route path="/learn-more" element={<Learn />} />
         <Route path="/restaurant-dashboard" element={<RestaurantDashboard />} />
         <Route path="/inventory" element={<Inventory />} />
+        <Route path="/OrdersPage" element={<OrdersPage />} />
       </Routes>
     </BrowserRouter>
   );
