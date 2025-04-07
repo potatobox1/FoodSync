@@ -9,6 +9,7 @@ import restaurantRoutes from "./routes/restaurantRoutes"
 import userbyID from "./routes/userByID";
 import locationRoutes from "./routes/locationRoutes";
 import footitem from "./routes/fooditem"
+import donationRequestRoutes from "./routes/donationRequestRoutes";
 
 // Load environment variables
 dotenv.config();
@@ -37,6 +38,7 @@ app.use("/api/restaurant", restaurantRoutes) // Inventory routes
 app.use("/api/user", userbyID);
 app.use("/api/location", locationRoutes);
 app.use("/api/fooditems", footitem)
+app.use("/api/donation-requests", donationRequestRoutes)
 
 // Start the server
 app.listen(PORT, () => {
