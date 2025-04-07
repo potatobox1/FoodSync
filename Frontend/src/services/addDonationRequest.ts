@@ -19,4 +19,25 @@ export const addDonationRequest = async (
   }
 };
 
+export const fetchDonationRequestsForRestaurant = async (restaurantId: string) => {
+  try {
+    const response = await API.get(`/api/donation-requests/restaurant/${restaurantId}`);
+    return response.data; // Return the list of donation requests
+  } catch (error) {
+    console.error("Error fetching donation requests for restaurant:", error);
+    throw error;
+  }
+};
+
+export const fetchDonationRequestsForFoodbank = async (foodbankId: string) => {
+  try {
+    const response = await API.get(`/api/donation-requests/foodbank/${foodbankId}`);
+    return response.data; // Return the list of donation requests
+  } catch (error) {
+    console.error("Error fetching donation requests for foodbank:", error);
+    throw error;
+  }
+};
+
+
 export default API;

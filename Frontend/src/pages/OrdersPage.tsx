@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/OrdersPage.css';
+import { fetchDonationRequestsForFoodbank } from '../services/addDonationRequest';
+import { fetchRestaurantById } from '../services/restaurant';
+import { fetchUserById } from '../services/user';
 
-// Using the provided interfaces
 interface Restaurant {
   _id: string;
   name: string;
-  location: {
-    latitude: number;
-    longitude: number;
-  };
 }
 
 interface FoodItem {
@@ -28,14 +26,14 @@ interface FoodItem {
 interface DonationRequest {
   _id: string;
   foodbank_id: string;
-  food_id: string;
+  food_id: FoodItem;
   requested_quantity: number;
   status: 'pending' | 'accepted' | 'cancelled' | 'completed';
   created_at: Date;
   foodItem?: FoodItem;
 }
 
-// Helper functions as provided
+// Get appropriate image
 function getCategoryImage(subCategory: string): string {
   switch (subCategory) {
     case "Savoury":
@@ -49,178 +47,85 @@ function getCategoryImage(subCategory: string): string {
   }
 }
 
-function determineSubCategory(category: string): "Savoury" | "Sweet" | "Beverage" {
-  const lowerCategory = category.toLowerCase();
-
-  if (
-    lowerCategory.includes("beverage") ||
-    lowerCategory.includes("drink") ||
-    lowerCategory.includes("juice") ||
-    lowerCategory.includes("water")
-  ) {
-    return "Beverage";
-  } else if (
-    lowerCategory.includes("sweet") ||
-    lowerCategory.includes("dessert") ||
-    lowerCategory.includes("cake") ||
-    lowerCategory.includes("pastry")
-  ) {
-    return "Sweet";
-  } else {
-    return "Savoury";
-  }
-}
-
+// Format expiration time
 function formatExpiryTime(expirationDate: Date): string {
   const now = new Date();
-  const diffMs = expirationDate.getTime() - now.getTime();
+  const diffMs = new Date(expirationDate).getTime() - now.getTime();
   const diffHrs = Math.round(diffMs / (1000 * 60 * 60));
 
-  if (diffHrs < 1) {
-    return "Less than 1h";
-  } else if (diffHrs < 24) {
-    return `${diffHrs}h`;
-  } else {
-    const days = Math.floor(diffHrs / 24);
-    return `${days}d`;
-  }
+  if (diffHrs < 1) return "Less than 1h";
+  else if (diffHrs < 24) return `${diffHrs}h`;
+  else return `${Math.floor(diffHrs / 24)}d`;
 }
 
 const OrdersPage: React.FC = () => {
   const [orders, setOrders] = useState<DonationRequest[]>([]);
   const [filter, setFilter] = useState<string>('all');
-  
-  // Mock data for demonstration - replace with actual API call
-  useEffect(() => {
-    // This would be your actual API call
-    // fetchOrders().then(data => setOrders(data));
-    
-    // Mock data with the updated interfaces
-    const mockOrders = [
-      {
-        _id: '1',
-        foodbank_id: 'fb123',
-        food_id: 'food1',
-        requested_quantity: 12,
-        status: 'pending',
-        created_at: new Date('2023-04-06T10:00:00'),
-        foodItem: {
-          _id: 'food1',
-          restaurant_id: 'rest1',
-          restaurant: {
-            _id: 'rest1',
-            name: 'Italian Corner Restaurant',
-            location: { latitude: 40.7128, longitude: -74.0060 }
-          },
-          quantity: 20,
-          expiration_date: new Date('2023-04-07T10:00:00'),
-          name: 'Palao',
-          category: 'Rice',
-          status: 'available',
-          created_at: new Date('2023-04-05T10:00:00'),
-          expiresIn: '24h',
-          subCategory: 'Savoury'
-        }
-      },
-      {
-        _id: '2',
-        foodbank_id: 'fb123',
-        food_id: 'food2',
-        requested_quantity: 30,
-        status: 'accepted',
-        created_at: new Date('2023-04-05T14:30:00'),
-        foodItem: {
-          _id: 'food2',
-          restaurant_id: 'rest1',
-          restaurant: {
-            _id: 'rest1',
-            name: 'Italian Corner Restaurant',
-            location: { latitude: 40.7128, longitude: -74.0060 }
-          },
-          quantity: 40,
-          expiration_date: new Date('2023-04-06T14:30:00'),
-          name: 'Daal',
-          category: 'Soup',
-          status: 'available',
-          created_at: new Date('2023-04-04T14:30:00'),
-          expiresIn: '24h',
-          subCategory: 'Savoury'
-        }
-      },
-      {
-        _id: '3',
-        foodbank_id: 'fb123',
-        food_id: 'food3',
-        requested_quantity: 50,
-        status: 'completed',
-        created_at: new Date('2023-04-04T09:15:00'),
-        foodItem: {
-          _id: 'food3',
-          restaurant_id: 'rest1',
-          restaurant: {
-            _id: 'rest1',
-            name: 'Italian Corner Restaurant',
-            location: { latitude: 40.7128, longitude: -74.0060 }
-          },
-          quantity: 60,
-          expiration_date: new Date('2023-04-05T09:15:00'),
-          name: 'Lemonade',
-          category: 'Drink',
-          status: 'available',
-          created_at: new Date('2023-04-03T09:15:00'),
-          expiresIn: '24h',
-          subCategory: 'Beverage'
-        }
-      },
-      {
-        _id: '4',
-        foodbank_id: 'fb123',
-        food_id: 'food4',
-        requested_quantity: 25,
-        status: 'cancelled',
-        created_at: new Date('2023-04-03T16:45:00'),
-        foodItem: {
-          _id: 'food4',
-          restaurant_id: 'rest1',
-          restaurant: {
-            _id: 'rest1',
-            name: 'Italian Corner Restaurant',
-            location: { latitude: 40.7128, longitude: -74.0060 }
-          },
-          quantity: 30,
-          expiration_date: new Date('2023-04-04T16:45:00'),
-          name: 'Halwa',
-          category: 'Dessert',
-          status: 'available',
-          created_at: new Date('2023-04-02T16:45:00'),
-          expiresIn: '24h',
-          subCategory: 'Sweet'
-        }
-      }
-    ] as DonationRequest[];
-    
-    setOrders(mockOrders);
-  }, []);
+  const foodbankId = "67e9eceb64bee4b8d302d496"; // replace with redux state later
 
-  // Filter orders based on status
-  const filteredOrders = filter === 'all' 
-    ? orders 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data: DonationRequest[] = await fetchDonationRequestsForFoodbank(foodbankId);
+
+        // For each order, enrich with subCategory and restaurant name
+        const enrichedOrders = await Promise.all(data.map(async (order) => {
+          // Create a new object to avoid reference issues
+          const enrichedOrder = { ...order };
+          
+          // Since food_id is already the populated food item from MongoDB
+          // We need to copy it to foodItem to match your component's expectations
+          enrichedOrder.foodItem = { ...order.food_id };
+          
+          // Set subCategory to match category
+          if (enrichedOrder.foodItem) {
+            enrichedOrder.foodItem.subCategory = enrichedOrder.foodItem.category as FoodItem["subCategory"];
+            
+            try {
+              const restaurant = await fetchRestaurantById(enrichedOrder.foodItem.restaurant_id);
+              const user = await fetchUserById(restaurant.user_id);
+              
+              enrichedOrder.foodItem.restaurant = {
+                _id: restaurant._id,
+                name: user.name
+              };
+            } catch (err) {
+              console.error("Failed to fetch restaurant name", err);
+              enrichedOrder.foodItem.restaurant = {
+                _id: enrichedOrder.foodItem.restaurant_id,
+                name: "Unknown"
+              };
+            }
+          }
+          
+          return enrichedOrder;
+        }));
+
+        setOrders(enrichedOrders);
+        // console.log("Enriched orders:", enrichedOrders); // Add this to debug
+      } catch (error) {
+        console.error("Error fetching donation requests:", error);
+      }
+    };
+
+    fetchOrders();
+  }, [foodbankId]);
+
+  const filteredOrders = filter === 'all'
+    ? orders
     : orders.filter(order => order.status === filter);
 
-  // Format date to readable string
-  const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString('en-US', {
+  const formatDate = (date: Date) =>
+    new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
-  };
 
-  // Get status class for styling
   const getStatusClass = (status: string) => {
-    switch(status) {
+    switch (status) {
       case 'pending': return 'status-pending';
       case 'accepted': return 'status-accepted';
       case 'cancelled': return 'status-cancelled';
@@ -238,44 +143,22 @@ const OrdersPage: React.FC = () => {
           <a href="#" className="nav-link">Available Food</a>
           <a href="#" className="nav-link active">My Orders</a>
         </nav>
-        {/* Profile picture removed as requested */}
       </header>
 
       <main className="main-content">
         <h1 className="page-title">My Food Bank Orders</h1>
-        
+
         <div className="filter-container">
           <div className="filter-tabs">
-            <button 
-              className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
-              onClick={() => setFilter('all')}
-            >
-              All Orders
-            </button>
-            <button 
-              className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}
-              onClick={() => setFilter('pending')}
-            >
-              Pending
-            </button>
-            <button 
-              className={`filter-tab ${filter === 'accepted' ? 'active' : ''}`}
-              onClick={() => setFilter('accepted')}
-            >
-              Accepted
-            </button>
-            <button 
-              className={`filter-tab ${filter === 'completed' ? 'active' : ''}`}
-              onClick={() => setFilter('completed')}
-            >
-              Completed
-            </button>
-            <button 
-              className={`filter-tab ${filter === 'cancelled' ? 'active' : ''}`}
-              onClick={() => setFilter('cancelled')}
-            >
-              Cancelled
-            </button>
+            {['all', 'pending', 'accepted', 'completed', 'cancelled'].map((status) => (
+              <button
+                key={status}
+                className={`filter-tab ${filter === status ? 'active' : ''}`}
+                onClick={() => setFilter(status)}
+              >
+                {status.charAt(0).toUpperCase() + status.slice(1)}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -284,13 +167,13 @@ const OrdersPage: React.FC = () => {
             <div className="order-card" key={order._id}>
               <div className="order-image-container">
                 {order.foodItem && (
-                  <img 
-                    src={getCategoryImage(order.foodItem.subCategory) || "/placeholder.svg"} 
-                    alt={order.foodItem.name} 
-                    className="order-image" 
+                  <img
+                    src={getCategoryImage(order.foodItem.subCategory)}
+                    alt={order.foodItem.name}
+                    className="order-image"
                   />
                 )}
-                {order.foodItem && order.foodItem.expiration_date && (
+                {order.foodItem?.expiration_date && (
                   <div className="expires-tag">
                     Expires in {formatExpiryTime(order.foodItem.expiration_date)}
                   </div>
@@ -309,18 +192,12 @@ const OrdersPage: React.FC = () => {
                   Quantity requested: <span className="quantity-value">{order.requested_quantity} portions</span>
                 </div>
                 <div className="order-date">
-                  Ordered on: <span className="date-value">{formatDate(order.created_at)}</span>
+                  Ordered on {formatDate(order.created_at)}
                 </div>
               </div>
             </div>
           ))}
         </div>
-        
-        {filteredOrders.length === 0 && (
-          <div className="no-orders">
-            <p>No orders found with the selected filter.</p>
-          </div>
-        )}
       </main>
     </div>
   );

@@ -1,6 +1,7 @@
 import { type FoodItem, getCategoryImage } from "../types/food-item"
 import "../styles/main_inventory.css"
 import { addDonationRequest } from "../services/addDonationRequest"; // Step 1: import function
+import { useState } from "react";
 
 
 interface FoodCardProps {
@@ -11,6 +12,7 @@ interface FoodCardProps {
 
 export default function FoodCard({ item }: FoodCardProps) {
   // Get the appropriate image based on subcategory
+  const [isClaimed, setIsClaimed] = useState(false);
   const imageUrl = getCategoryImage(item.subCategory)
 
   const handleClaim = async () => {
@@ -29,7 +31,8 @@ export default function FoodCard({ item }: FoodCardProps) {
 
       const result = await addDonationRequest(donation);
       console.log("Donation request submitted:", result);
-      alert("Donation claimed successfully!");
+      setIsClaimed(true);
+      alert("Donation claimed successfully!"); // can remove if u want
     } catch (error) {
       console.error("Error claiming donation:", error);
       alert("Failed to claim donation.");
@@ -72,7 +75,13 @@ export default function FoodCard({ item }: FoodCardProps) {
           </div>
         </div>
 
-        <button className="food-card-button" onClick={handleClaim}>Claim</button>
+        <button 
+          className="food-card-button" 
+          onClick={handleClaim}
+          disabled={isClaimed} // Disable the button if claimed
+        >
+          {isClaimed ? "Success!" : "Claim"}
+        </button>
       </div>
     </div>
   )

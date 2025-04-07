@@ -8,9 +8,12 @@ router.get("/", async (req, res) => {
     try {
         const { available } = req.query; // Read query parameter
         
-        let query = {};
+        let query: any = {
+            quantity: { $gt: 0 }  // Only items where quantity > 0
+        };
+        
         if (available === "true") {
-            query = { status: "available" };
+            query.status = "available";  // Filter by available items if query is true
         }
 
         const foodItems = await FoodItem.find(query);
