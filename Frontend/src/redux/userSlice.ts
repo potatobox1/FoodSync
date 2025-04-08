@@ -2,12 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
   uid: string;
-  id: string;
 }
-
+const localUid = localStorage.getItem("uid") || ""
+;
 const initialState: UserState = {
-  uid: "",
-  id: "",
+  uid: localUid
 };
 
 const userSlice = createSlice({
@@ -15,9 +14,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
+      localStorage.setItem("uid", action.payload.uid);
       return { ...state, ...action.payload };
     },
-    clearUser: () => initialState,
+    clearUser: () => {
+      localStorage.removeItem("uid"); // clear on logout
+      return initialState;
+    }
   },
 });
 

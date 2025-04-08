@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { useAppSelector } from "../redux/hooks";
 
 
 const Dashboard: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user);
-  console.log(user.uid); // John Doe
+  // const user = useSelector((state: RootState) => state.user);
+  const uid = useAppSelector((state:any) => state.user.uid);
+  console.log(uid); // John Doe
   // console.log(user.id); // john@example.com
     return (
       <div>

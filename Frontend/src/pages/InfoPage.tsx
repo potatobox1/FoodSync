@@ -5,8 +5,6 @@ import { useState } from "react"
 import "../styles/InfoPage.css"
 import { signUp,registerFoodBank,registerRestaurant } from "../services/sign_up"
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUser } from "../redux/userSlice";
 
 interface FormData {
   name: string
@@ -50,8 +48,6 @@ interface Message {
 }
 
 const RegisterForm: React.FC = () => {
-  const dispatch = useDispatch();
-
   const location = useLocation();
   const uid = location.state?.uid || null;
   console.log("Inside Info-Page: ",uid)
@@ -189,10 +185,6 @@ const RegisterForm: React.FC = () => {
           uid,
           cuisine_type: formData.cuisine_type,
         });
-        dispatch(setUser({
-          uid,
-          id:ret_api.restaurant.id,
-        }));
         console.log("Restaurant Registered",ret_api.restaurant.id);
       } else {
         let ret_api = await registerFoodBank({
@@ -200,10 +192,6 @@ const RegisterForm: React.FC = () => {
           transportation_notes: "", // Add input field for this if needed
         });
         console.log("Food Bank Registered");
-        dispatch(setUser({
-          uid,
-          id:ret_api.foodbank.id,
-        }));
       }
       console.log("Form submitted successfully:", response)
       setMessage({

@@ -1,15 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { doSignInWithGoogle } from "../../../backend/src/firebase/auth";
+import {useAppDispatch} from "../redux/hooks"
+import { setUser } from "../redux/userSlice"
 import "../styles/LoginPage.css"; // Import the new CSS file
 
 export default function LoginPage() {
   const navigate = useNavigate(); // React Router hook for navigation
+  const dispatch = useAppDispatch();
 
   const handleGoogleSignIn = async () => {
     try {
       const { user, isNewUser } = await doSignInWithGoogle(); // Destructure correctly
       const uid = user.user.uid;
       console.log("User signed in:", user.user.uid);
+      dispatch(setUser({ uid: user.user.uid }));
   
       // Redirect based on new user status
       if (isNewUser) {
