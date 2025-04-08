@@ -11,6 +11,7 @@ import RestaurantDashboard from "./pages/RestaurantDashboard"
 import Leaderboard from "./pages/leaderboard"
 import Inventory from "./pages/MainInventory"
 import OrdersPage from "./pages/OrdersPage";
+import IncomingOrders from "./pages/IncomingOrders"; 
 
 
 const App: React.FC = () => {
@@ -27,6 +28,7 @@ const App: React.FC = () => {
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/OrdersPage" element={<OrdersPage />} />
+        <Route path="/incoming-orders" element={<IncomingOrders />} />
       </Routes>
     </BrowserRouter>
   );
