@@ -5,13 +5,16 @@ import { fetchDonationRequestsForRestaurant } from "../services/addDonationReque
 import { updateDonationRequestStatus } from "../services/addDonationRequest";
 import { updateFoodItemStatus } from "../services/foodItems";
 import { addCompletedOrder } from "../services/completedorders";
+import { fetchUserById } from "../services/user";
+import { getUserIdByFoodbankId } from "../services/foodbank";
 
 interface DonationRequest {
   _id: string;
   requested_quantity: number;
   status: string;
   created_at: string;
-  food_id: string
+  food_id: string;
+  foodbank_id: string;
   foodItem: {
     _id: string;
     name: string;
@@ -22,6 +25,9 @@ interface DonationRequest {
 
 export default function IncomingOrders() {
   const [orders, setOrders] = useState<DonationRequest[]>([]);
+  const [foodbankNames, setFoodbankNames] = useState<{ [key: string]: string }>(
+    {}
+  );
   const restaurantId = "67e97e45125462fba093347b";
 
   useEffect(() => {
@@ -29,6 +35,24 @@ export default function IncomingOrders() {
       try {
         const data = await fetchDonationRequestsForRestaurant(restaurantId);
         setOrders(data);
+
+        // Fetch foodbank names
+        const namesMap: { [key: string]: string } = {};
+        await Promise.all(
+          data.map(async (order: DonationRequest) => {
+            try {
+              const userId = await getUserIdByFoodbankId(order.foodbank_id);
+              const user = await fetchUserById(userId);
+              namesMap[order.foodbank_id] = user.name;
+            } catch (error) {
+              console.error(
+                "Error loading user name for foodbank:",
+                order.foodbank_id
+              );
+            }
+          })
+        );
+        setFoodbankNames(namesMap);
       } catch (err) {
         console.error("Failed to load donation requests", err);
       }
@@ -41,33 +65,41 @@ export default function IncomingOrders() {
     try {
       // Step 1: Accept this donation request
       await updateDonationRequestStatus(id, "accepted");
-  
+
       // Step 2: Mark the food item as sold
       await updateFoodItemStatus(foodItemId, "sold");
-  
+
       // Step 3: Add to completed orders
       await addCompletedOrder({
         restaurant_id: restaurantId,
         food_id: foodItemId,
-        quantity: orders.find(order => order._id === id)?.requested_quantity || 1,
+        quantity:
+          orders.find((order) => order._id === id)?.requested_quantity || 1,
       });
-  
+
       // Step 4: Cancel all other requests for this food_id
       const otherPendingRequests = orders.filter(
-        (order) => order.food_id === foodItemId && order._id !== id && order.status === "pending"
+        (order) =>
+          order.food_id === foodItemId &&
+          order._id !== id &&
+          order.status === "pending"
       );
-  
+
       await Promise.all(
         otherPendingRequests.map((order) =>
           updateDonationRequestStatus(order._id, "cancelled")
         )
       );
-  
+
       // Step 5: Update local state
       setOrders((prev) =>
         prev.map((order) => {
           if (order._id === id) return { ...order, status: "accepted" };
-          if (order.food_id === foodItemId && order._id !== id && order.status === "pending") {
+          if (
+            order.food_id === foodItemId &&
+            order._id !== id &&
+            order.status === "pending"
+          ) {
             return { ...order, status: "cancelled" };
           }
           return order;
@@ -116,7 +148,7 @@ export default function IncomingOrders() {
             <div className={styles.cardHeader}>
               <div>
                 <h3 className={styles.customerName}>
-                  {order.foodItem.name.toUpperCase()}
+                  {foodbankNames[order.foodbank_id] || "Loading..."}
                 </h3>
                 <div className={styles.orderTime}>
                   <Clock size={14} />
@@ -127,7 +159,9 @@ export default function IncomingOrders() {
                 </div>
               </div>
               <div className={styles.orderSummary}>
-                <div className={styles.orderId}>Request ID #{order._id.slice(-5)}</div>
+                <div className={styles.orderId}>
+                  Request ID #{order._id.slice(-5)}
+                </div>
                 <div className={styles.orderAmount}>
                   Quantity: {order.requested_quantity}
                 </div>
@@ -151,15 +185,15 @@ export default function IncomingOrders() {
                     className={styles.itemImage}
                   />
                   <div className={styles.itemInfo}>
-                    <div className={styles.itemName}>
-                      {order.foodItem.name}
-                    </div>
+                    <div className={styles.itemName}>{order.foodItem.name}</div>
                     <div className={styles.itemDetail}>
                       Category: {order.foodItem.category}
                     </div>
                     <div className={styles.itemDetail}>
                       Expires on{" "}
-                      {new Date(order.foodItem.expiration_date).toLocaleDateString()}
+                      {new Date(
+                        order.foodItem.expiration_date
+                      ).toLocaleDateString()}
                     </div>
                   </div>
                 </div>

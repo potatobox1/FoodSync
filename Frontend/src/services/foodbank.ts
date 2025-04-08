@@ -17,7 +17,7 @@ export const getFoodBankByUserId = async (userId: string) => {
 
 export const getUserIdByFoodbankId = async (foodbankId: string) => {
   try {
-    const response = await API.get(`/api/foodbanks/user/${foodbankId}`);
+    const response = await API.get(`/api/foodbank/user/${foodbankId}`);
     return response.data.user_id;
   } catch (error) {
     console.error("Error fetching user ID by foodbank ID:", error);
