@@ -39,21 +39,39 @@ export default function IncomingOrders() {
 
   const handleAccept = async (id: string, foodItemId: string) => {
     try {
+      // Step 1: Accept this donation request
       await updateDonationRequestStatus(id, "accepted");
+  
+      // Step 2: Mark the food item as sold
       await updateFoodItemStatus(foodItemId, "sold");
   
-      // Add completed order
+      // Step 3: Add to completed orders
       await addCompletedOrder({
         restaurant_id: restaurantId,
         food_id: foodItemId,
         quantity: orders.find(order => order._id === id)?.requested_quantity || 1,
       });
   
-      // Update UI
-      setOrders((prev) =>
-        prev.map((order) =>
-          order._id === id ? { ...order, status: "accepted" } : order
+      // Step 4: Cancel all other requests for this food_id
+      const otherPendingRequests = orders.filter(
+        (order) => order.food_id === foodItemId && order._id !== id && order.status === "pending"
+      );
+  
+      await Promise.all(
+        otherPendingRequests.map((order) =>
+          updateDonationRequestStatus(order._id, "cancelled")
         )
+      );
+  
+      // Step 5: Update local state
+      setOrders((prev) =>
+        prev.map((order) => {
+          if (order._id === id) return { ...order, status: "accepted" };
+          if (order.food_id === foodItemId && order._id !== id && order.status === "pending") {
+            return { ...order, status: "cancelled" };
+          }
+          return order;
+        })
       );
     } catch (err) {
       console.error("Error while accepting the request:", err);
