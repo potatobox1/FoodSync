@@ -31,4 +31,26 @@ router.get("/:id", async (req: any, res: any) => {
     }
 });
 
+
+router.post('/getbyuserid', async (req:any, res:any) => {
+    try {
+      const { user_id } = req.body;
+  
+      if (!user_id) {
+        return res.status(400).json({ message: 'user_id is required' });
+      }
+  
+      const restaurant = await Restaurant.findOne({ user_id });
+  
+      if (!restaurant) {
+        return res.status(404).json({ message: 'Restaurant not found' });
+      }
+  
+      res.json(restaurant);
+    } catch (err) {
+      console.error('Error fetching restaurant by user ID:', err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+
 export default router;

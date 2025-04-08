@@ -3,8 +3,14 @@
 import type React from "react"
 import { useState } from "react"
 import "../styles/InfoPage.css"
-import { signUp,registerFoodBank,registerRestaurant } from "../services/sign_up"
-import { useLocation } from "react-router-dom";
+import { signUp, registerFoodBank, registerRestaurant } from "../services/sign_up"
+import { useAppSelector } from "../redux/hooks";
+import { getUserByFirebaseUID } from "../services/sign_up";
+import { getRestaurantByUserId } from "../services/restaurant";
+import { getFoodBankByUserId } from "../services/foodbank";
+import {useAppDispatch} from "../redux/hooks"
+import { setUser, setFirebaseUid } from "../redux/userSlice"
+
 
 interface FormData {
   name: string
@@ -48,9 +54,12 @@ interface Message {
 }
 
 const RegisterForm: React.FC = () => {
-  const location = useLocation();
-  const uid = location.state?.uid || null;
-  console.log("Inside Info-Page: ",uid)
+  const uid = useAppSelector((state:any) => state.user.firebase_uid);
+  const photoURL = useAppSelector((state:any) => state.user.photoURL);
+  const dispatch = useAppDispatch();
+
+
+
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -175,29 +184,69 @@ const RegisterForm: React.FC = () => {
         longitude: parseFloat(longitude),
       })
       console.log("User Registered:", response);
-      
+
 
       if (formData.user_type === "restaurant") {
         if (!formData.cuisine_type) {
           throw new Error("Cuisine type is required for restaurants.");
         }
-          const ret_api = await registerRestaurant({
+        const ret_api = await registerRestaurant({
           uid,
           cuisine_type: formData.cuisine_type,
         });
-        console.log("Restaurant Registered",ret_api.restaurant.id);
+        console.log("Restaurant Registered", ret_api.restaurant.id);
       } else {
-        let ret_api = await registerFoodBank({
+        const ret_api = await registerFoodBank({
           uid,
           transportation_notes: "", // Add input field for this if needed
         });
-        console.log("Food Bank Registered");
+        console.log("Food Bank Registered", ret_api.foodbank.id);
       }
       console.log("Form submitted successfully:", response)
       setMessage({
         text: "Registration successful! Your account has been created.",
         type: "success",
       })
+      ////////////////
+      try {
+                  const userData = await getUserByFirebaseUID(uid);
+                  if (userData.user_type == "restaurant")
+                  {
+                    const restaurant = await getRestaurantByUserId(userData.id);
+                    dispatch(setUser({
+                      firebase_uid: uid, //
+                      email: userData.email, //
+                      name:userData.name,    //
+                      user_type: userData.user_type, //
+                      photoURL: photoURL, //
+                      user_id: userData.id,  //
+                      type_id: restaurant._id, ///
+        
+                    }));
+                  }
+                  else{
+                    const foodBank = await getFoodBankByUserId(userData.id);
+      
+                    dispatch(setUser({
+                      firebase_uid: uid, //
+                      email: userData.email, //
+                      name:userData.name,    //
+                      user_type: userData.user_type, //
+                      photoURL: photoURL, //
+                      user_id: userData.id,  //
+                      type_id: foodBank._id, ///
+        
+                    }));
+      
+                  }
+                  
+      
+      
+      
+                  console.log("Fetched user:", userData);
+                } catch (err) {
+                  console.error("Could not fetch user", err);
+                }
 
       setFormData({
         name: "",

@@ -3,9 +3,8 @@ import { useAppSelector } from "../redux/hooks";
 
 const Dashboard: React.FC = () => {
   // const user = useSelector((state: RootState) => state.user);
-  const uid = useAppSelector((state:any) => state.user.uid);
-  console.log(uid); // John Doe
-  // console.log(user.id); // john@example.com
+  const user = useAppSelector((state:any) => state.user);
+  console.log(user); 
     return (
       <div>
         <h1>Dashboard</h1>

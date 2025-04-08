@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { doSignInWithGoogle } from "../../../backend/src/firebase/auth";
 import {useAppDispatch} from "../redux/hooks"
-import { setUser } from "../redux/userSlice"
+import { setUser, setFirebaseUid } from "../redux/userSlice"
+import { getUserByFirebaseUID } from "../services/sign_up";
+import {getRestaurantByUserId} from "../services/restaurant"
+import {getFoodBankByUserId } from "../services/foodbank"
 import "../styles/LoginPage.css"; // Import the new CSS file
 
 export default function LoginPage() {
@@ -11,14 +14,58 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     try {
       const { user, isNewUser } = await doSignInWithGoogle(); // Destructure correctly
-      const uid = user.user.uid;
       console.log("User signed in:", user.user.uid);
-      dispatch(setUser({ uid: user.user.uid }));
-  
-      // Redirect based on new user status
+    
       if (isNewUser) {
-        navigate("/register",{ state: { uid } }); // Redirect new users to registration
-      } else {
+        dispatch(setFirebaseUid({ 
+          firebase_uid: user.user.uid,
+          photoURL: user.user.photoURL }));
+        navigate("/register"); // Redirect new users to registration
+      }
+       
+      else {
+        ////
+          try {
+            const userData = await getUserByFirebaseUID(user.user.uid);
+            if (userData.user_type == "restaurant")
+            {
+              const restaurant = await getRestaurantByUserId(userData.id);
+              dispatch(setUser({
+                firebase_uid: user.user.uid, //
+                email: userData.email, //
+                name:userData.name,    //
+                user_type: userData.user_type, //
+                photoURL: user.user.photoURL, //
+                user_id: userData.id,  //
+                type_id: restaurant._id, ///
+  
+              }));
+            }
+            else{
+              const foodBank = await getFoodBankByUserId(userData.id);
+
+              dispatch(setUser({
+                firebase_uid: user.user.uid, //
+                email: userData.email, //
+                name:userData.name,    //
+                user_type: userData.user_type, //
+                photoURL: user.user.photoURL, //
+                user_id: userData.id,  //
+                type_id: foodBank._id, ///
+  
+              }));
+
+            }
+            
+
+
+
+            console.log("Fetched user:", userData);
+          } catch (err) {
+            console.error("Could not fetch user", err);
+          }
+        
+
         navigate("/dashboard"); // Redirect existing users
       }
     } catch (error) {

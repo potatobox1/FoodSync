@@ -52,4 +52,16 @@ export const registerFoodBank = async (foodBankData: {
   }
 };
 
+export const getUserByFirebaseUID = async (uid: string) => {
+  try {
+    const response = await API.post("/api/auth/getuser", { uid });
+    return response.data.user; // returns user object
+  } catch (error) {
+    console.error("Error fetching user by UID:", error);
+    throw error;
+  }
+};
+
+
+
 export default API;

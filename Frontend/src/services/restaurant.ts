@@ -22,4 +22,17 @@ export const fetchRestaurants = async () => {
   }
 };
 
+export const getRestaurantByUserId = async (userId: string) => {
+  try {
+    const response = await API.post("/api/restaurant/getbyuserid", {
+      user_id: userId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching restaurant:", error);
+    throw error;
+  }
+};
+
+
 export default API;
