@@ -50,7 +50,7 @@ export const updateFoodItemStatus = async (
   status: "available" | "expired" | "sold"
 ) => {
   try {
-    const response = await API.patch(`/api/food-items/update-status/${itemId}`, {
+    const response = await API.patch(`/api/fooditems/update-status/${itemId}`, {
       status,
     });
     return response.data;
