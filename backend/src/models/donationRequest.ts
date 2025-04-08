@@ -4,7 +4,7 @@ export interface IDonationRequest extends Document {
   foodbank_id: mongoose.Types.ObjectId;
   food_id: mongoose.Types.ObjectId;
   requested_quantity: number;
-  status: 'pending' | 'accepted' | 'cancelled' | 'completed';
+  status: 'pending' | 'completed' | 'cancelled' | 'accepted';
   created_at: Date;
 }
 
