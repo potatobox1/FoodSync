@@ -4,6 +4,7 @@ import styles from "../styles/IncomingOrders.module.css";
 import { fetchDonationRequestsForRestaurant } from "../services/addDonationRequest";
 import { updateDonationRequestStatus } from "../services/addDonationRequest";
 import { updateFoodItemStatus } from "../services/foodItems";
+import { addCompletedOrder } from "../services/completedorders";
 
 interface DonationRequest {
   _id: string;
@@ -41,6 +42,14 @@ export default function IncomingOrders() {
       await updateDonationRequestStatus(id, "accepted");
       await updateFoodItemStatus(foodItemId, "sold");
   
+      // Add completed order
+      await addCompletedOrder({
+        restaurant_id: restaurantId,
+        food_id: foodItemId,
+        quantity: orders.find(order => order._id === id)?.requested_quantity || 1,
+      });
+  
+      // Update UI
       setOrders((prev) =>
         prev.map((order) =>
           order._id === id ? { ...order, status: "accepted" } : order
