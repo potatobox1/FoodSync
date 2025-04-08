@@ -33,4 +33,16 @@ export const addFoodItem = async (foodItemData:FoodItemRequest) => {
   }
 };
 
+export const updateFoodItemQuantity = async (itemId: string, quantity: number) => {
+  try {
+    const response = await API.patch(`/api/fooditems/update-quantity/${itemId}`, {
+      quantity,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating food item quantity:", error);
+    throw error;
+  }
+};
+
 export default API;

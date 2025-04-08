@@ -24,6 +24,7 @@ export default function MainInventory() {
     latitude: 40.7128,
     longitude: -74.006,
   })
+  const [foodbankId, setFoodbankId] = useState<string>("67e9eceb64bee4b8d302d496")  // replace with reduxx state
 
   // Get user's location on component mount
   useEffect(() => {
@@ -41,7 +42,7 @@ export default function MainInventory() {
     async function fetchData() {
       setLoading(true)
       try {
-        const inventory = await fetchInventory()
+        const inventory = await fetchInventory(foodbankId)
         const itemsWithDetails = await Promise.all(
           inventory.map(async (item: any) => {
             const restaurant = await fetchRestaurantById(item.restaurant_id)
@@ -73,7 +74,7 @@ export default function MainInventory() {
       }
     }
     fetchData()
-  }, [])
+  }, [foodbankId])
 
   // Filter items based on selected category and minimum quantity
   const filteredItems = foodItems

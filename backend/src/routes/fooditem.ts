@@ -25,6 +25,39 @@ router.get("/:restaurantId", async (req: any, res: any) => {
   }
 });
 
+// Update quantity of a specific food item
+router.patch("/update-quantity/:itemId", async (req: any, res: any) => {
+  try {
+    const { itemId } = req.params;
+    const { quantity } = req.body;
+
+    // Validate inputs
+    if (!itemId || quantity === undefined) {
+      return res.status(400).json({ message: "Item ID and quantity are required." });
+    }
+
+    // Check if quantity is a valid number
+    if (typeof quantity !== "number" || quantity < 0) {
+      return res.status(400).json({ message: "Quantity must be a non-negative number." });
+    }
+
+    // Update the quantity of the food item
+    const updatedItem = await FoodItem.findByIdAndUpdate(
+      itemId,
+      { $set: { quantity } },
+      { new: true } // return the updated document
+    );
+
+    if (!updatedItem) {
+      return res.status(404).json({ message: "Food item not found." });
+    }
+
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    console.error("Error updating quantity:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
 
 // Create a new food item
