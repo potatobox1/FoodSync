@@ -92,4 +92,39 @@ router.post("/additem", async (req:any, res:any) => {
   }
 });
 
+router.patch("/update-status/:foodItemId", async (req: any, res: any) => {
+  try {
+    const { foodItemId } = req.params;
+    const { status } = req.body;
+
+    // Validate food item ID
+    if (!mongoose.Types.ObjectId.isValid(foodItemId)) {
+      return res.status(400).json({ message: "Invalid food item ID." });
+    }
+
+    // Validate status
+    const validStatuses = ["available", "expired", "sold"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status value." });
+    }
+
+    // Update the food item's status
+    const updatedFoodItem = await FoodItem.findByIdAndUpdate(
+      foodItemId,
+      { status },
+      { new: true } // return the updated document
+    );
+
+    if (!updatedFoodItem) {
+      return res.status(404).json({ message: "Food item not found." });
+    }
+
+    res.status(200).json(updatedFoodItem);
+  } catch (error) {
+    console.error("Error updating food item status:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 export default router;

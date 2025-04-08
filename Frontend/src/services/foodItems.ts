@@ -45,4 +45,19 @@ export const updateFoodItemQuantity = async (itemId: string, quantity: number) =
   }
 };
 
+export const updateFoodItemStatus = async (
+  itemId: string,
+  status: "available" | "expired" | "sold"
+) => {
+  try {
+    const response = await API.patch(`/api/food-items/update-status/${itemId}`, {
+      status,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating food item status:", error);
+    throw error;
+  }
+};
+
 export default API;
