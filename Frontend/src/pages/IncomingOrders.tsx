@@ -3,12 +3,14 @@ import { Check, Clock, User, X } from "lucide-react";
 import styles from "../styles/IncomingOrders.module.css";
 import { fetchDonationRequestsForRestaurant } from "../services/addDonationRequest";
 import { updateDonationRequestStatus } from "../services/addDonationRequest";
+import { updateFoodItemStatus } from "../services/foodItems";
 
 interface DonationRequest {
   _id: string;
   requested_quantity: number;
   status: string;
   created_at: string;
+  food_id: string
   foodItem: {
     _id: string;
     name: string;
@@ -34,16 +36,18 @@ export default function IncomingOrders() {
     loadRequests();
   }, []);
 
-  const handleAccept = async (id: string) => {
+  const handleAccept = async (id: string, foodItemId: string) => {
     try {
       await updateDonationRequestStatus(id, "accepted");
+      await updateFoodItemStatus(foodItemId, "sold");
+  
       setOrders((prev) =>
         prev.map((order) =>
           order._id === id ? { ...order, status: "accepted" } : order
         )
       );
     } catch (err) {
-      console.error("Failed to accept donation request:", err);
+      console.error("Error while accepting the request:", err);
     }
   };
 
@@ -146,7 +150,7 @@ export default function IncomingOrders() {
                     Reject Order
                   </button>
                   <button
-                    onClick={() => handleAccept(order._id)}
+                    onClick={() => handleAccept(order._id, order.food_id)}
                     className={styles.acceptBtn}
                   >
                     <Check size={16} />
