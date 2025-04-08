@@ -7,6 +7,8 @@ import { updateFoodItemStatus } from "../services/foodItems";
 import { addCompletedOrder } from "../services/completedorders";
 import { fetchUserById } from "../services/user";
 import { getUserIdByFoodbankId } from "../services/foodbank";
+import { useAppSelector } from "../redux/hooks";
+
 
 interface DonationRequest {
   _id: string;
@@ -24,11 +26,12 @@ interface DonationRequest {
 }
 
 export default function IncomingOrders() {
+  const user = useAppSelector((state:any) => state.user);
   const [orders, setOrders] = useState<DonationRequest[]>([]);
   const [foodbankNames, setFoodbankNames] = useState<{ [key: string]: string }>(
     {}
   );
-  const restaurantId = "67e97e45125462fba093347b";
+  const restaurantId = user.type_id;
 
   useEffect(() => {
     const loadRequests = async () => {
