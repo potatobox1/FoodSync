@@ -14,4 +14,15 @@ export const getFoodBankByUserId = async (userId: string) => {
       throw error;
     }
   };
-  
+
+export const getUserIdByFoodbankId = async (foodbankId: string) => {
+  try {
+    const response = await API.get(`/api/foodbanks/user/${foodbankId}`);
+    return response.data.user_id;
+  } catch (error) {
+    console.error("Error fetching user ID by foodbank ID:", error);
+    throw error;
+  }
+};
+
+export default API;
