@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Check, Clock, User, X } from "lucide-react";
 import styles from "../styles/IncomingOrders.module.css";
 import { fetchDonationRequestsForRestaurant } from "../services/addDonationRequest";
+import { updateDonationRequestStatus } from "../services/addDonationRequest";
 
 interface DonationRequest {
   _id: string;
@@ -33,20 +34,30 @@ export default function IncomingOrders() {
     loadRequests();
   }, []);
 
-  const handleAccept = (id: string) => {
-    setOrders((prev) =>
-      prev.map((order) =>
-        order._id === id ? { ...order, status: "accepted" } : order
-      )
-    );
+  const handleAccept = async (id: string) => {
+    try {
+      await updateDonationRequestStatus(id, "accepted");
+      setOrders((prev) =>
+        prev.map((order) =>
+          order._id === id ? { ...order, status: "accepted" } : order
+        )
+      );
+    } catch (err) {
+      console.error("Failed to accept donation request:", err);
+    }
   };
 
-  const handleReject = (id: string) => {
-    setOrders((prev) =>
-      prev.map((order) =>
-        order._id === id ? { ...order, status: "rejected" } : order
-      )
-    );
+  const handleReject = async (id: string) => {
+    try {
+      await updateDonationRequestStatus(id, "cancelled");
+      setOrders((prev) =>
+        prev.map((order) =>
+          order._id === id ? { ...order, status: "cancelled" } : order
+        )
+      );
+    } catch (err) {
+      console.error("Failed to cancel donation request:", err);
+    }
   };
 
   return (
