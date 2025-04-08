@@ -50,7 +50,7 @@ export default function Dashboard() {
                 <img
                   src={
                     item.category === "Savoury"
-                      ? "/images/savory.jpg"
+                      ? "/images/savoury.jpg"
                       : item.category === "Sweet"
                       ? "/images/Sweet.png"
                       : item.category === "Beverage"
