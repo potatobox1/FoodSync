@@ -102,4 +102,33 @@ router.get("/foodbank/:foodbankId", async (req: any, res: any) => {
 });
 
 
+router.patch("/update-status/:requestId", async (req: any, res: any) => {
+  try {
+    const { requestId } = req.params;
+    const { status } = req.body;
+
+    // Validate the new status
+    if (!status || !['completed', 'cancelled', 'accepted'].includes(status)) {
+      return res.status(400).json({ message: "Invalid status. Status must be one of 'completed', 'cancelled', or 'accepted'." });
+    }
+
+    // Check if the donation request exists
+    const donationRequest = await DonationRequest.findById(requestId);
+
+    if (!donationRequest) {
+      return res.status(404).json({ message: "Donation request not found." });
+    }
+
+    // Update the status of the donation request
+    donationRequest.status = status;
+    await donationRequest.save();
+
+    res.status(200).json({ message: "Donation request status updated successfully.", donationRequest });
+  } catch (error) {
+    console.error("Error updating donation request status:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 export default router;

@@ -39,5 +39,20 @@ export const fetchDonationRequestsForFoodbank = async (foodbankId: string) => {
   }
 };
 
+// Update the status of a donation request
+export const updateDonationRequestStatus = async (
+  requestId: string,
+  status: "completed" | "cancelled" | "accepted"
+) => {
+  try {
+    const response = await API.patch(`/api/donation-requests/update-status/${requestId}`, { status });
+    return response.data; // Return updated donation request
+  } catch (error) {
+    console.error("Error updating donation request status:", error);
+    throw error;
+  }
+};
+
+
 
 export default API;

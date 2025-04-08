@@ -6,7 +6,7 @@ export interface IFoodItem extends Document {
   expiration_date: Date;
   name: string;
   category: string;
-  status: 'available' | 'expired';
+  status: 'available' | 'expired' | 'sold';
   created_at: Date;
 }
 
@@ -16,7 +16,7 @@ const FoodItemSchema: Schema = new Schema({
   expiration_date: { type: Date, required: true },
   name: { type: String, required: true },
   category: { type: String, required: true },
-  status: { type: String, enum: ['available', 'expired'], required: true },
+  status: { type: String, enum: ['available', 'expired','sold'], required: true },
   created_at: { type: Date, default: Date.now }
 });
 
