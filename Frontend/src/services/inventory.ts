@@ -15,12 +15,14 @@ export const fetchInventory = async (foodbankId: string, available?: boolean) =>
 
     // Fetch all donation requests for the given foodbank
     const donationRequests = await fetchDonationRequestsForFoodbank(foodbankId);
-
+    console.log("Inventory Data:", inventoryData); // Log inventory data
+    console.log("Donation Requests:", donationRequests); // Log donation requests
+    console.log("foodbankId:", foodbankId); // Log foodbank ID
     // Filter out items that already have a donation request from the given foodbank
     const filteredItems = inventoryData.filter((item: any) => {
-      // Check if the food item already has a donation request for this foodbank
+      // Ensure proper comparison between food_id._id and item._id
       return !donationRequests.some(
-        (request: any) => request.food_id === item._id
+        (request: any) => request.food_id._id.toString() === item._id.toString()
       );
     });
 
