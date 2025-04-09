@@ -3,16 +3,18 @@ import { fetchRestaurants } from "../services/restaurant";
 import { fetchUserById } from "../services/user";
 import "../styles/leaderboard.css";
 import FNavbar from "../components/foodbank_navbar";
+import Navbar from "../components/NavBar";
+import { useAppSelector } from "../redux/hooks";
 
 type Restaurant = {
   user_id: string;
   total_donations: number;
-  points?: number; // This will be added dynamically
-  name?: string; // This will be added dynamically
-  
+  points?: number;
+  name?: string;
 };
 
 function App() {
+  const user = useAppSelector((state: any) => state.user);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ function App() {
             };
           })
         );
-        enrichedData.sort((a, b) => b.points - a.points);
+        enrichedData.sort((a, b) => b.points! - a.points!);
         setRestaurants(enrichedData);
       } catch (error) {
         console.error("Error loading restaurants:", error);
@@ -39,15 +41,29 @@ function App() {
 
   return (
     <div className="app">
-      <FNavbar active="leaderboard" />
+      {/* Conditionally render navbar based on user type */}
+      {user.user_type === "restaurant" ? (
+        <Navbar active="leaderboard" />
+      ) : (
+        <FNavbar active="leaderboard" />
+      )}
+
       <main className="container">
         <h1 className="page-title">Leaderboard</h1>
 
         <div className="top-leaders">
           {restaurants.slice(0, 3).map((restaurant, index) => (
-            <div key={index} className={`leader-card ${index === 0 ? "gold" : index === 1 ? "silver" : "bronze"}` }>
+            <div
+              key={index}
+              className={`leader-card ${
+                index === 0 ? "gold" : index === 1 ? "silver" : "bronze"
+              }`}
+            >
               <div className="leader-image">
-                <img src="https://via.placeholder.com/160" alt={restaurant.name} />
+                <img
+                  src="https://via.placeholder.com/160"
+                  alt={restaurant.name}
+                />
               </div>
               <div className="leader-info">
                 <h3>{restaurant.name}</h3>
@@ -62,7 +78,10 @@ function App() {
             <div key={index} className="list-item light-blue">
               <span className="rank">{index + 4}</span>
               <div className="user-image">
-                <img src="https://via.placeholder.com/64" alt={restaurant.name} />
+                <img
+                  src="https://via.placeholder.com/64"
+                  alt={restaurant.name}
+                />
               </div>
               <span className="user-name">{restaurant.name}</span>
               <span className="points">{restaurant.points} Points</span>
