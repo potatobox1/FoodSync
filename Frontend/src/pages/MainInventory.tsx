@@ -49,7 +49,7 @@ export default function MainInventory() {
     async function fetchData() {
       setLoading(true)
       try {
-        const inventory = await fetchInventory(foodbankId)
+        const inventory = await fetchInventory(foodbankId, true)
         const itemsWithDetails = await Promise.all(
           inventory.map(async (item: any) => {
             const restaurant = await fetchRestaurantById(item.restaurant_id)

@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
         };
         
         if (available === "true") {
-            query.status = "available";  // Filter by available items if query is true
+            query.status = { $eq: "available" };  // Ensure status is explicitly "available"
         }
 
         const foodItems = await FoodItem.find(query);

@@ -3,7 +3,7 @@ import styles from "../styles/RestaurantDashboard.module.css";
 import AddItemModal from "./addItemModal";
 import { fetchFoodItemsByRestaurant } from "../services/foodItems";
 import { useAppSelector } from "../redux/hooks";
-import Navbar from "../components/NavBar";// <-- NEW
+import Navbar from "../components/NavBar";
 
 export default function Dashboard() {
   const restaurantId: string = useAppSelector((state: any) => state.user.type_id);
@@ -13,9 +13,15 @@ export default function Dashboard() {
   const loadFoodItems = useCallback(async () => {
     try {
       const response = await fetchFoodItemsByRestaurant(restaurantId);
-      const sortedItems = (response || []).sort((a: any, b: any) => {
+
+      // ✅ Only keep items with status === "available"
+      const availableItems = (response || []).filter((item: any) => item.status === "available");
+
+      // ✅ Sort by creation date (latest first)
+      const sortedItems = availableItems.sort((a: any, b: any) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
       });
+
       setFoodItems(sortedItems);
     } catch (error) {
       console.error("Failed to fetch food items:", error);
@@ -28,7 +34,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.container}>
-      <Navbar active="inventory" /> {/* NEW NAVBAR COMPONENT */}
+      <Navbar active="inventory" />
 
       <div className={styles.section}>
         <h2 className={styles.title}>My Inventory</h2>
