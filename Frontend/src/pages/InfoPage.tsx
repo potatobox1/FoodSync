@@ -261,7 +261,11 @@ const RegisterForm: React.FC = () => {
       setLatitude("")
       setLongitude("")
 
-      window.location.href = "/dashboard"
+      if (formData.user_type === "restaurant") {
+        window.location.href = "/restaurant-dashboard"
+      } else{
+        window.location.href = "/inventory"
+      }
     } catch (error) {
       console.error("Registration error:", error)
       setMessage({
