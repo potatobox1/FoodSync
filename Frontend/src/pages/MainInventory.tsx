@@ -26,17 +26,24 @@ export default function MainInventory() {
     longitude: -74.006,
   })
   const foodbankId = useAppSelector((state:any) => state.user.type_id); // replace with reduxx state
+  const userId = useAppSelector((state:any) => state.user.user_id); // replace with reduxx state
+
   // Get user's location on component mount
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+    async function fetchUserLocation() {
+      try {
+        const user = await fetchUserById(userId); // Fetch user instance
+        const location = await fetchLocationById(user.location_id); // Fetch location using location_id
         setUserLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        })
-      })
+          latitude: location.latitude,
+          longitude: location.longitude,
+        });
+      } catch (error) {
+        console.error("Error fetching user location:", error);
+      }
     }
-  }, [])
+    fetchUserLocation();
+  }, [userId]);
 
   useEffect(() => {
     async function fetchData() {
@@ -81,13 +88,15 @@ export default function MainInventory() {
     .filter((item) => selectedCategory === "All Items" || item.subCategory === selectedCategory)
     .filter((item) => item.quantity >= minQuantity)
 
-  // Sort by restaurant location if enabled
+  // Sort items based on the selected criteria
   const sortedItems = [...filteredItems].sort((a, b) => {
-    if (!sortByLocation) return 0
-    const distanceA = calculateDistance(userLocation, a.restaurant.location)
-    const distanceB = calculateDistance(userLocation, b.restaurant.location)
-    return distanceA - distanceB
-  })
+    if (sortByLocation) {
+      const distanceA = calculateDistance(userLocation, a.restaurant.location);
+      const distanceB = calculateDistance(userLocation, b.restaurant.location);
+      return distanceA - distanceB;
+    }
+    return b.quantity - a.quantity; // Default to sorting by highest quantity
+  });
 
   // Calculate distance between two coordinates using Haversine formula
   function calculateDistance(userLoc: { latitude: number; longitude: number }, restLoc: { latitude: number; longitude: number }) {
