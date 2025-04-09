@@ -78,7 +78,7 @@
 .hero {
   position: relative;
   height: 700px;
-  background-image: url("../../public/images/landingbackground.jpg");
+  background-image: url("../../images/landingbackground.jpg");
   background-size: cover;
   background-position: center;
   color: white;

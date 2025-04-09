@@ -86,17 +86,17 @@ const LandingPage: React.FC = () => {
   <h2 className={styles.sectionTitle}>Restaurants on our platform</h2>
   <div className={styles.restaurantsGrid}>
     <div className={styles.restaurantCard}>
-      <img src="../../public/images/club_j.jpg" alt="Defence Club J" className={styles.restaurantImage} />
+      <img src="../../images/club_j.jpg" alt="Defence Club J" className={styles.restaurantImage} />
       <h3>Defence club J</h3>
       <p>One of the leading food donors of Lahore, known for its food quality and taste</p>
     </div>
     <div className={styles.restaurantCard}>
-      <img src="../../public/images/raya.png" alt="Defence Club Raya" className={styles.restaurantImage} />
+      <img src="../../images/raya.png" alt="Defence Club Raya" className={styles.restaurantImage} />
       <h3>Defence Club Raya</h3>
       <p>Main stay on any foodies wishlist, known for amazing food and great variety</p>
     </div>
     <div className={styles.restaurantCard}>
-      <img src="../../public/images/club_f.webp" alt="Defence Club FF" className={styles.restaurantImage} />
+      <img src="../../images/club_f.webp" alt="Defence Club FF" className={styles.restaurantImage} />
       <h3>Defence Club FF</h3>
       <p>Known for its desi cuisine, FF is one of the largest donors of desi food in Lahore.</p>
     </div>
@@ -124,21 +124,21 @@ const LandingPage: React.FC = () => {
 <footer className={styles.footer}>
   <div className={styles.footerGrid}>
     <div className={styles.footerItem}>
-      <img src="../../public/email.svg" alt="Email" className={styles.footerIcon} />
+      <img src="../../email.svg" alt="Email" className={styles.footerIcon} />
       <h3>Email</h3>
       <p>Stunting in children can have long<br />term effect on their growth and development</p>
       <a href="mailto:cegastuntinginqlm@gmail.com">cegastuntinginqlm@gmail.com</a>
     </div>
 
     <div className={styles.footerItem}>
-      <img src="../../public/phone.svg" alt="Phone" className={styles.footerIcon} />
+      <img src="../../phone.svg" alt="Phone" className={styles.footerIcon} />
       <h3>Phone</h3>
       <p>Stunting in children can have long<br />term effect on their growth and development</p>
       <a href="tel:+923211105090">+92 321 110 50 90</a>
     </div>
 
     <div className={styles.footerItem}>
-      <img src="../../public/location.svg" alt="Office" className={styles.footerIcon} />
+      <img src="../../location.svg" alt="Office" className={styles.footerIcon} />
       <h3>Office</h3>
       <p>Stunting in children can have long<br />term effect on their growth and development</p>
       <a href="https://www.google.com/maps?q=Punjab+Small+Industries+Housing" target="_blank" rel="noopener noreferrer">
