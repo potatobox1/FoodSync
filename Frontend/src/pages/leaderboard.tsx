@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchRestaurants } from "../services/restaurant";
 import { fetchUserById } from "../services/user";
 import "../styles/leaderboard.css";
+import FNavbar from "../components/foodbank_navbar";
 
 type Restaurant = {
   user_id: string;
@@ -38,23 +39,7 @@ function App() {
 
   return (
     <div className="app">
-      <header className="navbar">
-        <div className="container">
-          <div className="logo">
-            <span className="logo-food">Food</span>
-            <span className="logo-sync">Sync</span>
-          </div>
-          <nav className="nav-menu">
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/inventory">Inventory</a></li>
-              <li><a href="restaurant-dashboard">Orders</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
+      <FNavbar active="leaderboard" />
       <main className="container">
         <h1 className="page-title">Leaderboard</h1>
 

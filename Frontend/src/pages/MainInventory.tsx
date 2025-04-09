@@ -104,9 +104,10 @@ export default function MainInventory() {
   }
 
   return (
-    <main className="min-h-screen">
-      <FNavbar active="inventory" />
-      <div className="container main-content">
+    <div className="main-inventory-page">
+    <FNavbar active="inventory" />
+    <main className="min-h-screen" style={{ marginTop: 0 }}> {/* Ensure no extra margin */}
+      <div className="container main-content" style={{ paddingTop: 0 }}> {/* Remove extra padding */}
         <h1 className="page-title">Available Food Donations</h1>
 
         <div className="flex flex-col md-flex-row gap-6">
@@ -150,6 +151,7 @@ export default function MainInventory() {
         </div>
       </div>
     </main>
+    </div>
   )
 }
 
