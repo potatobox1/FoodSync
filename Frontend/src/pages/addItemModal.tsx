@@ -11,6 +11,7 @@ interface AddItemModalProps {
 }
 
 export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemModalProps) {
+  const rest_id = useAppSelector((state: any) => state.user.type_id);
   const [formData, setFormData] = useState({
     quantity: "",
     expiration: "",
@@ -47,7 +48,6 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const newErrors = {
       quantity:
         formData.quantity.trim() === ""
@@ -71,7 +71,8 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
     if (hasErrors) return;
 
     try {
-      const restaurant_id =  useAppSelector((state:any) => state.user.type_id); // TODO:done
+      const restaurant_id =  rest_id // TODO:done
+      console.log(restaurant_id)
 
       const formattedDate = new Date(formData.expiration).toISOString(); // Ensures format like 2025-03-21T00:16:22.461Z
 
