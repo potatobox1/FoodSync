@@ -10,13 +10,13 @@ export default function Header() {
           </a>
 
           <nav className="nav">
-            <a href="/dashboard" className="nav-link">
+            {/* <a href="/dashboard" className="nav-link">
               Dashboard
-            </a>
-            <a href="/" className="nav-link-active">
+            </a> */}
+            <a href="/inventory" className="nav-link-active">
               Available Food
             </a>
-            <a href="/my-orders" className="nav-link">
+            <a href="/OrdersPage" className="nav-link">
               My Orders
             </a>
           </nav>

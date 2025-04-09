@@ -141,9 +141,10 @@ const OrdersPage: React.FC = () => {
       <header className="header">
         <div className="logo">FoodSync</div>
         <nav className="navigation">
-          <a href="#" className="nav-link">Dashboard</a>
-          <a href="#" className="nav-link">Available Food</a>
-          <a href="#" className="nav-link active">My Orders</a>
+          {/* <a href="#" className="nav-link">Dashboard</a> */}
+          <a href="/inventory" className="nav-link">Available Food</a>
+          <a href="/OrdersPage" className="nav-link active">My Orders</a>
+          <a href="/leaderboard" className="nav-link">LeaderBoard</a>
         </nav>
       </header>
 
