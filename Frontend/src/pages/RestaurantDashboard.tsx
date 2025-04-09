@@ -3,7 +3,7 @@ import styles from "../styles/RestaurantDashboard.module.css";
 import AddItemModal from "./addItemModal";
 import { fetchFoodItemsByRestaurant } from "../services/foodItems";
 import { useAppSelector } from "../redux/hooks";
-import Navbar from "../components/navbar";// <-- NEW
+import Navbar from "../components/NavBar";// <-- NEW
 
 export default function Dashboard() {
   const restaurantId: string = useAppSelector((state: any) => state.user.type_id);

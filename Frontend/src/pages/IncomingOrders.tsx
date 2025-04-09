@@ -8,7 +8,7 @@ import { addCompletedOrder } from "../services/completedorders";
 import { fetchUserById } from "../services/user";
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { useAppSelector } from "../redux/hooks";
-import Navbar from "../components/navbar";
+import Navbar from "../components/NavBar";
 
 interface DonationRequest {
   _id: string;

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Header from "../components/header"
+import FNavbar from "../components/foodbank_navbar"
 import CategoryFilter from "../components/category-filter"
 import FoodListings from "../components/food-listings"
 import FilterSidebar from "../components/filter-sidebar"
@@ -105,7 +105,7 @@ export default function MainInventory() {
 
   return (
     <main className="min-h-screen">
-      <Header />
+      <FNavbar active="inventory" />
       <div className="container main-content">
         <h1 className="page-title">Available Food Donations</h1>
 
