@@ -8,43 +8,55 @@
   .header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 2rem;
     border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 1rem;
-    margin-bottom: 2rem;
+    padding: 1.2rem 0;
   }
   
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #00a9c0;
+    flex-shrink: 0;
   }
   
   .nav {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+    align-items: center;
   }
   
   .nav a {
     text-decoration: none;
-    color: #4b5563;
-    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+    padding-bottom: 4px;
+    position: relative;
   }
   
-  .activeNav {
+  .nav a:hover {
     color: #00a9c0;
-    font-weight: 500;
+  }
+  
+  .nav a.activeNav {
+    color: #00a9c0;
+    font-weight: 600;
+    border-bottom: 2px solid #00a9c0;
   }
   
   .userIcon {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     background-color: #00a9c0;
-    border-radius: 999px;
-    color: white;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
+    font-size: 1.2rem;
   }
   
   /* ---- MAIN SECTION ---- */

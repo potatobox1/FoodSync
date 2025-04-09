@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
-import "../styles/RestaurantDashboard.css";
+import styles from "../styles/RestaurantDashboard.module.css";
 import AddItemModal from "./addItemModal";
 import { fetchFoodItemsByRestaurant } from "../services/foodItems";
 import { useAppSelector } from "../redux/hooks";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  const restaurantId: string = useAppSelector((state:any) => state.user.type_id);;
+  const restaurantId: string = useAppSelector((state: any) => state.user.type_id);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [foodItems, setFoodItems] = useState<any[]>([]);
+  const navigate = useNavigate();
 
-  // Fetch items wrapped in useCallback so it can be passed as prop
   const loadFoodItems = useCallback(async () => {
     try {
       const response = await fetchFoodItemsByRestaurant(restaurantId);
-      const sortedItems = (response || []).sort((a:any, b:any) => {
+      const sortedItems = (response || []).sort((a: any, b: any) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
       });
       setFoodItems(sortedItems);
@@ -28,27 +28,29 @@ export default function Dashboard() {
   }, [loadFoodItems]);
 
   return (
-    <div className="dashboard-container">
-      <header className="dashboard-header">
-        <div className="logo">FoodSync</div>
-        <nav className="nav-links">
-          <a href="#">Dashboard</a>
-          <a href="#">Available Food</a>
-          <a href="#">My Orders</a>
-          <a href="#" style={{ color: "#00a9cd", fontWeight: "bold" }}>
-            Order Dashboard
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <div className={styles.logo}>FoodSync</div>
+        <nav className={styles.nav}>
+          <a
+            onClick={() => navigate("/restaurant-dashboard")}
+            className={styles.active}
+          >
+            My Inventory
           </a>
+          <a onClick={() => navigate("/incoming-orders")}>My Orders</a>
+          <a onClick={() => navigate("/leaderboard")}>Leaderboard</a>
         </nav>
-        <div className="user-icon">👤</div>
+        <div className={styles.userIcon}>👤</div>
       </header>
 
-      <div className="food-section">
-        <h2 className="dashboard-title">Orders Dashboard</h2>
+      <div className={styles.section}>
+        <h2 className={styles.title}>My Inventory</h2>
 
-        <div className="food-cards">
+        <div className={styles.cards}>
           {foodItems.length > 0 ? (
             foodItems.map((item) => (
-              <div className="food-card" key={item._id}>
+              <div className={styles.card} key={item._id}>
                 <img
                   src={
                     item.category === "Savoury"
@@ -61,7 +63,7 @@ export default function Dashboard() {
                   }
                   alt={item.name}
                 />
-                <div className="food-info">
+                <div className={styles.info}>
                   <div
                     style={{
                       display: "flex",
@@ -70,7 +72,7 @@ export default function Dashboard() {
                     }}
                   >
                     <h3 style={{ margin: 0 }}>{item.name}</h3>
-                    <div className="expiry-badge">
+                    <div className={styles.expiry}>
                       Expires on <br />
                       {item.expiration_date
                         ? new Date(item.expiration_date).toLocaleDateString()
@@ -78,8 +80,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <p>
-                    Quantity available:{" "}
-                    <strong>{item.quantity || "N/A"}</strong>
+                    Quantity available: <strong>{item.quantity || "N/A"}</strong>
                   </p>
                 </div>
               </div>
@@ -89,12 +90,11 @@ export default function Dashboard() {
           )}
         </div>
 
-        <button className="add-button" onClick={() => setIsModalOpen(true)}>
+        <button className={styles.addBtn} onClick={() => setIsModalOpen(true)}>
           Add Item
         </button>
       </div>
 
-      {/* Pass refresh function to modal */}
       <AddItemModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -103,5 +103,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-// all done

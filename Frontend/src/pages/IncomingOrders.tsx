@@ -131,18 +131,13 @@ export default function IncomingOrders() {
       <header className={styles.header}>
         <div className={styles.logo}>FoodSync</div>
         <nav className={styles.nav}>
-          <a href="/dashboard">Dashboard</a>
-          <a href="/available-food">Available Food</a>
-          <a href="/my-orders">My Orders</a>
-          <a href="/order-dashboard" className={styles.activeNav}>
-            Order Dashboard
-          </a>
+          <a href="/restaurant-dashboard" className={styles.activeNav}>My Inventory</a>
+          <a href="/incoming-orders">My Orders</a>
+          <a href="/leaderboard">Leaderboard</a>
         </nav>
-        <div className={styles.userIcon}>
-          <User size={20} />
-        </div>
+        <div className={styles.userIcon}>👤</div>
       </header>
-
+      
       <main className={styles.main}>
         <h1 className={styles.title}>Incoming Orders</h1>
 
