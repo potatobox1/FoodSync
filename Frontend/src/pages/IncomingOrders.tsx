@@ -30,6 +30,7 @@ export default function IncomingOrders() {
   const [orders, setOrders] = useState<DonationRequest[]>([]);
   const [foodbankNames, setFoodbankNames] = useState<{ [key: string]: string }>({});
   const restaurantId = user.type_id;
+  console.log("I am :",restaurantId)
 
   useEffect(() => {
     const loadRequests = async () => {
@@ -41,6 +42,7 @@ export default function IncomingOrders() {
         await Promise.all(
           data.map(async (order: DonationRequest) => {
             try {
+              console.log(order.foodbank_id)
               const userId = await getUserIdByFoodbankId(order.foodbank_id);
               const user = await fetchUserById(userId);
               namesMap[order.foodbank_id] = user.name;

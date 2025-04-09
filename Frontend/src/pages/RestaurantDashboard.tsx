@@ -42,9 +42,9 @@ export default function Dashboard() {
                     item.category === "Savoury"
                       ? "/images/savoury.jpg"
                       : item.category === "Sweet"
-                      ? "/images/Sweet.png"
+                      ? "/images/sweet.jpg"
                       : item.category === "Beverage"
-                      ? "/images/Beverage.png"
+                      ? "/images/beverage.jpg"
                       : "/placeholder.svg"
                   }
                   alt={item.name}

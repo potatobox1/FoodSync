@@ -2,6 +2,7 @@ import { type FoodItem, getCategoryImage } from "../types/food-item"
 import "../styles/main_inventory.css"
 import { addDonationRequest } from "../services/addDonationRequest"; // Step 1: import function
 import { useState } from "react";
+import { useAppSelector } from "../redux/hooks";
 
 
 interface FoodCardProps {
@@ -14,6 +15,8 @@ export default function FoodCard({ item }: FoodCardProps) {
   // Get the appropriate image based on subcategory
   const [isClaimed, setIsClaimed] = useState(false);
   const imageUrl = getCategoryImage(item.subCategory)
+  const user = useAppSelector((state:any) => state.user);
+
 
   const handleClaim = async () => {
     try {
@@ -23,7 +26,7 @@ export default function FoodCard({ item }: FoodCardProps) {
         requested_quantity: number;
         status: "pending" | "accepted" | "cancelled" | "completed"; // 👈 Use union type
       } = {
-        foodbank_id: "67e9eceb64bee4b8d302d496", // Add live reduxx state here
+        foodbank_id: user.type_id, // Add live reduxx state here
         food_id: item._id,
         requested_quantity: item.quantity,
         status: "pending",
