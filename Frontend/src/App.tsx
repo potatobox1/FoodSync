@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import InfoPage from "./pages/InfoPage";
 import Dashboard from "./pages/dashboard";
-import Landing from "./pages/landing"
+import Landing from "./pages/LandingPage"
 import Learn from "./pages/learn-more"
 import Contact from "./pages/contact"
 import RestaurantDashboard from "./pages/RestaurantDashboard"
