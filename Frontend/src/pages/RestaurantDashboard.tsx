@@ -2,9 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import "../styles/RestaurantDashboard.css";
 import AddItemModal from "./addItemModal";
 import { fetchFoodItemsByRestaurant } from "../services/foodItems";
+import { useAppSelector } from "../redux/hooks";
+
 
 export default function Dashboard() {
-  const restaurantId: string = "67e88d5621be484ff7f3cd73";
+  const restaurantId: string = useAppSelector((state:any) => state.user.type_id);;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [foodItems, setFoodItems] = useState<any[]>([]);
 

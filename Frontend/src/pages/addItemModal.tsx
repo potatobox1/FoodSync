@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../styles/AddItemModal.css";
 import { addFoodItem } from "../services/foodItems";
+import { useAppSelector } from "../redux/hooks";
+
 
 interface AddItemModalProps {
   isOpen: boolean;
@@ -69,7 +71,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
     if (hasErrors) return;
 
     try {
-      const restaurant_id = "67e88d5621be484ff7f3cd73"; // TODO: Replace with dynamic if needed
+      const restaurant_id =  useAppSelector((state:any) => state.user.type_id); // TODO: Replace with dynamic if needed
 
       const formattedDate = new Date(formData.expiration).toISOString(); // Ensures format like 2025-03-21T00:16:22.461Z
 

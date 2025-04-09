@@ -3,6 +3,8 @@ import '../styles/OrdersPage.css';
 import { fetchDonationRequestsForFoodbank } from '../services/addDonationRequest';
 import { fetchRestaurantById } from '../services/restaurant';
 import { fetchUserById } from '../services/user';
+import { useAppSelector } from "../redux/hooks";
+
 
 interface Restaurant {
   _id: string;
@@ -61,7 +63,7 @@ function formatExpiryTime(expirationDate: Date): string {
 const OrdersPage: React.FC = () => {
   const [orders, setOrders] = useState<DonationRequest[]>([]);
   const [filter, setFilter] = useState<string>('all');
-  const foodbankId = "67e9eceb64bee4b8d302d496"; // replace with redux state later
+  const foodbankId =  useAppSelector((state:any) => state.user.type_id); // replace with redux state later
 
   useEffect(() => {
     const fetchOrders = async () => {

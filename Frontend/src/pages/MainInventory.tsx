@@ -11,6 +11,7 @@ import { fetchInventory } from "../services/inventory";
 import { fetchRestaurantById } from "../services/restaurant";
 import { fetchUserById } from "../services/user";
 import { fetchLocationById } from "../services/location";
+import { useAppSelector } from "../redux/hooks";
 // import axios from "axios";
 
 export default function MainInventory() {
@@ -24,7 +25,7 @@ export default function MainInventory() {
     latitude: 40.7128,
     longitude: -74.006,
   })
-  const [foodbankId, setFoodbankId] = useState<string>("67e9eceb64bee4b8d302d496")  // replace with reduxx state
+  const [foodbankId, setFoodbankId] = useAppSelector((state:any) => state.user.type_id); // replace with reduxx state
 
   // Get user's location on component mount
   useEffect(() => {
