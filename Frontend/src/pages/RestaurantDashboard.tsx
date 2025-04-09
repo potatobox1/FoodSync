@@ -3,13 +3,12 @@ import styles from "../styles/RestaurantDashboard.module.css";
 import AddItemModal from "./addItemModal";
 import { fetchFoodItemsByRestaurant } from "../services/foodItems";
 import { useAppSelector } from "../redux/hooks";
-import { useNavigate } from "react-router-dom";
+import Navbar from "../components/navbar";// <-- NEW
 
 export default function Dashboard() {
   const restaurantId: string = useAppSelector((state: any) => state.user.type_id);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [foodItems, setFoodItems] = useState<any[]>([]);
-  const navigate = useNavigate();
 
   const loadFoodItems = useCallback(async () => {
     try {
@@ -29,20 +28,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.logo}>FoodSync</div>
-        <nav className={styles.nav}>
-          <a
-            onClick={() => navigate("/restaurant-dashboard")}
-            className={styles.active}
-          >
-            My Inventory
-          </a>
-          <a onClick={() => navigate("/incoming-orders")}>My Orders</a>
-          <a onClick={() => navigate("/leaderboard")}>Leaderboard</a>
-        </nav>
-        <div className={styles.userIcon}>👤</div>
-      </header>
+      <Navbar active="inventory" /> {/* NEW NAVBAR COMPONENT */}
 
       <div className={styles.section}>
         <h2 className={styles.title}>My Inventory</h2>

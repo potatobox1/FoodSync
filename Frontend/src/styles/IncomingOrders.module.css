@@ -1,221 +1,172 @@
 .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  /* ---- HEADER FIX ---- */
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 1.2rem 0;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #00a9c0;
-    flex-shrink: 0;
-  }
-  
-  .nav {
-    display: flex;
-    gap: 2rem;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 1rem;
-    align-items: center;
-  }
-  
-  .nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    padding-bottom: 4px;
-    position: relative;
-  }
-  
-  .nav a:hover {
-    color: #00a9c0;
-  }
-  
-  .nav a.activeNav {
-    color: #00a9c0;
-    font-weight: 600;
-    border-bottom: 2px solid #00a9c0;
-  }
-  
-  .userIcon {
-    width: 40px;
-    height: 40px;
-    background-color: #00a9c0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.2rem;
-  }
-  
-  /* ---- MAIN SECTION ---- */
-  .title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-  }
-  
-  .card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-    border: 1px solid #eee;
-  }
-  
-  .cardHeader {
-    padding: 1rem 1.5rem;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e2e8f0;
-  }
-  
-  .customerName {
-    font-weight: 500;
-    font-size: 1rem;
-    margin-bottom: 0.2rem;
-  }
-  
-  .orderTime {
-    font-size: 0.85rem;
-    color: #6b7280;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-  
-  .orderSummary {
-    text-align: right;
-  }
-  
-  .orderId {
-    font-size: 0.9rem;
-    color: #374151;
-  }
-  
-  .orderAmount {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #000;
-  }
-  
-  .itemList {
-    padding: 1rem 1.5rem;
-  }
-  
-  .item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  
-  .itemLeft {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex: 1;
-  }
-  
-  .itemImage {
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #e5e7eb;
-  }
-  
-  .itemInfo {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .itemName {
-    font-weight: 500;
-    font-size: 0.95rem;
-  }
-  
-  .itemDetail {
-    font-size: 0.85rem;
-    color: #6b7280;
-  }
-  
-  .itemTotal {
-    font-weight: 500;
-    font-size: 0.95rem;
-    min-width: 60px;
-    text-align: right;
-  }
-  
-  .actions {
-    border-top: 1px solid #e5e7eb;
-    padding: 1rem 1.5rem;
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-    background-color: #f9f9f9;
-  }
-  
-  .rejectBtn,
-  .acceptBtn {
-    padding: 0.5rem 1.2rem;
-    font-size: 0.875rem;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  
-  .rejectBtn {
-    background: transparent;
-    border: 1px solid #ccc;
-    color: #333;
-  }
-  
-  .rejectBtn:hover {
-    background-color: #f3f4f6;
-  }
-  
-  .acceptBtn {
-    background-color: #00a9c0;
-    color: white;
-    border: none;
-  }
-  
-  .acceptBtn:hover {
-    background-color: #008ba1;
-  }
-  
-  .statusBadge {
-    font-size: 0.875rem;
-    padding: 0.4rem 0.75rem;
-    border-radius: 6px;
-    font-weight: 500;
-  }
-  
-  .accepted {
-    background-color: #e6f9f7;
-    color: #00867e;
-  }
-  
-  .rejected {
-    background-color: #fdecea;
-    color: #b91c1c;
-  }
-  
+  min-height: 100vh;
+  background-color: white;
+  padding: 0 2rem 2rem 2rem;
+}
+
+/* No need for .header or .nav now if using Navbar component */
+
+/* ---- MAIN SECTION ---- */
+.main {
+  margin-top: 2.5rem;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border: 1px solid #eee;
+}
+
+.cardHeader {
+  padding: 1rem 1.5rem;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.customerName {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.orderTime {
+  font-size: 0.85rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.orderSummary {
+  text-align: right;
+}
+
+.orderId {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.orderAmount {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.itemList {
+  padding: 1rem 1.5rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.itemLeft {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex: 1;
+}
+
+.itemImage {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemName {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.itemDetail {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.itemTotal {
+  font-weight: 500;
+  font-size: 0.95rem;
+  min-width: 60px;
+  text-align: right;
+}
+
+.actions {
+  border-top: 1px solid #e5e7eb;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  background-color: #f9f9f9;
+}
+
+.rejectBtn,
+.acceptBtn {
+  padding: 0.5rem 1.2rem;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.rejectBtn {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.rejectBtn:hover {
+  background-color: #f3f4f6;
+}
+
+.acceptBtn {
+  background-color: #00a9c0;
+  color: white;
+  border: none;
+}
+
+.acceptBtn:hover {
+  background-color: #008ba1;
+}
+
+.statusBadge {
+  font-size: 0.875rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.accepted {
+  background-color: #e6f9f7;
+  color: #00867e;
+}
+
+.rejected {
+  background-color: #fdecea;
+  color: #b91c1c;
+}
