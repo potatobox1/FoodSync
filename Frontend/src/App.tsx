@@ -12,6 +12,7 @@ import Leaderboard from "./pages/leaderboard"
 import Inventory from "./pages/MainInventory"
 import OrdersPage from "./pages/OrdersPage";
 import IncomingOrders from "./pages/IncomingOrders"; 
+import AboutUsPage from "./pages/AboutUsPage";
 
 
 const App: React.FC = () => {
@@ -29,6 +30,7 @@ const App: React.FC = () => {
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/OrdersPage" element={<OrdersPage />} />
         <Route path="/incoming-orders" element={<IncomingOrders />} />
+        <Route path="/AboutUs" element={<AboutUsPage />} />
       </Routes>
     </BrowserRouter>
   );
