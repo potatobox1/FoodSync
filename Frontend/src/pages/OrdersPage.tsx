@@ -63,7 +63,8 @@ function formatExpiryTime(expirationDate: Date): string {
 const OrdersPage: React.FC = () => {
   const [orders, setOrders] = useState<DonationRequest[]>([]);
   const [filter, setFilter] = useState<string>('all');
-  const foodbankId =  useAppSelector((state:any) => state.user.type_id); // replace with redux state later
+  const [loading, setLoading] = useState<boolean>(true);
+  const foodbankId = useAppSelector((state: any) => state.user.type_id);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -72,21 +73,13 @@ const OrdersPage: React.FC = () => {
 
         // For each order, enrich with subCategory and restaurant name
         const enrichedOrders = await Promise.all(data.map(async (order) => {
-          // Create a new object to avoid reference issues
           const enrichedOrder = { ...order };
-          
-          // Since food_id is already the populated food item from MongoDB
-          // We need to copy it to foodItem to match your component's expectations
           enrichedOrder.foodItem = { ...order.food_id };
-          
-          // Set subCategory to match category
           if (enrichedOrder.foodItem) {
             enrichedOrder.foodItem.subCategory = enrichedOrder.foodItem.category as FoodItem["subCategory"];
-            
             try {
               const restaurant = await fetchRestaurantById(enrichedOrder.foodItem.restaurant_id);
               const user = await fetchUserById(restaurant.user_id);
-              
               enrichedOrder.foodItem.restaurant = {
                 _id: restaurant._id,
                 name: user.name
@@ -99,14 +92,14 @@ const OrdersPage: React.FC = () => {
               };
             }
           }
-          
           return enrichedOrder;
         }));
 
         setOrders(enrichedOrders);
-        // console.log("Enriched orders:", enrichedOrders); // Add this to debug
       } catch (error) {
         console.error("Error fetching donation requests:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -156,42 +149,52 @@ const OrdersPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="orders-grid">
-          {filteredOrders.map(order => (
-            <div className="order-card" key={order._id}>
-              <div className="order-image-container">
-                {order.foodItem && (
-                  <img
-                    src={getCategoryImage(order.foodItem.subCategory)}
-                    alt={order.foodItem.name}
-                    className="order-image"
-                  />
-                )}
-                {order.foodItem?.expiration_date && (
-                  <div className="expires-tag">
-                    Expires in {formatExpiryTime(order.foodItem.expiration_date)}
+        {/* Display loading indicator */}
+        {loading ? (
+          <div className="no-orders">Loading...</div>
+        ) : (
+          // If not loading, check if there are orders to display
+          filteredOrders.length === 0 ? (
+            <div className="no-orders">No items to display.</div>
+          ) : (
+            <div className="orders-grid">
+              {filteredOrders.map(order => (
+                <div className="order-card" key={order._id}>
+                  <div className="order-image-container">
+                    {order.foodItem && (
+                      <img
+                        src={getCategoryImage(order.foodItem.subCategory)}
+                        alt={order.foodItem.name}
+                        className="order-image"
+                      />
+                    )}
+                    {order.foodItem?.expiration_date && (
+                      <div className="expires-tag">
+                        Expires in {formatExpiryTime(order.foodItem.expiration_date)}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="order-details">
-                <h3 className="food-name">{order.foodItem?.name || 'Food Item'}</h3>
-                <div className={`order-status ${getStatusClass(order.status)}`}>
-                  {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                  <div className="order-details">
+                    <h3 className="food-name">{order.foodItem?.name || 'Food Item'}</h3>
+                    <div className={`order-status ${getStatusClass(order.status)}`}>
+                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                    </div>
+                    <div className="order-provider">
+                      <span className="provider-icon">🏢</span>
+                      {order.foodItem?.restaurant.name || 'Food Provider'}
+                    </div>
+                    <div className="order-quantity">
+                      Quantity requested: <span className="quantity-value">{order.requested_quantity} portions</span>
+                    </div>
+                    <div className="order-date">
+                      Ordered on {formatDate(order.created_at)}
+                    </div>
+                  </div>
                 </div>
-                <div className="order-provider">
-                  <span className="provider-icon">🏢</span>
-                  {order.foodItem?.restaurant.name || 'Food Provider'}
-                </div>
-                <div className="order-quantity">
-                  Quantity requested: <span className="quantity-value">{order.requested_quantity} portions</span>
-                </div>
-                <div className="order-date">
-                  Ordered on {formatDate(order.created_at)}
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )
+        )}
       </main>
     </div>
   );
