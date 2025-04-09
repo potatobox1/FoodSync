@@ -39,13 +39,13 @@ interface DonationRequest {
 function getCategoryImage(subCategory: string): string {
   switch (subCategory) {
     case "Savoury":
-      return "/images/savoury.jpg";
+      return "../images/savoury.jpg";
     case "Sweet":
-      return "/images/sweet.jpg";
+      return "../images/sweet.jpg";
     case "Beverage":
-      return "/images/beverage.jpg";
+      return "../images/beverage.jpg";
     default:
-      return "/images/default-food.jpg";
+      return "../images/default-food.jpg";
   }
 }
 
