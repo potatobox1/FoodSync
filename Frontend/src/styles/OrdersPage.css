@@ -1,247 +1,249 @@
 /* Base styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  body {
-    background-color: #f9f9f9;
-  }
-  
-  .orders-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: white;
-    min-height: 100vh;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  }
-  
-  /* Header styles */
-  .header {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #eaeaea;
-  }
-  
-  .logo {
-    color: #0078a0;
-    font-size: 24px;
-    font-weight: bold;
-    margin-right: 40px;
-  }
-  
-  .navigation {
-    display: flex;
-    flex-grow: 1;
-  }
-  
-  .nav-link {
-    color: #333;
-    text-decoration: none;
-    margin-right: 20px;
-    padding: 5px 0;
-    position: relative;
-  }
-  
-  .nav-link.active {
-    color: #0078a0;
-  }
-  
-  .nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #0078a0;
-  }
-  
-  /* Profile styles removed as requested */
-  
-  /* Main content styles */
-  .main-content {
-    padding: 20px;
-  }
-  
-  .page-title {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  /* Filter styles */
-  .filter-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .filter-tabs {
-    display: flex;
-  }
-  
-  .filter-tab {
-    background: none;
-    border: none;
-    padding: 8px 16px;
-    margin-right: 5px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .filter-tab.active {
-    background-color: #e6f7fb;
-    color: #0078a0;
-  }
-  
-  /* Orders grid styles */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #f9f9f9;
+}
+
+/* Make .orders-page fill the full screen */
+.orders-page {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  min-height: 100vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Header styles */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.logo {
+  color: #0078a0;
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 40px;
+}
+
+.navigation {
+  display: flex;
+  flex-grow: 1;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  margin-right: 20px;
+  padding: 5px 0;
+  position: relative;
+}
+
+.nav-link.active {
+  color: #0078a0;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #0078a0;
+}
+
+/* Main content styles */
+.main-content {
+  padding: 20px;
+}
+
+.page-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Filter styles */
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-tabs {
+  display: flex;
+}
+
+.filter-tab {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  margin-right: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+}
+
+.filter-tab.active {
+  background-color: #e6f7fb;
+  color: #0078a0;
+}
+
+/* Orders grid styles */
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.order-card {
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.order-image-container {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.order-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.expires-tag {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #0078a0;
+}
+
+.order-details {
+  padding: 15px;
+}
+
+.food-name {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.order-status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.status-pending {
+  background-color: #fff8e6;
+  color: #ffa000;
+}
+
+.status-accepted {
+  background-color: #e6f7fb;
+  color: #0078a0;
+}
+
+.status-completed {
+  background-color: #e6f9e6;
+  color: #2e7d32;
+}
+
+.status-cancelled {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.order-provider {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.provider-icon {
+  margin-right: 5px;
+}
+
+.order-quantity, .order-date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.quantity-value, .date-value {
+  font-weight: bold;
+  color: #333;
+}
+
+/* No orders message */
+.no-orders {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
   .orders-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
-  
-  .order-card {
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
+
+  .filter-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    max-width: 100%;
   }
-  
-  .order-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 480px) {
+  .orders-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .order-image-container {
-    height: 150px;
-    overflow: hidden;
-    position: relative;
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .order-image {
+
+  .navigation {
+    margin: 15px 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    overflow-x: auto;
   }
-  
-  .expires-tag {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #0078a0;
-  }
-  
-  .order-details {
-    padding: 15px;
-  }
-  
-  .food-name {
-    font-size: 18px;
-    margin-bottom: 5px;
-  }
-  
-  .order-status {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .status-pending {
-    background-color: #fff8e6;
-    color: #ffa000;
-  }
-  
-  .status-accepted {
-    background-color: #e6f7fb;
-    color: #0078a0;
-  }
-  
-  .status-completed {
-    background-color: #e6f9e6;
-    color: #2e7d32;
-  }
-  
-  .status-cancelled {
-    background-color: #ffebee;
-    color: #c62828;
-  }
-  
-  .order-provider {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 8px;
-  }
-  
-  .provider-icon {
-    margin-right: 5px;
-  }
-  
-  .order-quantity, .order-date {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 8px;
-  }
-  
-  .quantity-value, .date-value {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /* No orders message */
-  .no-orders {
-    text-align: center;
-    padding: 40px;
-    color: #666;
-  }
-  
-  /* Responsive styles */
-  @media (max-width: 768px) {
-    .orders-grid {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-    
-    .filter-tabs {
-      overflow-x: auto;
-      white-space: nowrap;
-      padding-bottom: 10px;
-      max-width: 100%;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .orders-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    
-    .navigation {
-      margin: 15px 0;
-      width: 100%;
-      overflow-x: auto;
-    }
-    
-    /* Profile responsive styles removed as well */
-  }
+}

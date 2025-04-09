@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Check, Clock, User, X } from "lucide-react";
+import { Check, Clock, X } from "lucide-react";
 import styles from "../styles/IncomingOrders.module.css";
 import { fetchDonationRequestsForRestaurant } from "../services/addDonationRequest";
 import { updateDonationRequestStatus } from "../services/addDonationRequest";
@@ -8,7 +8,7 @@ import { addCompletedOrder } from "../services/completedorders";
 import { fetchUserById } from "../services/user";
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { useAppSelector } from "../redux/hooks";
-
+import Navbar from "../components/NavBar";
 
 interface DonationRequest {
   _id: string;
@@ -26,11 +26,9 @@ interface DonationRequest {
 }
 
 export default function IncomingOrders() {
-  const user = useAppSelector((state:any) => state.user);
+  const user = useAppSelector((state: any) => state.user);
   const [orders, setOrders] = useState<DonationRequest[]>([]);
-  const [foodbankNames, setFoodbankNames] = useState<{ [key: string]: string }>(
-    {}
-  );
+  const [foodbankNames, setFoodbankNames] = useState<{ [key: string]: string }>({});
   const restaurantId = user.type_id;
 
   useEffect(() => {
@@ -39,7 +37,6 @@ export default function IncomingOrders() {
         const data = await fetchDonationRequestsForRestaurant(restaurantId);
         setOrders(data);
 
-        // Fetch foodbank names
         const namesMap: { [key: string]: string } = {};
         await Promise.all(
           data.map(async (order: DonationRequest) => {
@@ -48,10 +45,7 @@ export default function IncomingOrders() {
               const user = await fetchUserById(userId);
               namesMap[order.foodbank_id] = user.name;
             } catch (error) {
-              console.error(
-                "Error loading user name for foodbank:",
-                order.foodbank_id
-              );
+              console.error("Error loading user name for foodbank:", order.foodbank_id);
             }
           })
         );
@@ -66,21 +60,14 @@ export default function IncomingOrders() {
 
   const handleAccept = async (id: string, foodItemId: string) => {
     try {
-      // Step 1: Accept this donation request
       await updateDonationRequestStatus(id, "accepted");
-
-      // Step 2: Mark the food item as sold
       await updateFoodItemStatus(foodItemId, "sold");
-
-      // Step 3: Add to completed orders
       await addCompletedOrder({
         restaurant_id: restaurantId,
         food_id: foodItemId,
-        quantity:
-          orders.find((order) => order._id === id)?.requested_quantity || 1,
+        quantity: orders.find((order) => order._id === id)?.requested_quantity || 1,
       });
 
-      // Step 4: Cancel all other requests for this food_id
       const otherPendingRequests = orders.filter(
         (order) =>
           order.food_id === foodItemId &&
@@ -94,7 +81,6 @@ export default function IncomingOrders() {
         )
       );
 
-      // Step 5: Update local state
       setOrders((prev) =>
         prev.map((order) => {
           if (order._id === id) return { ...order, status: "accepted" };
@@ -128,25 +114,14 @@ export default function IncomingOrders() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.logo}>FoodSync</div>
-        <nav className={styles.nav}>
-          <a href="/dashboard">Dashboard</a>
-          <a href="/available-food">Available Food</a>
-          <a href="/my-orders">My Orders</a>
-          <a href="/order-dashboard" className={styles.activeNav}>
-            Order Dashboard
-          </a>
-        </nav>
-        <div className={styles.userIcon}>
-          <User size={20} />
-        </div>
-      </header>
-
+      <Navbar active="orders" />
       <main className={styles.main}>
         <h1 className={styles.title}>Incoming Orders</h1>
-
-        {orders.map((order) => (
+        {
+          orders.length === 0 ? (
+            <p className={styles.emptyState}>No orders yet.</p>
+          ) : (
+        orders.map((order) => (
           <div key={order._id} className={styles.card}>
             <div className={styles.cardHeader}>
               <div>
@@ -234,7 +209,7 @@ export default function IncomingOrders() {
               )}
             </div>
           </div>
-        ))}
+        )))}
       </main>
     </div>
   );

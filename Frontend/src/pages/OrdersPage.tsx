@@ -4,7 +4,7 @@ import { fetchDonationRequestsForFoodbank } from '../services/addDonationRequest
 import { fetchRestaurantById } from '../services/restaurant';
 import { fetchUserById } from '../services/user';
 import { useAppSelector } from "../redux/hooks";
-
+import FNavbar from '../components/foodbank_navbar';
 
 interface Restaurant {
   _id: string;
@@ -138,15 +138,7 @@ const OrdersPage: React.FC = () => {
 
   return (
     <div className="orders-page">
-      <header className="header">
-        <div className="logo">FoodSync</div>
-        <nav className="navigation">
-          <a href="#" className="nav-link">Dashboard</a>
-          <a href="#" className="nav-link">Available Food</a>
-          <a href="#" className="nav-link active">My Orders</a>
-        </nav>
-      </header>
-
+      <FNavbar active="orders" />
       <main className="main-content">
         <h1 className="page-title">My Food Bank Orders</h1>
 

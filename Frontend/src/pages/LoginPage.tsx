@@ -10,7 +10,7 @@ import "../styles/LoginPage.css"; // Import the new CSS file
 export default function LoginPage() {
   const navigate = useNavigate(); // React Router hook for navigation
   const dispatch = useAppDispatch();
-
+  let type = "none"
   const handleGoogleSignIn = async () => {
     try {
       const { user, isNewUser } = await doSignInWithGoogle(); // Destructure correctly
@@ -29,6 +29,7 @@ export default function LoginPage() {
             const userData = await getUserByFirebaseUID(user.user.uid);
             if (userData.user_type == "restaurant")
             {
+              type = "restaurant"
               const restaurant = await getRestaurantByUserId(userData.id);
               dispatch(setUser({
                 firebase_uid: user.user.uid, //
@@ -40,8 +41,10 @@ export default function LoginPage() {
                 type_id: restaurant._id, ///
   
               }));
+              // navigate("/dashboard");
             }
             else{
+              type = "foodbank"
               const foodBank = await getFoodBankByUserId(userData.id);
 
               dispatch(setUser({
@@ -54,19 +57,22 @@ export default function LoginPage() {
                 type_id: foodBank._id, ///
   
               }));
-
+              // navigate("/dashboard");
             }
-            
-
-
-
             console.log("Fetched user:", userData);
           } catch (err) {
             console.error("Could not fetch user", err);
           }
-        
-
-        navigate("/dashboard"); // Redirect existing users
+        if (type == "restaurant"){
+          console.log("Restaurant user type detected, navigating to restaurant dashboard.");
+          navigate("/restaurant-dashboard")
+        }
+        else if (type == "foodbank"){
+          console.log("Foodbank user type detected, navigating to inventory.");
+          navigate("/inventory")
+        } else {
+          console.error("Unknown user type:", type);
+        }
       }
     } catch (error) {
       console.error("Google sign-in error:", error);
