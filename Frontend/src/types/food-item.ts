@@ -68,7 +68,8 @@ export function determineSubCategory(category: string): "Savoury" | "Sweet" | "B
 export function formatExpiryTime(expirationDate: Date | string): string {
   const expDate = expirationDate instanceof Date ? expirationDate : new Date(expirationDate);
   const now = new Date();
-  const diffMs = expDate.getTime() - now.getTime();
+  let expiry = expDate.getTime() - (1000 * 60 * 60 * 5); // Adjust for timezone difference
+  const diffMs = expiry - now.getTime();
   const diffHrs = Math.round(diffMs / (1000 * 60 * 60));
 
   if (diffHrs < 1) {
@@ -80,5 +81,4 @@ export function formatExpiryTime(expirationDate: Date | string): string {
     return `${days}d`;
   }
 }
-
 

@@ -52,7 +52,8 @@ function getCategoryImage(subCategory: string): string {
 // Format expiration time
 function formatExpiryTime(expirationDate: Date): string {
   const now = new Date();
-  const diffMs = new Date(expirationDate).getTime() - now.getTime();
+  let expire = new Date(expirationDate).getTime() - (1000 * 60 * 60 * 5);
+  const diffMs = expire - now.getTime();
   const diffHrs = Math.round(diffMs / (1000 * 60 * 60));
 
   if (diffHrs < 1) return "Less than 1h";
