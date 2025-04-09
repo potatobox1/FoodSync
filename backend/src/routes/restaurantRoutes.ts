@@ -53,4 +53,36 @@ router.post('/getbyuserid', async (req:any, res:any) => {
     }
   });
 
+  // PATCH /api/restaurant/updatedonations - Update total donations
+router.patch('/updatedonations', async (req: any, res: any) => {
+  try {
+      const { id, amount } = req.body;
+
+      // Validate inputs
+      // if (!id || !amount || typeof amount !== 'number' || amount <= 0) {
+      //     return res.status(400).json({ message: 'Valid user_id and amount are required' });
+      // }
+
+      // Find the restaurant by user_id
+      const restaurant = await Restaurant.findById(id)
+
+      if (!restaurant) {
+          return res.status(404).json({ message: 'Restaurant not found' });
+      }
+
+      // Update the total donations
+      restaurant.total_donations += amount;
+
+      // Save the updated restaurant record
+      await restaurant.save();
+
+      // Respond with the updated restaurant data
+      res.json({ message: 'Total donations updated', restaurant });
+  } catch (err) {
+      console.error('Error updating total donations:', err);
+      res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 export default router;

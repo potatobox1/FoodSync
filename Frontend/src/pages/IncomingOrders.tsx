@@ -9,7 +9,7 @@ import { fetchUserById } from "../services/user";
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { useAppSelector } from "../redux/hooks";
 import Navbar from "../components/NavBar";
-
+import { updateTotalDonations } from "../services/restaurant";
 interface DonationRequest {
   _id: string;
   requested_quantity: number;
@@ -70,6 +70,7 @@ export default function IncomingOrders() {
         food_id: foodItemId,
         quantity: orders.find((order) => order._id === id)?.requested_quantity || 1,
       });
+      await updateTotalDonations (restaurantId,orders.find((order) => order._id === id)?.requested_quantity || 1)
 
       const otherPendingRequests = orders.filter(
         (order) =>

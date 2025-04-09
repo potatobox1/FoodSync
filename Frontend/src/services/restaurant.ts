@@ -34,5 +34,19 @@ export const getRestaurantByUserId = async (userId: string) => {
   }
 };
 
+export const updateTotalDonations = async (Id: string, amount: number) => {
+  try {
+    const response = await API.patch("/api/restaurant/updatedonations", {
+      id: Id,
+      amount: amount,
+    });
+    return response.data; // return the updated restaurant data
+  } catch (error) {
+    console.error("Error updating total donations:", error);
+    throw error;
+  }
+};
+
+
 
 export default API;
