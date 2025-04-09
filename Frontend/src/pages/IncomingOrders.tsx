@@ -117,7 +117,11 @@ export default function IncomingOrders() {
       <Navbar active="orders" />
       <main className={styles.main}>
         <h1 className={styles.title}>Incoming Orders</h1>
-        {orders.map((order) => (
+        {
+          orders.length === 0 ? (
+            <p className={styles.emptyState}>No orders yet.</p>
+          ) : (
+        orders.map((order) => (
           <div key={order._id} className={styles.card}>
             <div className={styles.cardHeader}>
               <div>
@@ -205,7 +209,7 @@ export default function IncomingOrders() {
               )}
             </div>
           </div>
-        ))}
+        )))}
       </main>
     </div>
   );
