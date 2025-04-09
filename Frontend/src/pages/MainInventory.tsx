@@ -25,8 +25,7 @@ export default function MainInventory() {
     latitude: 40.7128,
     longitude: -74.006,
   })
-  const [foodbankId, setFoodbankId] = useAppSelector((state:any) => state.user.type_id); // replace with reduxx state
-
+  const foodbankId = useAppSelector((state:any) => state.user.type_id); // replace with reduxx state
   // Get user's location on component mount
   useEffect(() => {
     if (navigator.geolocation) {
