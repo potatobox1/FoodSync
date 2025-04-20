@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../styles/AboutUsPage.module.css';
-
+import AIAssistant from '../components/ai-assistant'
 const AboutUsPage: React.FC = () => {
   return (
     <div className={styles.aboutPage}>
@@ -90,6 +90,8 @@ const AboutUsPage: React.FC = () => {
           <div className={styles.footerCopyright}>© 2023 FoodSync. All rights reserved.</div>
         </div>
       </footer>
+    
+      <AIAssistant/>
     </div>
   );
 };

@@ -13,7 +13,12 @@ export default function AIAssistant() {
   const [isDragging, setIsDragging] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [startPos, setStartPos] = useState({ x: 0, y: 0 })
-  const [chatPosition, setChatPosition] = useState({ top: "auto", right: "auto", bottom: "80px", left: "auto" })
+  const [chatPosition, setChatPosition] = useState<{
+    top: string | number
+    right: string | number
+    bottom: string | number
+    left: string | number
+  }>({ top: "auto", right: "auto", bottom: "80px", left: "auto" })
   const botRef = useRef<HTMLDivElement>(null)
   const chatRef = useRef<HTMLDivElement>(null)
 
@@ -94,10 +99,10 @@ export default function AIAssistant() {
 
       // Determine optimal position
       const newPosition = {
-        top: "auto" as const,
-        right: "auto" as const,
-        bottom: "auto" as const,
-        left: "auto" as const,
+        top: "auto" as string,
+        right: "auto" as string,
+        bottom: "auto" as string,
+        left: "auto" as string,
       }
 
       // Horizontal positioning
