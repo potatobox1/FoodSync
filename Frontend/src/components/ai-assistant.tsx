@@ -18,29 +18,42 @@ export default function AIAssistant() {
     bottom: string | number
     left: string | number
   }>({ top: "auto", right: "auto", bottom: "80px", left: "auto" })
+
   const botRef = useRef<HTMLDivElement>(null)
   const chatRef = useRef<HTMLDivElement>(null)
 
-  // Load saved position or default to bottom-right
+  // Load saved position or default to bottom-right based on actual size
   useEffect(() => {
     const savedPosition = localStorage.getItem("aiAssistantPosition")
     if (savedPosition) {
       try {
         setPosition(JSON.parse(savedPosition))
+        return
       } catch (e) {
         console.error("Failed to parse saved position", e)
       }
-    } else {
-      // Set default position to bottom-right
-      const defaultWidth = 100
-      const defaultHeight = 100
-      const x = window.innerWidth - defaultWidth - 20
-      const y = window.innerHeight - defaultHeight - 20
-      setPosition({ x, y })
     }
+
+    // Wait for bot to render before calculating its size
+    const handleDefaultPosition = () => {
+        if (botRef.current) {
+            const rect = botRef.current.getBoundingClientRect()
+            
+            // 👇 Change this padding value as needed
+            const paddingRight = 30
+            const paddingBottom = 30
+        
+            const x = window.innerWidth - rect.width - paddingRight
+            const y = window.innerHeight - rect.height - paddingBottom
+        
+            setPosition({ x, y })
+          }
+    }
+
+    // Slight delay to ensure DOM is ready
+    setTimeout(handleDefaultPosition, 50)
   }, [])
 
-  // Handle mouse down for drag start
   const handleMouseDown = (e: React.MouseEvent) => {
     if (botRef.current) {
       setIsDragging(true)
@@ -52,7 +65,6 @@ export default function AIAssistant() {
     }
   }
 
-  // Handle mouse move for dragging
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging) return
     const newX = e.clientX - startPos.x
@@ -60,7 +72,6 @@ export default function AIAssistant() {
     setPosition({ x: newX, y: newY })
   }
 
-  // Handle mouse up to end dragging
   const handleMouseUp = () => {
     if (isDragging) {
       setIsDragging(false)
@@ -79,7 +90,6 @@ export default function AIAssistant() {
     }
   }, [isDragging, startPos])
 
-  // Calculate chat position based on bot position
   useEffect(() => {
     if (isOpen && botRef.current) {
       const botRect = botRef.current.getBoundingClientRect()
@@ -123,7 +133,6 @@ export default function AIAssistant() {
     }
   }
 
-  // Handle touch events for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     if (botRef.current) {
       setIsDragging(true)
