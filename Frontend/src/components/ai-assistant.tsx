@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef, useEffect } from "react"
 import { MessageSquare, X } from "lucide-react"
 import ChatInterface from "./chat-interface"
@@ -22,7 +21,7 @@ export default function AIAssistant() {
   const botRef = useRef<HTMLDivElement>(null)
   const chatRef = useRef<HTMLDivElement>(null)
 
-  // Load saved position on mount
+  // Load saved position or default to bottom-right
   useEffect(() => {
     const savedPosition = localStorage.getItem("aiAssistantPosition")
     if (savedPosition) {
@@ -31,6 +30,13 @@ export default function AIAssistant() {
       } catch (e) {
         console.error("Failed to parse saved position", e)
       }
+    } else {
+      // Set default position to bottom-right
+      const defaultWidth = 100
+      const defaultHeight = 100
+      const x = window.innerWidth - defaultWidth - 20
+      const y = window.innerHeight - defaultHeight - 20
+      setPosition({ x, y })
     }
   }, [])
 
@@ -42,8 +48,6 @@ export default function AIAssistant() {
         x: e.clientX - position.x,
         y: e.clientY - position.y,
       })
-
-      // Prevent text selection during drag
       e.preventDefault()
     }
   }
@@ -51,10 +55,8 @@ export default function AIAssistant() {
   // Handle mouse move for dragging
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging) return
-
     const newX = e.clientX - startPos.x
     const newY = e.clientY - startPos.y
-
     setPosition({ x: newX, y: newY })
   }
 
@@ -62,18 +64,15 @@ export default function AIAssistant() {
   const handleMouseUp = () => {
     if (isDragging) {
       setIsDragging(false)
-      // Save position to localStorage
       localStorage.setItem("aiAssistantPosition", JSON.stringify(position))
     }
   }
 
-  // Add and remove event listeners for dragging
   useEffect(() => {
     if (isDragging) {
       window.addEventListener("mousemove", handleMouseMove)
       window.addEventListener("mouseup", handleMouseUp)
     }
-
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
       window.removeEventListener("mouseup", handleMouseUp)
@@ -87,17 +86,14 @@ export default function AIAssistant() {
       const viewportWidth = window.innerWidth
       const viewportHeight = window.innerHeight
 
-      // Default chat dimensions
       const chatWidth = 320
       const chatHeight = 400
 
-      // Calculate if chat would go off-screen
       const wouldGoOffRight = botRect.right + chatWidth > viewportWidth
       const wouldGoOffTop = botRect.top - chatHeight < 0
       const wouldGoOffLeft = botRect.left - chatWidth < 0
       const wouldGoOffBottom = botRect.bottom + chatHeight > viewportHeight
 
-      // Determine optimal position
       const newPosition = {
         top: "auto" as string,
         right: "auto" as string,
@@ -105,21 +101,15 @@ export default function AIAssistant() {
         left: "auto" as string,
       }
 
-      // Horizontal positioning
       if (wouldGoOffRight) {
-        // Position to the left of the bot
         newPosition.right = `${viewportWidth - botRect.left}px`
       } else {
-        // Position to the right of the bot
         newPosition.left = `${botRect.right}px`
       }
 
-      // Vertical positioning
       if (wouldGoOffBottom) {
-        // Position above the bot
         newPosition.bottom = `${viewportHeight - botRect.top}px`
       } else {
-        // Position below the bot
         newPosition.top = `${botRect.bottom}px`
       }
 
@@ -147,11 +137,9 @@ export default function AIAssistant() {
 
   const handleTouchMove = (e: TouchEvent) => {
     if (!isDragging) return
-
     const touch = e.touches[0]
     const newX = touch.clientX - startPos.x
     const newY = touch.clientY - startPos.y
-
     setPosition({ x: newX, y: newY })
   }
 
@@ -162,13 +150,11 @@ export default function AIAssistant() {
     }
   }
 
-  // Add and remove touch event listeners
   useEffect(() => {
     if (isDragging) {
       window.addEventListener("touchmove", handleTouchMove)
       window.addEventListener("touchend", handleTouchEnd)
     }
-
     return () => {
       window.removeEventListener("touchmove", handleTouchMove)
       window.removeEventListener("touchend", handleTouchEnd)
