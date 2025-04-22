@@ -1,0 +1,84 @@
+.container {
+    width: 100%;
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+  }
+  
+  .tableHeader,
+  .tableRow {
+    display: grid;
+    grid-template-columns: 40px 1fr 100px 120px;
+    padding: 12px 0;
+    align-items: center;
+    min-width: 400px; /* Ensure minimum width for content */
+  }
+  
+  .tableHeader {
+    font-weight: bold;
+    color: #666;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .tableRow {
+    border-bottom: 1px solid #f5f5f5;
+  }
+  
+  .tableRow:last-child {
+    border-bottom: none;
+  }
+  
+  .rank {
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+  }
+  
+  .name {
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 8px; /* Add some padding */
+  }
+  
+  .donations {
+    font-weight: 500;
+    color: #00a896;
+    text-align: center;
+    white-space: nowrap;
+  }
+  
+  .rating {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .ratingValue {
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+  }
+  
+  .ratingBar {
+    height: 6px;
+    background-color: #eee;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .ratingFill {
+    height: 100%;
+    background-color: #00a896;
+    border-radius: 3px;
+  }
+  
+  /* Add responsive adjustments */
+  @media (max-width: 600px) {
+    .tableHeader,
+    .tableRow {
+      grid-template-columns: 30px 1fr 80px 100px;
+    }
+  }
+  

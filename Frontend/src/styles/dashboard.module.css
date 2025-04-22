@@ -1,0 +1,104 @@
+.dashboardContainer {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+  }
+  
+  .dashboardContent {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .dashboardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .dashboardHeader h1 {
+    font-size: 28px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .timeRangeSelector {
+    display: flex;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .timeRangeSelector button {
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.2s ease;
+  }
+  
+  .timeRangeSelector button.active {
+    background-color: #00a896;
+    color: white;
+  }
+  
+  .metricsOverview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .chartsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .chartCard {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Add this to prevent overflow */
+  }
+  
+  .chartCard h2 {
+    font-size: 18px;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .chartRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  
+  @media (max-width: 768px) {
+    .chartRow {
+      grid-template-columns: 1fr;
+    }
+  
+    .metricsOverview {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  
+    .dashboardHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  
+    .dashboardHeader h1 {
+      font-size: 24px;
+    }
+  }
+  
