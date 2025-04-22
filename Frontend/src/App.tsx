@@ -4,23 +4,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import InfoPage from "./pages/InfoPage";
 import Dashboard from "./pages/dashboard";
-import Landing from "./pages/LandingPage"
-import Learn from "./pages/learn-more"
-import Contact from "./pages/contact"
-import RestaurantDashboard from "./pages/RestaurantDashboard"
-import Leaderboard from "./pages/leaderboard"
-import Inventory from "./pages/MainInventory"
+import Landing from "./pages/LandingPage";
+import Learn from "./pages/learn-more";
+import Contact from "./pages/contact";
+import RestaurantDashboard from "./pages/RestaurantDashboard";
+import Leaderboard from "./pages/leaderboard";
+import Inventory from "./pages/MainInventory";
 import OrdersPage from "./pages/OrdersPage";
-import IncomingOrders from "./pages/IncomingOrders"; 
+import IncomingOrders from "./pages/IncomingOrders";
 import AboutUsPage from "./pages/AboutUsPage";
-
+import ReviewPage from "./pages/addReview";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/register" element={<InfoPage/>} />
+        <Route path="/register" element={<InfoPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/contact" element={<Contact />} />
@@ -31,10 +31,10 @@ const App: React.FC = () => {
         <Route path="/OrdersPage" element={<OrdersPage />} />
         <Route path="/incoming-orders" element={<IncomingOrders />} />
         <Route path="/AboutUs" element={<AboutUsPage />} />
+        <Route path="/Review" element={<ReviewPage />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
 export default App;
-
