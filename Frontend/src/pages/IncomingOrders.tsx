@@ -117,8 +117,13 @@ export default function IncomingOrders() {
   };
 
   return (
-    <div className={styles.container}>
+    <>
+    <div>
       <Navbar active="orders" />
+
+    </div>
+   
+    <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>Incoming Orders</h1>
         <div className={styles.filterContainer}>
@@ -235,5 +240,6 @@ export default function IncomingOrders() {
 
       </main>
     </div>
+    </>
   );
 }

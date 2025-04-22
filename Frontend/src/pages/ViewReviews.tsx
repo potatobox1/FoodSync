@@ -1,6 +1,6 @@
 // import type React from "react"
 import React, { useEffect, useState } from "react";
-import "../styles/ViewReviews.css"
+import styles from '../styles/ViewReviews.module.css'
 import { Star } from "lucide-react"
 import Navbar from "../components/NavBar"
 import { useAppSelector } from "../redux/hooks";
@@ -99,86 +99,92 @@ const OrderReviews: React.FC = () => {
 
   return (
     <>
-    <div>
-        <Navbar active="reviews"/>
-
-    </div>
-    <div className="order-reviews-container">
-
-      <div className="content">
-        <h1 className="page-title">Order Reviews</h1>
-
-        <div className="filter-section">
-          <label htmlFor="filter">Filter by rating:</label>
-          <select
-            id="filter"
-            className="filter-dropdown"
-            value={selectedRating}
-            onChange={(e) => setSelectedRating(e.target.value)}
-          >
-
-            <option value="all">All Ratings</option>
-            <option value="5">5 Stars</option>
-            <option value="4">4 Stars</option>
-            <option value="3">3 Stars</option>
-            <option value="2">2 Stars</option>
-            <option value="1">1 Star</option>
-          </select>
-        </div>
-
-        {loading ? (
+      <div>
+        <Navbar active="reviews" />
+      </div>
+      <div className={styles["order-reviews-container"]}>
+        <div className={styles.content}>
+          <h1 className={styles["page-title"]}>Order Reviews</h1>
+  
+          <div className={styles["filter-section"]}>
+            <label htmlFor="filter">Filter by rating:</label>
+            <select
+              id="filter"
+              className={styles["filter-dropdown"]}
+              value={selectedRating}
+              onChange={(e) => setSelectedRating(e.target.value)}
+            >
+              <option value="all">All Ratings</option>
+              <option value="5">5 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="2">2 Stars</option>
+              <option value="1">1 Star</option>
+            </select>
+          </div>
+  
+          {loading ? (
             <p>Loading reviews...</p>
           ) : reviews.length === 0 ? (
             <p>No reviews found.</p>
           ) : (
-
-        <div className="reviews-list">
-          {reviews
-              .filter((review) =>
-                selectedRating === "all" ? true : review.rating === Number(selectedRating)
-              )
-              .map((review) => (
-
-            <div key={review._id} className="review-card">
-              <div className="review-header">
-                <div className="item-details">
-                <img
-                  src={
-                    review.itemCategory.toLowerCase() === "savoury"
-                      ? "/images/savoury.jpg"
-                      : review.itemCategory.toLowerCase() === "beverage"
-                      ? "/images/beverage.jpg"
-                      : review.itemCategory.toLowerCase() === "sweet"
-                      ? "/images/sweet.jpg"
-                      : "/images/default.png"
-                  }
-                  alt={review.itemCategory}
-                  className="item-image"
-                />
-                  <div className="item-info">
-                    <h3 className="item-name">{review.itemName}</h3>
-                    <p className="item-category">Category: {review.itemCategory}</p>
+            <div className={styles["reviews-list"]}>
+              {reviews
+                .filter((review) =>
+                  selectedRating === "all"
+                    ? true
+                    : review.rating === Number(selectedRating)
+                )
+                .map((review) => (
+                  <div key={review._id} className={styles["review-card"]}>
+                    <div className={styles["review-header"]}>
+                      <div className={styles["item-details"]}>
+                        <img
+                          src={
+                            review.itemCategory.toLowerCase() === "savoury"
+                              ? "/images/savoury.jpg"
+                              : review.itemCategory.toLowerCase() === "beverage"
+                              ? "/images/beverage.jpg"
+                              : review.itemCategory.toLowerCase() === "sweet"
+                              ? "/images/sweet.jpg"
+                              : "/images/default.png"
+                          }
+                          alt={review.itemCategory}
+                          className={styles["item-image"]}
+                        />
+                        <div className={styles["item-info"]}>
+                          <h3 className={styles["item-name"]}>
+                            {review.itemName}
+                          </h3>
+                          <p className={styles["item-category"]}>
+                            Category: {review.itemCategory}
+                          </p>
+                        </div>
+                      </div>
+                      <div className={styles["review-meta"]}>
+                        <div className={styles.rating}>
+                          {renderStars(review.rating)}
+                        </div>
+                        <p className={styles["review-date"]}>
+                          Reviewed on {formatDate(review.created_at)}
+                        </p>
+                      </div>
+                    </div>
+  
+                    <div className={styles["review-content"]}>
+                      <p className={styles["review-text"]}>{review.feedback}</p>
+                      <p className={styles["reviewer-name"]}>
+                        - {review.reviewerName}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="review-meta">
-                  <div className="rating">{renderStars(review.rating)}</div>
-                  <p className="review-date">Reviewed on {formatDate(review.created_at)}</p>
-                </div>
-              </div>
-
-              <div className="review-content">
-                <p className="review-text">{review.feedback}</p>
-                <p className="reviewer-name">- {review.reviewerName}</p>
-              </div>
+                ))}
             </div>
-          ))}
-        </div>
           )}
+        </div>
       </div>
-    </div>
-
-  </>
-  )
+    </>
+  );
 }
 
 export default OrderReviews

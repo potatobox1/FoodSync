@@ -40,13 +40,18 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      {/* Conditionally render navbar based on user type */}
-      {user.user_type === "restaurant" ? (
+    <>
+    <div>
+    {user.user_type === "restaurant" ? (
         <Navbar active="leaderboard" />
       ) : (
         <FNavbar active="leaderboard" />
       )}
+    </div>
+    
+    <div className="app">
+      {/* Conditionally render navbar based on user type */}
+      
 
       <main className="container">
         <h1 className="page-title">Leaderboard</h1>
@@ -90,6 +95,7 @@ function App() {
         </div>
       </main>
     </div>
+    </>
   );
 }
 
