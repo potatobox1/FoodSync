@@ -68,7 +68,7 @@ const OrderReviews: React.FC = () => {
   return (
     <>
     <div>
-        <Navbar active="orders"/>
+        <Navbar active="reviews"/>
 
     </div>
     <div className="order-reviews-container">
