@@ -1,56 +1,88 @@
-import type React from "react"
+// import type React from "react"
+import React, { useEffect, useState } from "react";
 import "../styles/ViewReviews.css"
 import { Star } from "lucide-react"
 import Navbar from "../components/NavBar"
+import { useAppSelector } from "../redux/hooks";
+import { fetchReviewsByRestaurant } from "../services/review";
+import { fetchFoodItemById } from "../services/foodItems"; 
+import { getUserIdByFoodbankId } from "../services/foodbank";
+import { fetchUserById } from "../services/user";
 
 // Define types for our data
 interface Review {
-  id: string
-  itemName: string
-  reviewText: string
+  _id: string
+  foodbank_id: string
+  restaurant_id: string
+  food_id: string
   rating: number
+  feedback: string
+  created_at: string
+  itemName:string
+  itemCategory: string
   reviewerName: string
-  date: string
-  itemImage?: string
-  itemCategory?: string
+
 }
 
 const OrderReviews: React.FC = () => {
   // Sample data - in a real app, this would come from an API
-  const reviews: Review[] = [
-    {
-      id: "rev1",
-      itemName: "Juicy Burger",
-      reviewText: "Absolutely delicious! The burger was juicy and flavorful. Would definitely order again.",
-      rating: 5,
-      reviewerName: "Alex Johnson",
-      date: "2025-04-20",
-      itemImage: "/placeholder.svg?height=80&width=80",
-      itemCategory: "Savoury",
-    },
-    {
-      id: "rev2",
-      itemName: "Fresh Orange Juice",
-      reviewText: "Very refreshing and not too sweet. Perfect for a hot day!",
-      rating: 4,
-      reviewerName: "Sam Wilson",
-      date: "2025-04-19",
-      itemImage: "/placeholder.svg?height=80&width=80",
-      itemCategory: "Beverage",
-    },
-    {
-      id: "rev3",
-      itemName: "Veggie Platter",
-      reviewText: "The vegetables were fresh but I would have liked more variety in the dips.",
-      rating: 3,
-      reviewerName: "Jamie Smith",
-      date: "2025-04-18",
-      itemImage: "/placeholder.svg?height=80&width=80",
-      itemCategory: "Healthy",
-    },
-  ]
+  const restaurant_id:string = useAppSelector((state:any) => state.user.type_id);  
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedRating, setSelectedRating] = useState("all");
 
-  // Function to render stars based on rating
+  useEffect(() => {
+    const fetchReviews = async () => {
+      if (!restaurant_id) return;
+
+      try {
+        const rawReviews: Review[] = await fetchReviewsByRestaurant(restaurant_id);
+
+        const enrichedReviews = await Promise.all(
+          rawReviews.map(async (review) => {
+            let itemName = "Unknown";
+            let itemCategory = "Unknown";
+            let reviewerName = "Anonymous";
+
+            // Get food item name/category
+            try {
+              const food = await fetchFoodItemById(review.food_id);
+              itemName = food.name || "Unknown";
+              itemCategory = food.category || "Unknown";
+            } catch (err) {
+              console.error(`Failed to fetch food item for ID ${review.food_id}`, err);
+            }
+
+            // Get reviewer name
+            try {
+              const restaurant = await getUserIdByFoodbankId(review.foodbank_id);
+              const user = await fetchUserById(restaurant);
+              reviewerName = user.name || "Anonymous";
+            } catch (err) {
+              console.error(`Failed to fetch user for review ${review._id}`, err);
+            }
+
+            return {
+              ...review,
+              itemName,
+              itemCategory,
+              reviewerName,
+            };
+          })
+        );
+
+        setReviews(enrichedReviews);
+      } catch (err) {
+        console.error("Failed to fetch reviews", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, [restaurant_id]);
+
+
   const renderStars = (rating: number) => {
     const stars = []
     for (let i = 1; i <= 5; i++) {
@@ -59,7 +91,7 @@ const OrderReviews: React.FC = () => {
     return stars
   }
 
-  // Format date to a more readable format
+  
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }
     return new Date(dateString).toLocaleDateString(undefined, options)
@@ -78,7 +110,13 @@ const OrderReviews: React.FC = () => {
 
         <div className="filter-section">
           <label htmlFor="filter">Filter by rating:</label>
-          <select id="filter" className="filter-dropdown">
+          <select
+            id="filter"
+            className="filter-dropdown"
+            value={selectedRating}
+            onChange={(e) => setSelectedRating(e.target.value)}
+          >
+
             <option value="all">All Ratings</option>
             <option value="5">5 Stars</option>
             <option value="4">4 Stars</option>
@@ -88,12 +126,35 @@ const OrderReviews: React.FC = () => {
           </select>
         </div>
 
+        {loading ? (
+            <p>Loading reviews...</p>
+          ) : reviews.length === 0 ? (
+            <p>No reviews found.</p>
+          ) : (
+
         <div className="reviews-list">
-          {reviews.map((review) => (
-            <div key={review.id} className="review-card">
+          {reviews
+              .filter((review) =>
+                selectedRating === "all" ? true : review.rating === Number(selectedRating)
+              )
+              .map((review) => (
+
+            <div key={review._id} className="review-card">
               <div className="review-header">
                 <div className="item-details">
-                  <img src="../public/images/beverage.png"  alt={review.itemName} className="item-image" />
+                <img
+                  src={
+                    review.itemCategory.toLowerCase() === "savoury"
+                      ? "/images/savoury.jpg"
+                      : review.itemCategory.toLowerCase() === "beverage"
+                      ? "/images/beverage.jpg"
+                      : review.itemCategory.toLowerCase() === "sweet"
+                      ? "/images/sweet.jpg"
+                      : "/images/default.png"
+                  }
+                  alt={review.itemCategory}
+                  className="item-image"
+                />
                   <div className="item-info">
                     <h3 className="item-name">{review.itemName}</h3>
                     <p className="item-category">Category: {review.itemCategory}</p>
@@ -101,17 +162,18 @@ const OrderReviews: React.FC = () => {
                 </div>
                 <div className="review-meta">
                   <div className="rating">{renderStars(review.rating)}</div>
-                  <p className="review-date">Reviewed on {formatDate(review.date)}</p>
+                  <p className="review-date">Reviewed on {formatDate(review.created_at)}</p>
                 </div>
               </div>
 
               <div className="review-content">
-                <p className="review-text">{review.reviewText}</p>
+                <p className="review-text">{review.feedback}</p>
                 <p className="reviewer-name">- {review.reviewerName}</p>
               </div>
             </div>
           ))}
         </div>
+          )}
       </div>
     </div>
 

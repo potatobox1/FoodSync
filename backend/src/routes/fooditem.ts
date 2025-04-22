@@ -127,4 +127,30 @@ router.patch("/update-status/:foodItemId", async (req: any, res: any) => {
 });
 
 
+// GET a specific food item by its ID
+router.get("/get-item/:foodId", async (req: any, res: any) => {
+  try {
+    const { foodId } = req.params;
+
+    // Validate foodId
+    if (!foodId) {
+      return res.status(400).json({ message: "Food item ID is required." });
+    }
+
+    // Fetch the food item by ID
+    const foodItem = await FoodItem.findById(foodId);
+
+    if (!foodItem) {
+      return res.status(404).json({ message: "Food item not found." });
+    }
+
+    // Return the food item details
+    res.json(foodItem);
+  } catch (error) {
+    console.error("Error fetching food item:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
 export default router;

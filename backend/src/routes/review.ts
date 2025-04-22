@@ -33,7 +33,6 @@ router.post("/addreview", async (req: any, res: any) => {
 
 
 // GET /api/review/restaurant/:id - Get reviews by restaurant_id
-// GET /api/review/restaurant/:id - Get all reviews for a restaurant (no populate)
 router.get("/restaurant/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
