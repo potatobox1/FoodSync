@@ -40,8 +40,8 @@ export default function AIAssistant() {
             const rect = botRef.current.getBoundingClientRect()
             
             // 👇 Change this padding value as needed
-            const paddingRight = 30
-            const paddingBottom = 30
+            const paddingRight = 10
+            const paddingBottom = 10
         
             const x = window.innerWidth - rect.width - paddingRight
             const y = window.innerHeight - rect.height - paddingBottom
