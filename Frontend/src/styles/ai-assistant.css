@@ -628,3 +628,21 @@
 
 /* Keep the eyes, arms, antenna, waving & blinking as before */
 /* No changes needed to those rules */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;       /* sit above the messages */
+  flex: 0 0 auto;   /* don’t grow or shrink */
+  
+}
+
+.messages-container {
+  flex: 1 1 auto;   /* fill the rest of the height */
+  overflow-y: auto; /* scroll only the messages */
+}
+
