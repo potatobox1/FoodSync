@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../styles/Navbar.module.css";
 
 interface NavbarProps {
-  active: "inventory" | "orders" | "leaderboard";
+  active: "inventory" | "orders" | "leaderboard" | "review"; // 👈 Add "review" here
 }
 
 const FNavbar: React.FC<NavbarProps> = ({ active }) => {
@@ -27,6 +27,12 @@ const FNavbar: React.FC<NavbarProps> = ({ active }) => {
           className={active === "leaderboard" ? styles.active : ""}
         >
           Leaderboard
+        </a>
+        <a
+          href="/Review"
+          className={active === "review" ? styles.active : ""}
+        >
+          Review
         </a>
       </nav>
       <div className={styles.userIcon}>👤</div>

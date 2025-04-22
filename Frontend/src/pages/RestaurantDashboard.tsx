@@ -33,8 +33,11 @@ export default function Dashboard() {
   }, [loadFoodItems]);
 
   return (
-    <div className={styles.container}>
+    <>
+    <div>
       <Navbar active="inventory" />
+    </div>
+    <div className={styles.container}>
 
       <div className={styles.section}>
         <h2 className={styles.title}>My Inventory</h2>
@@ -93,5 +96,6 @@ export default function Dashboard() {
         onItemAdded={loadFoodItems}
       />
     </div>
+    </>
   );
 }

@@ -1,0 +1,23 @@
+.starRating {
+    display: flex;
+    gap: 0.25rem;
+  }
+  
+  .star {
+    font-size: 1.5rem;
+    color: #e0e0e0;
+    transition: color 0.2s ease;
+  }
+  
+  .filled {
+    color: #ffc107;
+  }
+  
+  .clickable {
+    cursor: pointer;
+  }
+  
+  .clickable:hover {
+    color: #ffc107;
+  }
+  

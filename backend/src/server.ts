@@ -12,6 +12,7 @@ import footitem from "./routes/fooditem"
 import donationRequestRoutes from "./routes/donationRequestRoutes";
 import foodbankRoutes from './routes/foodbank'; // path depends on your folder structure
 import completedorders from "./routes/completedOrders"
+import reviewRoutes from "./routes/review"
 // Load environment variables
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.use("/api/fooditems", footitem)
 app.use("/api/donation-requests", donationRequestRoutes)
 app.use('/api/foodbank', foodbankRoutes);
 app.use('/api/completed-orders', completedorders)
+app.use('/api/review',reviewRoutes)
 // Start the server
 app.listen(PORT, () => {
     console.log(`🚀 Server is running on port ${PORT}`);

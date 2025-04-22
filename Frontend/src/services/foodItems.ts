@@ -60,4 +60,14 @@ export const updateFoodItemStatus = async (
   }
 };
 
+export const fetchFoodItemById = async (itemId: string) => {
+  try {
+    const response = await API.get(`/api/fooditems/get-item/${itemId}`);  
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching food item by ID:", error);
+    throw error;
+  }
+};
+
 export default API;
