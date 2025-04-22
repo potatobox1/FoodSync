@@ -8,7 +8,7 @@ interface Order {
   _id: string
   food_id: {
     name: string
-    subCategory: string
+    category: string
     restaurant: { name: string }
   }
   created_at: Date
@@ -41,16 +41,19 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ order, onClose, onSubmit }) =
         <h2 className={styles.modalTitle}>Review Your Order</h2>
 
         <div className={styles.orderInfo}>
-          <img
-            src={
-              order.food_id.subCategory === "Savoury" ? "/images/savoury.jpg"
-              : order.food_id.subCategory === "Sweet" ? "/images/sweet.jpg"
-              : order.food_id.subCategory === "Beverage" ? "/images/beverage.jpg"
+        <img
+          src={
+            order.food_id.category === "Savoury"
+              ? "/images/savoury.jpg"
+              : order.food_id.category === "Sweet"
+              ? "/images/sweet.jpg"
+              : order.food_id.category === "Beverage"
+              ? "/images/beverage.jpg"
               : "/placeholder.svg"
-            }
-            alt={order.food_id.name}
-            className={styles.orderImage}
-          />
+          }
+          alt={order.food_id.name}
+          className={styles.orderImage}
+        />
           <div>
             <h3 className={styles.orderName}>{order.food_id.name}</h3>
             <p className={styles.orderDate}>

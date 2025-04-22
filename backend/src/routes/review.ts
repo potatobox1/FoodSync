@@ -47,4 +47,21 @@ router.get("/restaurant/:id", async (req: Request, res: Response) => {
 });
 
 
+router.get("/check", async (req: any, res: any) => {
+  const { foodbank_id, food_id } = req.query;
+
+  try {
+    const review = await Review.findOne({ foodbank_id, food_id });
+
+    if (review) {
+      return res.json({ exists: true, rating: review.rating });
+    } else {
+      return res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error("Error checking review:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
 export default router;

@@ -40,6 +40,18 @@ export const fetchReviewsByRestaurant = async (restaurantId: string) => {
       throw error;
     }
   };
+
+export const getExistingReview = async (foodbank_id: string, food_id: string) => {
+  try {
+    const response = await API.get(`/api/review/check`, {
+      params: { foodbank_id, food_id },
+    })
+    return response.data // includes: { exists, rating }
+  } catch (error) {
+    console.error("Error checking review:", error)
+    return { exists: false, rating: 0 }
+  }
+}
   
 
 export default API;
