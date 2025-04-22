@@ -84,12 +84,14 @@ const OrderReviews: React.FC = () => {
 
 
   const renderStars = (rating: number) => {
-    const stars = []
-    for (let i = 1; i <= 5; i++) {
-      stars.push(<Star key={i} className={`star ${i <= rating ? "filled" : "empty"}`} size={16} />)
-    }
-    return stars
-  }
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        size={16}
+        className={`${styles.star} ${i < rating ? styles.filled : styles.empty}`}
+      />
+    ));
+  };
 
   
   const formatDate = (dateString: string) => {
