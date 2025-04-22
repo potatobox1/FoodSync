@@ -4,6 +4,8 @@ import { Review } from "../models/review";
 const router = express.Router();
 
 // POST /api/review - Create a new review
+import mongoose from "mongoose";
+
 router.post("/addreview", async (req: any, res: any) => {
   try {
     const { foodbank_id, restaurant_id, food_id, rating, feedback } = req.body;
@@ -13,9 +15,9 @@ router.post("/addreview", async (req: any, res: any) => {
     }
 
     const review = new Review({
-      foodbank_id,
-      restaurant_id,
-      food_id,
+      foodbank_id: new mongoose.Types.ObjectId(foodbank_id),
+      restaurant_id: new mongoose.Types.ObjectId(restaurant_id),
+      food_id: new mongoose.Types.ObjectId(food_id),
       rating,
       feedback,
       created_at: new Date(),
@@ -29,32 +31,21 @@ router.post("/addreview", async (req: any, res: any) => {
   }
 });
 
+
 // GET /api/review/restaurant/:id - Get reviews by restaurant_id
-router.get("/restaurant/:id", async (req: any, res: any) => {
+// GET /api/review/restaurant/:id - Get all reviews for a restaurant (no populate)
+router.get("/restaurant/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const reviews = await Review.find({ restaurant_id: id }).populate("food_id");
 
-    if (!reviews || reviews.length === 0) {
-      return res.status(404).json({ message: "No reviews found for this restaurant" });
-    }
+    const reviews = await Review.find({ restaurant_id: id });
 
-    res.json(reviews);
+    res.status(200).json(reviews);
   } catch (error) {
     console.error("Error fetching reviews by restaurant_id:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
 
-// (Optional) GET /api/review - Get all reviews
-router.get("/", async (req: Request, res: Response) => {
-  try {
-    const reviews = await Review.find().populate("food_id");
-    res.json(reviews);
-  } catch (error) {
-    console.error("Error fetching reviews:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 export default router;

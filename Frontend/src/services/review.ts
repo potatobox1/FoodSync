@@ -5,13 +5,13 @@ const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 export const addReview = async ({
   foodbank_id,
   restaurant_id,
-  food_item_id,
+  food_id,
   rating,
   feedback,
 }: {
   foodbank_id?: string;
   restaurant_id?: string;
-  food_item_id: string;
+  food_id: string;
   rating: number;
   feedback: string;
 }) => {
@@ -19,7 +19,7 @@ export const addReview = async ({
     const response = await API.post("/api/review/addreview", {
       foodbank_id,
       restaurant_id,
-      food_item_id,
+      food_id,
       rating,
       feedback,
     });
