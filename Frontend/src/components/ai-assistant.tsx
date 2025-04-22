@@ -255,7 +255,7 @@ export default function AIAssistant() {
             <div className="robot-arm right"></div>
           </div>
         </div>
-        {isHovering && !isDragging && <div className="greeting-bubble">Hi there! 👋</div>}
+        {isHovering && !isDragging && <div className="greeting-bubble">Hi there! Iam Foodie 👋</div>}
         {!isOpen && (
           <div className="icon-badge">
             <MessageSquare size={16} />
