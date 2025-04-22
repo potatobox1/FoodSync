@@ -170,6 +170,33 @@ export default function AIAssistant() {
     }
   }, [isDragging, startPos])
 
+  useEffect(() => {
+    const maxOffset = 2; // how far the pupil can move inside the eye
+
+    function handlePupilFollow(e: MouseEvent) {
+      document.querySelectorAll<HTMLDivElement>('.pupil').forEach(pupil => {
+        const eye = pupil.parentElement!;  // the .eye
+        const rect = eye.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
+        const dist = Math.hypot(dx, dy) || 1;
+        const offsetX = (dx / dist) * maxOffset;
+        const offsetY = (dy / dist) * maxOffset;
+
+        // apply inline transform
+        pupil.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      })
+    }
+
+    window.addEventListener('mousemove', handlePupilFollow);
+    return () => {
+      window.removeEventListener('mousemove', handlePupilFollow);
+    }
+  }, []);
+
   return (
     <div className="ai-assistant-container">
       {isOpen && (

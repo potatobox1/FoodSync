@@ -23,7 +23,7 @@ export default function ChatInterface() {
       setMessages((prev) => [
         ...prev,
         {
-          text: `Thanks for your message! This is a demo response. In a real implementation, this would connect to your AI service.`,
+          text: `Sheraz say barra chutiya is duniya mein nahi fr fr fr.`,
           sender: "ai",
         },
       ])

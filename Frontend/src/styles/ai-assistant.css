@@ -14,7 +14,7 @@
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    background: linear-gradient(135deg, #023844, #00a9cd);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,7 +64,7 @@
   }
   
   .robot-head {
-    width: 36px;
+    width: 42px;
     height: 32px;
     background: white;
     border-radius: 18px 18px 12px 12px;
@@ -88,7 +88,7 @@
   .robot-eyes {
     display: flex;
     justify-content: space-between;
-    width: 24px;
+    width: 26px;
     margin-top: 4px;
   }
   
@@ -105,19 +105,19 @@
   }
   
   .pupil {
-    width: 4px;
-    height: 4px;
-    background: #4f46e5;
+    width: 5px;
+    height: 5px;
+    background: #000000;
     border-radius: 50%;
     transition: all 0.3s ease;
   }
   
   .eye.left .pupil {
-    transform: translateX(-1px);
+    transform: translateX(-2px);
   }
   
   .eye.right .pupil {
-    transform: translateX(1px);
+    transform: translateX(-2px);
   }
   
   .ai-bot-icon:hover .pupil {
@@ -127,7 +127,7 @@
   .robot-mouth {
     width: 16px;
     height: 8px;
-    background: #e0e7ff;
+    background: #000000;
     border-radius: 4px;
     margin-top: 6px;
     overflow: hidden;
@@ -137,18 +137,18 @@
   }
   
   .mouth-line {
-    width: 12px;
+    width: 9px;
     height: 6px;
-    background: #e0e7ff;
+    background: #f80000;
     border-radius: 6px 6px 10px 10px;
-    border: 2px solid #4f46e5;
+    /* border: 2px solid #4f46e5; */
     border-top: none;
     transition: all 0.3s ease;
   }
   
   .ai-bot-icon:hover .mouth-line {
     height: 7px;
-    width: 14px;
+    width: 12px;
   }
   
   .robot-body {
@@ -164,7 +164,7 @@
   .robot-arm {
     width: 6px;
     height: 16px;
-    background: white;
+    background: #d29a6c ;
     position: absolute;
     top: 2px;
     border-radius: 3px;
@@ -184,7 +184,7 @@
   }
   
   /* Waving Animation */
-  .waving .robot-arm.right {
+  .waving .robot-arm.left {
     animation: wave 0.6s infinite alternate;
   }
   
@@ -220,7 +220,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     font-size: 14px;
     font-weight: 500;
-    color: #4f46e5;
+    color: #00a9cd;
     white-space: nowrap;
     animation: fadeIn 0.3s ease;
     z-index: 1;
@@ -281,7 +281,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 14px 16px;
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    background: linear-gradient(135deg, #00a9cd, #00a9cd);
     color: white;
   }
   
@@ -305,7 +305,8 @@
   }
   
   .close-button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    color: red;
+    /* background: rgba(255, 255, 255, 0.2); */
   }
   
   /* Chat Interface */
@@ -336,7 +337,7 @@
   
   .message.user {
     align-self: flex-end;
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    background: linear-gradient(135deg, #00a9cd, #006e86);
     color: white;
     border-bottom-right-radius: 4px;
   }
@@ -375,7 +376,7 @@
   }
   
   .input-container button {
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    background: linear-gradient(135deg, #00a9cd, #006379);
     color: white;
     border: none;
     border-radius: 50%;
@@ -400,9 +401,162 @@
   }
   
   .input-container button:disabled {
-    background: #9ca3af;
+    background: #526469;
     cursor: not-allowed;
-    box-shadow: none;
+    box-shadow: none;/* ai-assistant.css */
+
+    /* Container stays the same */
+    .ai-assistant-container {
+      position: fixed;
+      z-index: 1000;
+      font-family: system-ui, sans-serif;
+      pointer-events: none;
+    }
+    
+    /* The “bot” is now a strawberry */
+    .ai-bot-icon {
+      width: 80px;
+      height: 90px;
+      background: #ef4f6f;              /* strawberry red */
+      border-radius: 50% 50% 45% 45%;    /* plump top, tapered bottom */
+      position: relative;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .ai-bot-icon:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .ai-bot-icon.dragging {
+      cursor: grabbing;
+      opacity: 0.9;
+    }
+    
+    /* Strawberry seeds */
+    .ai-bot-icon::before,
+    .ai-bot-icon::after {
+      content: "";
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .ai-bot-icon::before {
+      width: 6px; height: 4px;
+      top: 30%;
+      left: 30%;
+      box-shadow:
+        20px 10px #fff,
+        10px 30px #fff,
+        30px 40px #fff,
+        50px 20px #fff;
+    }
+    .ai-bot-icon::after {
+      width: 6px; height: 4px;
+      top: 50%;
+      left: 15%;
+      box-shadow:
+        30px 5px #fff,
+        40px 35px #fff,
+        60px 25px #fff;
+    }
+    
+    /* Green leafy top */
+    .robot-antenna, .antenna {
+      width: 0; height: 0; /* hide original antenna */
+    }
+    .ai-bot-icon .robot > .robot-antenna {
+      position: absolute;
+      top: -16px;
+      left: calc(50% - 8px);
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 14px solid #51a351;  /* leaf green */
+      transform: rotate(-20deg);
+    }
+    .ai-bot-icon .robot .robot-antenna::before {
+      display: none;
+    }
+    
+    /* Eyes & mouth inside */
+    .robot-head, .robot-face {
+      all: unset;
+    }
+    .ai-bot-icon .robot .robot-eyes {
+      display: flex;
+      gap: 14px;
+      position: absolute;
+      top: 35%;
+    }
+    .ai-bot-icon .robot .eye {
+      width: 12px; height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      position: relative;
+      animation: blink 5s infinite;
+    }
+    .ai-bot-icon .robot .pupil {
+      width: 5px; height: 5px;
+      background: #333;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.2s ease;
+    }
+    .ai-bot-icon:hover .pupil {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+    @keyframes blink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
+    }
+    
+    /* Smiling mouth */
+    .ai-bot-icon .robot-mouth {
+      width: 24px;
+      height: 12px;
+      border: 3px solid #333;
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      position: absolute;
+      bottom: 25%;
+    }
+    
+    /* Waving “arm” leaf */
+    .robot-arm, .robot-body { display: none; }
+    .ai-bot-icon.waving::after {
+      content: "";
+      position: absolute;
+      width: 14px; height: 40px;
+      background: #51a351;
+      border-radius: 8px;
+      top: 10%;
+      right: -10px;
+      transform-origin: top center;
+      animation: leaf-wave 0.6s infinite alternate ease-in-out;
+    }
+    @keyframes leaf-wave {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(30deg); }
+    }
+    
+    /* Greeting bubble unchanged */
+    .greeting-bubble {
+      position: absolute;
+      top: -45px; right: -10px;
+      background: white;
+      padding: 6px 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-size: 14px;
+      color: #333;
+      animation: fadeIn 0.3s ease;
+    }
+    
   }
   
   /* Badge for message icon */
@@ -440,5 +594,37 @@
     }
   }
   
+  /* ——— Burger‑Bot Skin ——— */
 
-  
+/* Top bun for the head */
+.robot-head {
+  background: linear-gradient(to bottom, #f5d194 0%, #d29a6c 60%, #b07a4f 100%);
+  border-radius: 50% 50% 40% 40%;
+}
+
+/* Sesame seeds on the bun */
+.robot-head::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  width: 4px; height: 2px;
+  background: #fff3c4;
+  border-radius: 2px;
+  box-shadow:
+    12px 4px #fff3c4,
+    20px 10px #fff3c4,
+    6px 14px #fff3c4,
+    18px 18px #fff3c4;
+}
+
+/* Patty + lettuce in the body */
+.robot-body {
+  background:
+    linear-gradient(to bottom, #7ec850 0%, #7ec850 30%,    /* lettuce */
+                    #c07c40 30%, #c07c40 60%,             /* cheese */
+                    #6b4226 60%, #6b4226 100%);           /* patty */
+  border-radius: 30% 30% 10% 10%;
+}
+
+/* Keep the eyes, arms, antenna, waving & blinking as before */
+/* No changes needed to those rules */
