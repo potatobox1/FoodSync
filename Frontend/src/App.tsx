@@ -13,6 +13,7 @@ import Inventory from "./pages/MainInventory";
 import OrdersPage from "./pages/OrdersPage";
 import IncomingOrders from "./pages/IncomingOrders";
 import AboutUsPage from "./pages/AboutUsPage";
+import OrderReviews from "./pages/ViewReviews";
 import ReviewPage from "./pages/addReview";
 
 const App: React.FC = () => {
@@ -31,7 +32,6 @@ const App: React.FC = () => {
         <Route path="/OrdersPage" element={<OrdersPage />} />
         <Route path="/incoming-orders" element={<IncomingOrders />} />
         <Route path="/AboutUs" element={<AboutUsPage />} />
-        <Route path="/Review" element={<ReviewPage />} />
       </Routes>
     </BrowserRouter>
   );
