@@ -31,4 +31,15 @@ export const addReview = async ({
   }
 };
 
+export const fetchReviewsByRestaurant = async (restaurantId: string) => {
+    try {
+      const response = await API.get(`/api/review/restaurant/${restaurantId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching reviews by restaurant ID:", error);
+      throw error;
+    }
+  };
+  
+
 export default API;
