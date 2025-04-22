@@ -9,6 +9,7 @@ import { fetchDonationRequestsForFoodbank } from "../services/addDonationRequest
 import { fetchRestaurantById } from "../services/restaurant"
 import { fetchUserById } from "../services/user"
 import { useAppSelector } from "../redux/hooks"
+import { addReview, getExistingReview } from "../services/review"
 
 interface Restaurant {
   _id: string
@@ -21,7 +22,6 @@ interface FoodItem {
   category: string
   restaurant_id: string
   expiration_date: Date
-  subCategory: "Savoury" | "Sweet" | "Beverage"
   restaurant: Restaurant
 }
 
@@ -30,11 +30,15 @@ interface DonationRequest {
   food_id: FoodItem
   requested_quantity: number
   created_at: Date
-  isReviewed?: boolean
+  review?: {
+    exists: boolean
+    rating: number
+  }
 }
 
 const Review: React.FC = () => {
-  const foodbankId = useAppSelector((state: any) => state.user.type_id)
+  const user = useAppSelector((state: any) => state.user)
+  const foodbankId = user.type_id
   const [orders, setOrders] = useState<DonationRequest[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedOrder, setSelectedOrder] = useState<DonationRequest | null>(null)
@@ -48,13 +52,15 @@ const Review: React.FC = () => {
         completed.map(async (order: any) => {
           const restaurant = await fetchRestaurantById(order.food_id.restaurant_id)
           const user = await fetchUserById(restaurant.user_id)
+          const review = await getExistingReview(foodbankId, order.food_id._id)
+
           return {
             ...order,
             food_id: {
               ...order.food_id,
               restaurant: { _id: restaurant._id, name: user.name },
             },
-            isReviewed: false, // You can replace this with real review logic
+            review, // includes { exists, rating }
           }
         })
       )
@@ -70,23 +76,55 @@ const Review: React.FC = () => {
     setIsModalOpen(true)
   }
 
-  const closeReviewModal = () => {
+  const closeReviewModal = async () => {
     setIsModalOpen(false)
     setSelectedOrder(null)
+
+    // Refresh reviews to fetch the new rating
+    const data = await fetchDonationRequestsForFoodbank(foodbankId)
+    const completed = data.filter((d: any) => d.status === "accepted")
+
+    const updated = await Promise.all(
+      completed.map(async (order: any) => {
+        const restaurant = await fetchRestaurantById(order.food_id.restaurant_id)
+        const user = await fetchUserById(restaurant.user_id)
+        const review = await getExistingReview(foodbankId, order.food_id._id)
+
+        return {
+          ...order,
+          food_id: {
+            ...order.food_id,
+            restaurant: { _id: restaurant._id, name: user.name },
+          },
+          review,
+        }
+      })
+    )
+
+    setOrders(updated)
   }
 
-  const submitReview = (orderId: string, rating: number, feedback: string) => {
-    console.log("Review submitted:", { orderId, rating, feedback })
+  const submitReview = async (orderId: string, rating: number, feedback: string) => {
+    if (!selectedOrder) return
 
-    setOrders((prev) =>
-      prev.map((o) => (o._id === orderId ? { ...o, isReviewed: true } : o))
-    )
+    try {
+      await addReview({
+        foodbank_id: foodbankId,
+        restaurant_id: selectedOrder.food_id.restaurant._id,
+        food_id: selectedOrder.food_id._id,
+        rating,
+        feedback,
+      })
+      console.log("✅ Review submitted")
+    } catch (error) {
+      console.error("❌ Error submitting review:", error)
+    }
 
     closeReviewModal()
   }
 
-  const getCategoryImage = (sub: string) => {
-    switch (sub) {
+  const getCategoryImage = (cat: string) => {
+    switch (cat) {
       case "Savoury": return "/images/savoury.jpg"
       case "Sweet": return "/images/sweet.jpg"
       case "Beverage": return "/images/beverage.jpg"
@@ -107,22 +145,20 @@ const Review: React.FC = () => {
               <div key={order._id} className={styles.orderCard}>
                 <div className={styles.orderImageContainer}>
                   <img
-                    src={getCategoryImage(order.food_id.subCategory)}
+                    src={getCategoryImage(order.food_id.category)}
                     alt={order.food_id.name}
                     className={styles.orderImage}
                   />
                 </div>
                 <div className={styles.orderDetails}>
                   <h3 className={styles.orderName}>{order.food_id.name}</h3>
-                  <p className={styles.orderDate}>
-                    Received on: {new Date(order.created_at).toLocaleDateString()}
-                  </p>
+                  <p className={styles.orderDate}>Received on: {new Date(order.created_at).toLocaleDateString()}</p>
                   <p className={styles.orderItems}>Qty: {order.requested_quantity}</p>
                   <p className={styles.orderItems}>From: {order.food_id.restaurant.name}</p>
-                  {order.isReviewed ? (
+                  {order.review?.exists ? (
                     <div className={styles.reviewedBadge}>
                       <span className={styles.reviewedText}>Reviewed</span>
-                      <StarRating rating={4} readOnly />
+                      <StarRating rating={order.review.rating} readOnly />
                     </div>
                   ) : (
                     <button className={styles.reviewButton} onClick={() => openReviewModal(order)}>
