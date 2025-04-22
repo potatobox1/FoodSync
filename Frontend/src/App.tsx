@@ -13,7 +13,7 @@ import Inventory from "./pages/MainInventory"
 import OrdersPage from "./pages/OrdersPage";
 import IncomingOrders from "./pages/IncomingOrders"; 
 import AboutUsPage from "./pages/AboutUsPage";
-
+import OrderReviews from "./pages/ViewReviews";
 
 const App: React.FC = () => {
   return (
@@ -31,6 +31,7 @@ const App: React.FC = () => {
         <Route path="/OrdersPage" element={<OrdersPage />} />
         <Route path="/incoming-orders" element={<IncomingOrders />} />
         <Route path="/AboutUs" element={<AboutUsPage />} />
+        <Route path="/viewreview" element= {<OrderReviews/>}/>
       </Routes>
     </BrowserRouter>
   );
