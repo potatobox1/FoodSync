@@ -3,13 +3,19 @@ import { Check, Clock, X } from "lucide-react";
 import styles from "../styles/IncomingOrders.module.css";
 import { fetchDonationRequestsForRestaurant } from "../services/addDonationRequest";
 import { updateDonationRequestStatus } from "../services/addDonationRequest";
-import { updateFoodItemStatus } from "../services/foodItems";
+import { fetchFoodItemById, updateFoodItemStatus } from "../services/foodItems";
 import { addCompletedOrder } from "../services/completedorders";
 import { fetchUserById } from "../services/user";
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { useAppSelector } from "../redux/hooks";
 import Navbar from "../components/NavBar";
 import { updateTotalDonations } from "../services/restaurant";
+import { sendEmail } from "../services/email";
+import { getDonationRequestById } from "../services/addDonationRequest";
+
+
+
+
 interface DonationRequest {
   _id: string;
   requested_quantity: number;
@@ -98,12 +104,35 @@ export default function IncomingOrders() {
           return order;
         })
       );
+      
+      const foodItem = await fetchFoodItemById(foodItemId)
+      const fullReq = await getDonationRequestById(id);
+      const user_id = await getUserIdByFoodbankId(fullReq.foodbank_id);
+      const foodbank = await fetchUserById(user_id)
+
+      console.log("Sending to ",foodbank.email)
+
+      await sendEmail({
+        to: foodbank.email,
+        subject: "Donation Request Accepted",
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: linear-gradient(135deg, #000000, #00a9cd); border-radius: 8px;">
+            <h2 style="color: white;">✅ Request Accepted</h2>
+            <p style="color: white;">Hi <strong>${foodbank.name}</strong>,</p>
+            <p style="color: white;"><strong>${user.name}</strong> has accepted your request for <strong>${foodItem.name}</strong> (${foodItem.quantity} portions) 🥳</p>
+            <p style="color: white;">Please make sure to pick up your order in a timely manner.</p>
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;" />
+            <p style="color: white; font-size: 1em;">Thanks for using <strong>FoodSync</strong> ❤️</p>
+          </div>
+        `,
+      });
+      
     } catch (err) {
       console.error("Error while accepting the request:", err);
     }
   };
 
-  const handleReject = async (id: string) => {
+  const handleReject = async (id: string,foodItemId: string) => {
     try {
       await updateDonationRequestStatus(id, "cancelled");
       setOrders((prev) =>
@@ -111,6 +140,29 @@ export default function IncomingOrders() {
           order._id === id ? { ...order, status: "cancelled" } : order
         )
       );
+
+      const foodItem = await fetchFoodItemById(foodItemId)
+      const fullReq = await getDonationRequestById(id);
+      const user_id = await getUserIdByFoodbankId(fullReq.foodbank_id);
+      const foodbank = await fetchUserById(user_id)
+
+      console.log("Sending to ",foodbank.email)
+
+      await sendEmail({
+        to: foodbank.email,
+        subject: "Donation Request Rejected",
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: linear-gradient(135deg, #000000, #00a9cd); border-radius: 8px;">
+            <h2 style="color: white;">❌ Request Rejected</h2>
+            <p style="color: white;">Hi <strong>${foodbank.name}</strong>,</p>
+            <p style="color: white;">We regret to inform you that your request for <strong>${foodItem.name}</strong> (${foodItem.quantity} units) was <strong>rejected</strong> by ${user.name}.</p>
+            <p style="color: white;">There are still plenty of donations available. Feel free to explore other options in the app 🙌</p>
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;" />
+            <p style="color: white; font-size: 1em;">Thanks for using <strong>FoodSync</strong> ❤️</p>
+          </div>
+        `,
+      });
+      
     } catch (err) {
       console.error("Failed to cancel donation request:", err);
     }
@@ -210,7 +262,7 @@ export default function IncomingOrders() {
                     {order.status === "pending" ? (
                       <>
                         <button
-                          onClick={() => handleReject(order._id)}
+                          onClick={() => handleReject(order._id,order.food_id)}
                           className={styles.rejectBtn}
                         >
                           <X size={16} />

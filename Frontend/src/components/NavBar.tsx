@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../redux/userSlice";
 import React from "react";
 import styles from "../styles/Navbar.module.css";
 
@@ -6,6 +10,16 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ active }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    
+    dispatch(clearUser());
+    navigate("/");
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>FoodSync</div>

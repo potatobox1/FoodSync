@@ -130,5 +130,28 @@ router.patch("/update-status/:requestId", async (req: any, res: any) => {
   }
 });
 
+// Get a specific donation request by ID
+router.get("/getReq/:requestId", async (req: any, res: any) => {
+  try {
+    const { requestId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(requestId)) {
+      return res.status(400).json({ message: "Invalid donation request ID." });
+    }
+
+    const request = await DonationRequest.findById(requestId).populate("food_id");
+
+    if (!request) {
+      return res.status(404).json({ message: "Donation request not found." });
+    }
+
+    res.status(200).json(request);
+  } catch (error) {
+    console.error("Error fetching donation request:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 
 export default router;

@@ -240,8 +240,8 @@ const RegisterForm: React.FC = () => {
       
                   }
                   
-      
-      
+                  
+            
       
                   console.log("Fetched user:", userData);
                 } catch (err) {
