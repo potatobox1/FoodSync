@@ -1,17 +1,23 @@
 "use client"
 
-import type React from "react"
-import { useEffect, useRef } from "react"
-import styles from "../../styles/donationChart.module.css"
+import React from "react"
+import { Bar } from "react-chartjs-2"
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+} from "chart.js"
+
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
 
 interface DonationChartProps {
   timeRange: string
 }
 
 const DonationChart: React.FC<DonationChartProps> = ({ timeRange }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  // Sample data based on time range
   const getData = () => {
     if (timeRange === "week") {
       return {
@@ -31,66 +37,53 @@ const DonationChart: React.FC<DonationChartProps> = ({ timeRange }) => {
     }
   }
 
-  useEffect(() => {
-    if (!canvasRef.current) return
+  const { labels, values } = getData()
 
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Donations Claimed",
+        data: values,
+        backgroundColor: "#00A896",
+        borderRadius: 6,
+      },
+    ],
+  }
 
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-    const data = getData()
-    const { labels, values } = data
-
-    // Set canvas dimensions
-    canvas.width = canvas.offsetWidth
-    canvas.height = canvas.offsetHeight
-
-    // Chart dimensions
-    const chartWidth = canvas.width - 60
-    const chartHeight = canvas.height - 60
-    const barWidth = Math.min(chartWidth / labels.length - 20, 60) // Limit max bar width
-
-    // Find max value for scaling
-    const maxValue = Math.max(...values)
-
-    // Draw axes
-    ctx.beginPath()
-    ctx.moveTo(40, 20)
-    ctx.lineTo(40, chartHeight + 20)
-    ctx.lineTo(chartWidth + 40, chartHeight + 20)
-    ctx.strokeStyle = "#ddd"
-    ctx.stroke()
-
-    // Draw bars
-    values.forEach((value, index) => {
-      const barHeight = (value / maxValue) * chartHeight
-      const x = 50 + index * (barWidth + (chartWidth - barWidth * labels.length) / (labels.length - 1 || 1))
-      const y = chartHeight + 20 - barHeight
-
-      // Draw bar
-      ctx.fillStyle = "#00A896"
-      ctx.fillRect(x, y, barWidth, barHeight)
-
-      // Draw label - use shorter text if space is limited
-      ctx.fillStyle = "#666"
-      ctx.font = "12px Arial"
-      ctx.textAlign = "center"
-      const displayLabel =
-        canvas.width < 500 && labels[index].length > 3 ? labels[index].substring(0, 3) : labels[index]
-      ctx.fillText(displayLabel, x + barWidth / 2, chartHeight + 40)
-
-      // Draw value
-      ctx.fillStyle = "#333"
-      ctx.fillText(value.toString(), x + barWidth / 2, y - 10)
-    })
-  }, [timeRange])
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: (ctx: any) => ` ${ctx.parsed.y} meals`,
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 50,
+        },
+        grid: {
+          color: "#eee",
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+  }
 
   return (
-    <div className={styles.chartContainer}>
-      <canvas ref={canvasRef} className={styles.chart}></canvas>
+    <div style={{ width: "100%", height: "300px" }}>
+      <Bar data={data} options={options} />
     </div>
   )
 }

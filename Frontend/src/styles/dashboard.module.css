@@ -11,6 +11,10 @@
   }
   
   .dashboardHeader {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #333;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,10 +71,10 @@
   }
   
   .chartCard h2 {
-    font-size: 18px;
-    color: #333;
-    margin-top: 0;
+    font-size: 20px;
+    font-weight: bold;
     margin-bottom: 16px;
+    color: #333;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

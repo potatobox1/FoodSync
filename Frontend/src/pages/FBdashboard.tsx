@@ -9,9 +9,8 @@ import TopRestaurants from "../components/FBdashboard/topRestaurants"
 import PickupMap from "../components/FBdashboard/pickupMap"
 import FoodCategoryChart from "../components/FBdashboard/categoryChart"
 import ReviewsChart from "../components/FBdashboard/reviewChart"
-import ClaimTimeChart from "../components/FBdashboard/claimChart"
 import MetricCard from "../components/FBdashboard/metricCard"
-import Navbar from "../components/NavBar"
+import Navbar from "../components/foodbank_navbar"
 import { BarChart3, Clock, MapPin, Star, TrendingUp } from "lucide-react"
 
 const Dashboard: React.FC = () => {
@@ -28,7 +27,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboardContainer}>
-      <Navbar active="orders" />
+      <Navbar active="dashboard" />
 
       <div className={styles.dashboardContent}>
         <div className={styles.dashboardHeader}>
@@ -50,21 +49,17 @@ const Dashboard: React.FC = () => {
           <MetricCard title="Total Donations Claimed" value={summaryData.totalDonations} icon={<TrendingUp />} />
           <MetricCard title="Participating Restaurants" value={summaryData.totalRestaurants} icon={<BarChart3 />} />
           <MetricCard title="Avg. Pickup Distance" value={`${summaryData.avgPickupDistance} km`} icon={<MapPin />} />
-          <MetricCard title="Avg. Pickup Time" value={`${summaryData.avgPickupTime} min`} icon={<Clock />} />
+          {/* <MetricCard title="Avg. Pickup Time" value={`${summaryData.avgPickupTime} min`} icon={<Clock />} /> */}
           <MetricCard title="Avg. Restaurant Rating" value={summaryData.avgRating} icon={<Star />} />
         </div>
 
         <div className={styles.chartsContainer}>
-          <div className={styles.chartCard}>
-            <h2>Total Donations Claimed</h2>
-            <DonationChart timeRange={timeRange} />
-          </div>
 
           <div className={styles.chartRow}>
             <div className={styles.chartCard}>
-              <h2>Top Donating Restaurants</h2>
-              <TopRestaurants />
-            </div>
+            <h2>Total Donations Claimed</h2>
+            <DonationChart timeRange={timeRange} />
+          </div>
             <div className={styles.chartCard}>
               <h2>Food Category Breakdown</h2>
               <FoodCategoryChart />
@@ -77,8 +72,8 @@ const Dashboard: React.FC = () => {
               <PickupMap />
             </div>
             <div className={styles.chartCard}>
-              <h2>Claim-to-Pickup Time</h2>
-              <ClaimTimeChart />
+              <h2>Most Ordered From</h2>
+              <TopRestaurants />
             </div>
           </div>
 

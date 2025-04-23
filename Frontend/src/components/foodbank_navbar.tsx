@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../styles/Navbar.module.css";
 
 interface NavbarProps {
-  active: "inventory" | "orders" | "leaderboard" | "review"; // 👈 Add "review" here
+  active: "inventory" | "orders" | "leaderboard" | "review" | "dashboard";
 }
 
 const FNavbar: React.FC<NavbarProps> = ({ active }) => {
@@ -10,6 +10,12 @@ const FNavbar: React.FC<NavbarProps> = ({ active }) => {
     <header className={styles.header}>
       <div className={styles.logo}>FoodSync</div>
       <nav className={styles.nav}>
+      <a
+          href="/FBdashboard"
+          className={active === "dashboard" ? styles.active : ""}
+        >
+          Dashboard
+        </a>
         <a
           href="/inventory"
           className={active === "inventory" ? styles.active : ""}

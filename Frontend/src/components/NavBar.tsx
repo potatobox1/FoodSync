@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../styles/Navbar.module.css";
 
 interface NavbarProps {
-  active: "inventory" | "orders" | "leaderboard" | "reviews";
+  active: "inventory" | "orders" | "leaderboard" | "reviews"| "dashboard";
 }
 
 const Navbar: React.FC<NavbarProps> = ({ active }) => {
