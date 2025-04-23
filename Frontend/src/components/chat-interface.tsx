@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { Send } from "lucide-react"
 import { fetchAIResponse } from "../services/sendChatbotMessage"
+import systemPrompt from "../services/chatbotPrompt"
 
 type Message = {
   text: string
@@ -12,9 +13,10 @@ type Message = {
 }
 
 type ChatHistoryMessage = {
-  role: "user" | "assistant"
+  role: "user" | "assistant" | "system"
   content: string
 }
+
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
@@ -47,10 +49,16 @@ export default function ChatInterface() {
     setMessages(updatedMessages)
     setInput("")
 
-    const chatHistory: ChatHistoryMessage[] = updatedMessages.map((msg) => ({
-      role: msg.sender === "user" ? "user" : "assistant",
-      content: msg.text,
-    }))
+    const chatHistory: ChatHistoryMessage[] = [
+      {
+        role: "system",
+        content: systemPrompt,
+      },
+      ...updatedMessages.map((msg): ChatHistoryMessage => ({
+        role: msg.sender === "user" ? "user" : "assistant",
+        content: msg.text,
+      })),
+    ]
 
     try {
       const reply = await fetchAIResponse(chatHistory);  // Call the function

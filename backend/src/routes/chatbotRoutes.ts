@@ -9,7 +9,6 @@ const router = Router()
 // Initialize Google Gemini API client with the API key
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 
-
 interface ChatMessage {
   role: "user" | "assistant"
   content: string

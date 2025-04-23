@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 
-export const fetchAIResponse = async (messages: { role: "user" | "assistant"; content: string }[]) => {
+export const fetchAIResponse = async (messages: { role: "user" | "assistant" | "system"; content: string }[]) => {
   try {
     const response = await API.post("/api/chat", { messages });
     const reply = response.data.reply;
