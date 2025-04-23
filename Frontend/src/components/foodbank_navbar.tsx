@@ -1,47 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { clearUser } from "../redux/userSlice";
 import styles from "../styles/Navbar.module.css";
+import { Menu, X } from "lucide-react"; // Or use emoji/icons if preferred
 
 interface NavbarProps {
-  active: "inventory" | "orders" | "leaderboard" | "review" | "dashboard";
+  active: "inventory" | "orders" | "leaderboard" | "reviews" | "dashboard";
 }
 
 const FNavbar: React.FC<NavbarProps> = ({ active }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+    navigate("/");
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>FoodSync</div>
-      <nav className={styles.nav}>
-      <a
-          href="/FBdashboard"
-          className={active === "dashboard" ? styles.active : ""}
-        >
-          Dashboard
-        </a>
-        <a
-          href="/inventory"
-          className={active === "inventory" ? styles.active : ""}
-        >
-          Available Items
-        </a>
-        <a
-          href="/OrdersPage"
-          className={active === "orders" ? styles.active : ""}
-        >
-          My Orders
-        </a>
-        <a
-          href="/leaderboard"
-          className={active === "leaderboard" ? styles.active : ""}
-        >
-          Leaderboard
-        </a>
-        <a
-          href="/Review"
-          className={active === "review" ? styles.active : ""}
-        >
-          Review
-        </a>
+      <button className={styles.hamburger} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">
+        {menuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+      <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
+        <Link to="/FBdashboard" className={active === "dashboard" ? styles.active : ""}>Dashboard</Link>
+        <Link to="/inventory" className={active === "inventory" ? styles.active : ""}>Available Items</Link>
+        <Link to="/OrdersPage" className={active === "orders" ? styles.active : ""}>My Orders</Link>
+        <Link to="/leaderboard" className={active === "leaderboard" ? styles.active : ""}>Leaderboard</Link>
+        <Link to="/Review" className={active === "reviews" ? styles.active : ""}>Review</Link>
+
+        {/* Show userArea inside the menu on mobile */}
+        <div className={styles.userAreaMobile}>
+          <div className={styles.userIcon}>👤</div>
+          <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+        </div>
       </nav>
-      <div className={styles.userIcon}>👤</div>
+
+      {/* Show userArea on desktop only */}
+      <div className={styles.userArea}>
+        <div className={styles.userIcon}>👤</div>
+        <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+      </div>
     </header>
   );
 };
