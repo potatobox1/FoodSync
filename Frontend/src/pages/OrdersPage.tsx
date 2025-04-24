@@ -5,6 +5,7 @@ import { fetchRestaurantById } from '../services/restaurant';
 import { fetchUserById } from '../services/user';
 import { useAppSelector } from "../redux/hooks";
 import FNavbar from '../components/foodbank_navbar';
+import AIAssistant from '../components/ai-assistant'
 
 interface Restaurant {
   _id: string;
@@ -197,6 +198,7 @@ const OrdersPage: React.FC = () => {
           )
         )}
       </main>
+      <AIAssistant />
     </div>
   );
 };

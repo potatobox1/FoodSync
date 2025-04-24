@@ -1,0 +1,66 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .chartContainer {
+    flex: 1;
+    position: relative;
+    min-height: 250px;
+  }
+  
+  .chart {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .feedbackSummary {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 12px;
+  }
+  
+  .feedbackItem {
+    text-align: center;
+    flex: 1;
+    min-width: 0; /* Allow proper text truncation */
+    min-width: 100px; /* Ensure minimum width */
+  }
+  
+  .feedbackLabel {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 4px;
+  }
+  
+  .feedbackValue {
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+  }
+  
+  /* Add responsive adjustments */
+  @media (max-width: 480px) {
+    .feedbackSummary {
+      flex-direction: column;
+    }
+  
+    .feedbackItem {
+      width: 100%;
+    }
+  
+    .feedbackLabel {
+      white-space: normal;
+    }
+  }
+  

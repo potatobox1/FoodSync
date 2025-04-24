@@ -4,6 +4,7 @@ import AddItemModal from "./addItemModal";
 import { fetchFoodItemsByRestaurant } from "../services/foodItems";
 import { useAppSelector } from "../redux/hooks";
 import Navbar from "../components/NavBar";
+import AIAssistant from '../components/ai-assistant'
 
 export default function Dashboard() {
   const restaurantId: string = useAppSelector((state: any) => state.user.type_id);
@@ -34,68 +35,69 @@ export default function Dashboard() {
 
   return (
     <>
-    <div>
-      <Navbar active="inventory" />
-    </div>
-    <div className={styles.container}>
+      <div>
+        <Navbar active="inventory" />
+      </div>
+      <div className={styles.container}>
 
-      <div className={styles.section}>
-        <h2 className={styles.title}>My Inventory</h2>
+        <div className={styles.section}>
+          <h2 className={styles.title}>My Inventory</h2>
 
-        <div className={styles.cards}>
-          {foodItems.length > 0 ? (
-            foodItems.map((item) => (
-              <div className={styles.card} key={item._id}>
-                <img
-                  src={
-                    item.category === "Savoury"
-                      ? "/images/savoury.jpg"
-                      : item.category === "Sweet"
-                      ? "/images/sweet.jpg"
-                      : item.category === "Beverage"
-                      ? "/images/beverage.jpg"
-                      : "/placeholder.svg"
-                  }
-                  alt={item.name}
-                />
-                <div className={styles.info}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <h3 style={{ margin: 0 }}>{item.name}</h3>
-                    <div className={styles.expiry}>
-                      Expires on <br />
-                      {item.expiration_date
-                        ? new Date(item.expiration_date).toLocaleDateString()
-                        : "N/A"}
+          <div className={styles.cards}>
+            {foodItems.length > 0 ? (
+              foodItems.map((item) => (
+                <div className={styles.card} key={item._id}>
+                  <img
+                    src={
+                      item.category === "Savoury"
+                        ? "/images/savoury.jpg"
+                        : item.category === "Sweet"
+                          ? "/images/sweet.jpg"
+                          : item.category === "Beverage"
+                            ? "/images/beverage.jpg"
+                            : "/placeholder.svg"
+                    }
+                    alt={item.name}
+                  />
+                  <div className={styles.info}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h3 style={{ margin: 0 }}>{item.name}</h3>
+                      <div className={styles.expiry}>
+                        Expires on <br />
+                        {item.expiration_date
+                          ? new Date(item.expiration_date).toLocaleDateString()
+                          : "N/A"}
+                      </div>
                     </div>
+                    <p>
+                      Quantity available: <strong>{item.quantity || "N/A"}</strong>
+                    </p>
                   </div>
-                  <p>
-                    Quantity available: <strong>{item.quantity || "N/A"}</strong>
-                  </p>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p style={{ margin: "1rem 0" }}>No food items listed yet.</p>
-          )}
+              ))
+            ) : (
+              <p style={{ margin: "1rem 0" }}>No food items listed yet.</p>
+            )}
+          </div>
+
+          <button className={styles.addBtn} onClick={() => setIsModalOpen(true)}>
+            Add Item
+          </button>
         </div>
 
-        <button className={styles.addBtn} onClick={() => setIsModalOpen(true)}>
-          Add Item
-        </button>
+        <AddItemModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onItemAdded={loadFoodItems}
+        />
+        <AIAssistant />
       </div>
-
-      <AddItemModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onItemAdded={loadFoodItems}
-      />
-    </div>
     </>
   );
 }

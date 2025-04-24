@@ -1,57 +1,133 @@
 .header {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 1.2rem 0;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-  
-  .logo {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #00a9cd;
-    flex-shrink: 0;
-  }
-  
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1.2rem 0;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #00a9cd;
+  flex-shrink: 0;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+  font-size: 1rem;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+  cursor: pointer;
+}
+
+.nav a:hover {
+  color: #00a9cd;
+}
+
+.active {
+  color: #00a9cd;
+  font-weight: 600;
+  border-bottom: 2px solid #00a9cd;
+}
+
+.userIcon {
+  width: 40px;
+  height: 40px;
+  background-color: #00a9cd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+.userArea {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: 1px solid #00a9cd;
+  color: #00a9cd;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logoutButton:hover {
+  background-color: #00a9cd;
+  color: white;
+}
+
+/* Add to the bottom of your existing CSS */
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #00a9cd;
+}
+
+@media (max-width: 768px) {
   .nav {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+  }
+
+  .navOpen {
     display: flex;
-    gap: 2rem;
-    font-size: 1rem;
-    align-items: center;
+  }
+
+  .hamburger {
+    display: block;
     margin-left: auto;
-    margin-right: auto;
   }
-  
-  .nav a {
-    color: #333;
-    text-decoration: none;
-    font-weight: 500;
-    position: relative;
-    padding-bottom: 4px;
-    cursor: pointer;
+
+  .userArea {
+    display: none;
   }
-  
-  .nav a:hover {
-    color: #00a9cd;
+}
+
+.userAreaMobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .userArea {
+    display: none;
   }
-  
-  .active {
-    color: #00a9cd;
-    font-weight: 600;
-    border-bottom: 2px solid #00a9cd;
-  }
-  
-  .userIcon {
-    width: 40px;
-    height: 40px;
-    background-color: #00a9cd;
-    border-radius: 50%;
+
+  .userAreaMobile {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.2rem;
+    gap: 1rem;
+    margin-top: 1rem;
   }
-  
+}

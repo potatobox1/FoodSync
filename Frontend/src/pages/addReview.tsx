@@ -10,6 +10,9 @@ import { fetchRestaurantById } from "../services/restaurant"
 import { fetchUserById } from "../services/user"
 import { useAppSelector } from "../redux/hooks"
 import { addReview, getExistingReview } from "../services/review"
+import { fetchFoodItemById } from "../services/foodItems"
+import { sendEmail } from "../services/email"
+import AIAssistant from '../components/ai-assistant'
 
 interface Restaurant {
   _id: string
@@ -115,6 +118,29 @@ const Review: React.FC = () => {
         rating,
         feedback,
       })
+
+      const fullFoodItem = await fetchFoodItemById(selectedOrder.food_id._id);
+      const restaurant = await fetchRestaurantById(selectedOrder.food_id.restaurant._id);
+      const restaurantUser = await fetchUserById(restaurant.user_id);
+
+      const recipientEmail = restaurantUser.email;
+
+      await sendEmail({
+        to: recipientEmail, // make sure this is available in `item.restaurant`
+        subject: `Food Item Reviewed`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: linear-gradient(135deg, #000000, #00a9cd); border-radius: 8px;">
+            <h2 style="color: white;">📝 New Review Received</h2>
+            <p style="color: white;">Hi <strong>${restaurantUser.name}</strong>,</p>
+            <p style="color: white;"><strong>${user.name}</strong> just left a review on your donated item: <strong>${fullFoodItem.name}</strong>.</p>
+            <p style="color: white;">Rating: ⭐ ${rating} / 5</p>
+            <p style="color: white;">Visit the app to see what they had to say about it!</p>
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;" />
+            <p style="color: white; font-size: 1em;">Thank you for making a difference through <strong>FoodSync</strong> 🙌</p>
+          </div>
+        `,
+      });
+
       console.log("✅ Review submitted")
     } catch (error) {
       console.error("❌ Error submitting review:", error)
@@ -134,7 +160,7 @@ const Review: React.FC = () => {
 
   return (
     <div className={styles.reviewPage}>
-      <FNavbar active="review" />
+      <FNavbar active="reviews" />
       <main className={styles.main}>
         <h1 className={styles.title}>My Completed Orders</h1>
         <p className={styles.subtitle}>Review your past orders and share your feedback</p>
@@ -183,6 +209,7 @@ const Review: React.FC = () => {
           onSubmit={(rating, feedback) => submitReview(selectedOrder._id, rating, feedback)}
         />
       )}
+      <AIAssistant />
     </div>
   )
 }

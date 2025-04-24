@@ -3,7 +3,10 @@ import "../styles/main_inventory.css"
 import { addDonationRequest } from "../services/addDonationRequest"; // Step 1: import function
 import { useState } from "react";
 import { useAppSelector } from "../redux/hooks";
-
+import { sendEmail } from "../services/email";
+import { fetchFoodItemById } from "../services/foodItems";
+import { fetchRestaurantById } from "../services/restaurant";
+import { fetchUserById } from "../services/user";
 
 interface FoodCardProps {
   item: FoodItem
@@ -36,6 +39,28 @@ export default function FoodCard({ item }: FoodCardProps) {
       console.log("Donation request submitted:", result);
       setIsClaimed(true);
       alert("Donation claimed successfully!"); // can remove if u want
+      const fullFoodItem = await fetchFoodItemById(item._id);
+      const restaurant = await fetchRestaurantById(fullFoodItem.restaurant_id);
+      const restaurantUser = await fetchUserById(restaurant.user_id);
+
+      const recipientEmail = restaurantUser.email;
+
+      await sendEmail({
+        to: recipientEmail,
+        subject: `Incoming Order`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: linear-gradient(135deg, #000000, #00a9cd); ; border-radius: 8px;">
+            <h2 style="color: white;">🍽️ New Food Request</h2>
+            <p style="color: white;">Hi <strong>${item.restaurant.name}</strong>,</p>
+            <p style="color: white;"><strong>${user.name}</strong> has requested to claim the food item:</p>
+            <p style="color: white; margin: 0 0 10px;"><strong>${item.name}</strong> (${item.quantity} portions)</p>
+            <p style="color: white;">Please visit the app to accept or reject the order.</p>
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;" />
+            <p style="color: white; font-size: 0.9em;">Thanks for using <strong>FoodSync</strong> ❤️</p>
+          </div>
+        `,
+      });
+      
     } catch (error) {
       console.error("Error claiming donation:", error);
       alert("Failed to claim donation.");

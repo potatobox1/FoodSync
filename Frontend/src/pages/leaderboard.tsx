@@ -5,6 +5,7 @@ import "../styles/leaderboard.css";
 import FNavbar from "../components/foodbank_navbar";
 import Navbar from "../components/NavBar";
 import { useAppSelector } from "../redux/hooks";
+import AIAssistant from '../components/ai-assistant'
 
 type Restaurant = {
   user_id: string;
@@ -94,6 +95,7 @@ function App() {
           ))}
         </div>
       </main>
+      <AIAssistant />
     </div>
     </>
   );

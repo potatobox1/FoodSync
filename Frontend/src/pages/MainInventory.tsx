@@ -12,6 +12,7 @@ import { fetchRestaurantById } from "../services/restaurant";
 import { fetchUserById } from "../services/user";
 import { fetchLocationById } from "../services/location";
 import { useAppSelector } from "../redux/hooks";
+import AIAssistant from '../components/ai-assistant'
 // import axios from "axios";
 
 export default function MainInventory() {
@@ -25,8 +26,8 @@ export default function MainInventory() {
     latitude: 40.7128,
     longitude: -74.006,
   })
-  const foodbankId = useAppSelector((state:any) => state.user.type_id); // replace with reduxx state
-  const userId = useAppSelector((state:any) => state.user.user_id); // replace with reduxx state
+  const foodbankId = useAppSelector((state: any) => state.user.type_id); // replace with reduxx state
+  const userId = useAppSelector((state: any) => state.user.user_id); // replace with reduxx state
 
   // Get user's location on component mount
   useEffect(() => {
@@ -114,52 +115,53 @@ export default function MainInventory() {
 
   return (
     <div className="main-inventory-page">
-    <FNavbar active="inventory" />
-    <main className="min-h-screen" style={{ marginTop: 0 }}> {/* Ensure no extra margin */}
-      <div className="container main-content" style={{ paddingTop: 0 }}> {/* Remove extra padding */}
-        <h1 className="page-title">Available Food Donations</h1>
+      <FNavbar active="inventory" />
+      <main className="min-h-screen" style={{ marginTop: 0 }}> {/* Ensure no extra margin */}
+        <div className="container main-content" style={{ paddingTop: 0 }}> {/* Remove extra padding */}
+          <h1 className="page-title">Available Food Donations</h1>
 
-        <div className="flex flex-col md-flex-row gap-6">
-          {isFilterOpen && (
-            <FilterSidebar
-              minQuantity={minQuantity}
-              setMinQuantity={setMinQuantity}
-              sortByLocation={sortByLocation}
-              setSortByLocation={setSortByLocation}
-            />
-          )}
-
-          <div className="flex-1">
-            <div className="flex justify-between items-center mb-6">
-              <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-              <button onClick={() => setIsFilterOpen(!isFilterOpen)} className="filter-button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="filter-icon"
-                >
-                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-                </svg>
-                Filters
-              </button>
-            </div>
-
-            {loading ? ( // Show loading state
-              <div className="text-center text-gray-500">Loading...</div>
-            ) : (
-              <FoodListings items={sortedItems} />
+          <div className="flex flex-col md-flex-row gap-6">
+            {isFilterOpen && (
+              <FilterSidebar
+                minQuantity={minQuantity}
+                setMinQuantity={setMinQuantity}
+                sortByLocation={sortByLocation}
+                setSortByLocation={setSortByLocation}
+              />
             )}
+
+            <div className="flex-1">
+              <div className="flex justify-between items-center mb-6">
+                <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+                <button onClick={() => setIsFilterOpen(!isFilterOpen)} className="filter-button">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="filter-icon"
+                  >
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                  </svg>
+                  Filters
+                </button>
+              </div>
+
+              {loading ? ( // Show loading state
+                <div className="text-center text-gray-500">Loading...</div>
+              ) : (
+                <FoodListings items={sortedItems} />
+              )}
             </div>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+      <AIAssistant />
     </div>
   )
 }
