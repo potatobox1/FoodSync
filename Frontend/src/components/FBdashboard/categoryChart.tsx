@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useEffect, useState } from "react"
 import { Doughnut } from "react-chartjs-2"
 import {
   Chart as ChartJS,
@@ -7,33 +8,43 @@ import {
   Tooltip,
   Legend,
 } from "chart.js"
-import React from "react"
+import { fetchCategoryBreakdown } from "../../services/analytics"
+import { useAppSelector } from "../../redux/hooks"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 const FoodCategoryChart: React.FC = () => {
-  const categories = [
-    { name: "Savoury", value: 35, color: "#00A896" },
-    { name: "Sweet", value: 25, color: "#02C39A" },
-    { name: "Beverages", value: 20, color: "#00BFB2" },
-    // { name: "Beverages", value: 15, color: "#028090" },
-    // { name: "Desserts", value: 5, color: "#05668D" },
-  ]
+  const [categoryData, setCategoryData] = useState<{ category: string; count: number }[]>([])
+  const foodbankId = useAppSelector((state: any) => state.user.type_id)
 
-  const data = {
-    labels: categories.map((c) => c.name),
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchCategoryBreakdown(foodbankId)
+        setCategoryData(data)
+      } catch (error) {
+        console.error("Error loading category data", error)
+      }
+    }
+
+    if (foodbankId) loadData()
+  }, [foodbankId])
+
+  const colors = ["#00A896", "#02C39A", "#00BFB2", "#028090", "#05668D"]
+
+  const chartData = {
+    labels: categoryData.map((c) => c.category),
     datasets: [
       {
-        data: categories.map((c) => c.value),
-        backgroundColor: categories.map((c) => c.color),
+        data: categoryData.map((c) => c.count),
+        backgroundColor: colors.slice(0, categoryData.length),
         borderWidth: 1,
-        
       },
     ],
   }
 
   const options = {
-    cutout: "60%", // donut thickness
+    cutout: "60%",
     plugins: {
       legend: {
         position: "bottom" as const,
@@ -48,7 +59,7 @@ const FoodCategoryChart: React.FC = () => {
 
   return (
     <div style={{ width: "100%", height: "300px" }}>
-      <Doughnut data={data} options={options} />
+      <Doughnut data={chartData} options={options} />
     </div>
   )
 }

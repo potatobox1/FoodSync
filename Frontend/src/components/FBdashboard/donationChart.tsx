@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Bar } from "react-chartjs-2"
 import {
   Chart as ChartJS,
@@ -10,6 +10,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js"
+import { fetchDonationsChartData } from "../../services/analytics"
+import { useAppSelector } from "../../redux/hooks"
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
 
@@ -18,38 +20,32 @@ interface DonationChartProps {
 }
 
 const DonationChart: React.FC<DonationChartProps> = ({ timeRange }) => {
-  const getData = () => {
-    if (timeRange === "week") {
-      return {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        values: [42, 58, 65, 49, 72, 80, 62],
-      }
-    } else if (timeRange === "month") {
-      return {
-        labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-        values: [210, 280, 320, 290],
-      }
-    } else {
-      return {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        values: [120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450],
+  const foodbankId = useAppSelector((state: any) => state.user.type_id)
+  const [chartData, setChartData] = useState<any>(null)
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchDonationsChartData(foodbankId, timeRange)
+        console.log("📊 Donations chart data:", data)
+        setChartData({
+          labels: data.labels,
+          datasets: [
+            {
+              label: "Donations Claimed",
+              data: data.counts,
+              backgroundColor: "#00A896",
+              borderRadius: 6,
+            },
+          ],
+        })
+      } catch (error) {
+        console.error("Failed to load donations chart data", error)
       }
     }
-  }
 
-  const { labels, values } = getData()
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Donations Claimed",
-        data: values,
-        backgroundColor: "#00A896",
-        borderRadius: 6,
-      },
-    ],
-  }
+    if (foodbankId) loadData()
+  }, [foodbankId, timeRange])
 
   const options = {
     responsive: true,
@@ -83,7 +79,7 @@ const DonationChart: React.FC<DonationChartProps> = ({ timeRange }) => {
 
   return (
     <div style={{ width: "100%", height: "300px" }}>
-      <Bar data={data} options={options} />
+      {chartData ? <Bar data={chartData} options={options} /> : <p>Loading chart...</p>}
     </div>
   )
 }

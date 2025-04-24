@@ -1,7 +1,6 @@
 "use client"
 
-import { Line } from "react-chartjs-2"
-
+import { Chart } from "react-chartjs-2"
 import {
   Chart as ChartJS,
   LineElement,
@@ -12,9 +11,10 @@ import {
   Tooltip,
   Legend,
 } from "chart.js"
-import { Chart } from "react-chartjs-2"
-import { useMemo } from "react"
+import { useEffect, useState } from "react"
 import styles from "../../styles/reviewChart.module.css"
+import { useAppSelector } from "../../redux/hooks"
+import { fetchReviewTrends } from "../../services/analytics"
 
 ChartJS.register(LineElement, BarElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend)
 
@@ -23,53 +23,68 @@ interface ReviewsChartProps {
 }
 
 const ReviewsChart: React.FC<ReviewsChartProps> = ({ timeRange }) => {
-  const chartData = useMemo(() => {
-    const getData = () => {
-      if (timeRange === "week") {
-        return {
-          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-          ratings: [4.5, 4.7, 4.6, 4.8, 4.7, 4.9, 4.8],
-          reviews: [5, 8, 6, 9, 7, 12, 10],
-        }
-      } else if (timeRange === "month") {
-        return {
-          labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-          ratings: [4.6, 4.7, 4.8, 4.7],
-          reviews: [28, 32, 35, 30],
-        }
-      } else {
-        return {
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          ratings: [4.5, 4.6, 4.6, 4.7, 4.7, 4.8, 4.8, 4.7, 4.8, 4.9, 4.8, 4.7],
-          reviews: [25, 28, 30, 32, 35, 40, 42, 38, 45, 48, 50, 45],
-        }
+  const foodbankId = useAppSelector((state: any) => state.user.type_id)
+  const [chartData, setChartData] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true)
+        const data = await fetchReviewTrends(foodbankId, timeRange)
+        console.log("📈 Review trends data:", data)
+
+        setChartData({
+          labels: data.labels,
+          datasets: [
+            {
+              type: "line" as const,
+              label: "Avg. Rating",
+              data: data.ratings,
+              borderColor: "#00A896",
+              backgroundColor: "#00A896",
+              tension: 0.4,
+              yAxisID: "y1",
+            },
+            {
+              type: "bar" as const,
+              label: "Review Count",
+              data: data.counts,
+              backgroundColor: "rgba(0, 168, 150, 0.2)",
+              yAxisID: "y2",
+            },
+          ],
+        })
+      } catch (err) {
+        console.error("❌ Failed to load review trends:", err)
+      } finally {
+        setLoading(false)
       }
     }
 
-    const { labels, ratings, reviews } = getData()
+    if (foodbankId) loadData()
+  }, [foodbankId, timeRange])
 
-    return {
-      labels,
-      datasets: [
-        {
-          type: "line" as const,
-          label: "Avg. Rating",
-          data: ratings,
-          borderColor: "#00A896",
-          backgroundColor: "#00A896",
-          tension: 0.4,
-          yAxisID: "y1",
-        },
-        {
-          type: "bar" as const,
-          label: "Reviews",
-          data: reviews,
-          backgroundColor: "rgba(0, 168, 150, 0.2)",
-          yAxisID: "y2",
-        },
-      ],
-    }
-  }, [timeRange])
+  const averageRating =
+    chartData && chartData.datasets[1].data.length > 0
+      ? (() => {
+          const ratings = chartData.datasets[0].data
+          const counts = chartData.datasets[1].data
+          let totalRating = 0
+          let totalReviews = 0
+
+          for (let i = 0; i < counts.length; i++) {
+            totalRating += ratings[i] * counts[i]
+            totalReviews += counts[i]
+          }
+
+          return totalReviews > 0 ? (totalRating / totalReviews).toFixed(2) : "—"
+        })()
+      : "—"
+
+  const totalReviews = chartData
+    ? chartData.datasets[1].data.reduce((a: number, b: number) => a + b, 0)
+    : "—"
 
   const options = {
     responsive: true,
@@ -77,22 +92,16 @@ const ReviewsChart: React.FC<ReviewsChartProps> = ({ timeRange }) => {
       y1: {
         type: "linear" as const,
         position: "left" as const,
-        min: 4,
+        min: 1,
         max: 5,
-        ticks: {
-          stepSize: 0.1,
-        },
-        grid: {
-          drawOnChartArea: false,
-        },
+        ticks: { stepSize: 0.5 },
+        grid: { drawOnChartArea: false },
       },
       y2: {
         type: "linear" as const,
         position: "right" as const,
         beginAtZero: true,
-        grid: {
-          drawOnChartArea: true,
-        },
+        grid: { drawOnChartArea: true },
       },
     },
     plugins: {
@@ -110,21 +119,21 @@ const ReviewsChart: React.FC<ReviewsChartProps> = ({ timeRange }) => {
   return (
     <div className={styles.container}>
       <div className={styles.chartContainer}>
-      <Chart type="bar" data={chartData} options={options} />
-
+        {chartData ? (
+          <Chart type="bar" data={chartData} options={options} />
+        ) : (
+          <p>Loading chart...</p>
+        )}
       </div>
+
       <div className={styles.feedbackSummary}>
         <div className={styles.feedbackItem}>
           <div className={styles.feedbackLabel}>Average Rating</div>
-          <div className={styles.feedbackValue}>4.7</div>
+          <div className={styles.feedbackValue}>{averageRating}</div>
         </div>
         <div className={styles.feedbackItem}>
           <div className={styles.feedbackLabel}>Total Reviews</div>
-          <div className={styles.feedbackValue}>425</div>
-        </div>
-        <div className={styles.feedbackItem}>
-          <div className={styles.feedbackLabel}>Response Rate</div>
-          <div className={styles.feedbackValue}>98%</div>
+          <div className={styles.feedbackValue}>{totalReviews}</div>
         </div>
       </div>
     </div>

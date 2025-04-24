@@ -1,14 +1,29 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styles from "../../styles/topRestaurants.module.css"
+import { useAppSelector } from "../../redux/hooks"
+import { fetchTopRestaurants } from "../../services/analytics"
+
+interface RestaurantInfo {
+  name: string
+  count: number
+}
 
 const TopRestaurants: React.FC = () => {
-  const restaurants = [
-    { name: "Baradari", donations: 156 },
-    { name: "Spice Garden", donations: 124 },
-    { name: "Fresh Bites", donations: 98 },
-    { name: "Green Plate", donations: 87 },
-    { name: "Urban Kitchen", donations: 76 },
-  ]
+  const [topRestaurants, setTopRestaurants] = useState<RestaurantInfo[]>([])
+  const foodbankId = useAppSelector((state: any) => state.user.type_id)
+
+  useEffect(() => {
+    const loadTopRestaurants = async () => {
+      try {
+        const data = await fetchTopRestaurants(foodbankId)
+        setTopRestaurants(data)
+      } catch (error) {
+        console.error("Failed to fetch top restaurants:", error)
+      }
+    }
+
+    if (foodbankId) loadTopRestaurants()
+  }, [foodbankId])
 
   return (
     <div className={styles.container}>
@@ -17,10 +32,10 @@ const TopRestaurants: React.FC = () => {
         <div className={styles.donations}>Order Count</div>
       </div>
 
-      {restaurants.map((restaurant) => (
-        <div key={restaurant.name} className={styles.tableRow}>
+      {topRestaurants.map((restaurant, index) => (
+        <div key={index} className={styles.tableRow}>
           <div className={styles.name}>{restaurant.name}</div>
-          <div className={styles.donations}>{restaurant.donations}</div>
+          <div className={styles.donations}>{restaurant.count}</div>
         </div>
       ))}
     </div>
