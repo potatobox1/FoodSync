@@ -5,7 +5,9 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { Send } from "lucide-react"
 import { fetchAIResponse } from "../services/sendChatbotMessage"
-import systemPrompt from "../services/chatbotPrompt"
+import restaurantPrompt from "../services/restaurantPrompt"
+import foodbankPrompt from "../services/foodbankPrompt"
+import { useAppSelector } from "../redux/hooks";
 
 type Message = {
   text: string
@@ -19,6 +21,15 @@ type ChatHistoryMessage = {
 
 
 export default function ChatInterface() {
+  const role = useAppSelector((state:any) => state.user.user_type);
+  const getPrompt = () => {
+    if (role === "restaurant") {
+      return restaurantPrompt
+    } else {
+      return foodbankPrompt
+    }
+  }
+  const prompt = getPrompt()
   const [messages, setMessages] = useState<Message[]>([
     { text: "Hello! I'm your AI assistant. How can I help you today?", sender: "ai" },
   ])
@@ -52,7 +63,7 @@ export default function ChatInterface() {
     const chatHistory: ChatHistoryMessage[] = [
       {
         role: "system",
-        content: systemPrompt,
+        content: prompt,
       },
       ...updatedMessages.map((msg): ChatHistoryMessage => ({
         role: msg.sender === "user" ? "user" : "assistant",
