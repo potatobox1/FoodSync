@@ -1,28 +1,16 @@
-import express from "express";
-import { User } from "../models/user";
+// routes/userRoutes.ts
+import { Router } from 'express';
+import { getUserById, getAllUsers, testEndpoint } from '../controller/userController2';
 
-const router = express.Router();
+const router = Router();
 
-// GET all users
-router.get("/", async (req, res) => {
-  try {
-    const users = await User.find(); // Fetches location details too
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+// Fetch all users
+router.get('/', getAllUsers);
 
-// Testing
-router.get("/testing", async (req, res) => {
-  try {
-   
-    res.json({"message":"Backend working"
+// Fetch a user by ID
+router.get('/:id', getUserById);
 
-    });
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+// Test endpoint
+router.get('/testing', testEndpoint);
 
 export default router;
