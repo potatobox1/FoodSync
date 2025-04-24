@@ -11,9 +11,10 @@ import FoodCategoryChart from "../components/FBdashboard/categoryChart"
 import ReviewsChart from "../components/FBdashboard/reviewChart"
 import MetricCard from "../components/FBdashboard/metricCard"
 import Navbar from "../components/foodbank_navbar"
+import AIAssistant from '../components/ai-assistant'
 import { BarChart3, MapPin, Star, TrendingUp } from "lucide-react"
 
-import { fetchFoodbankSummary,fetchPickupMapData  } from "../services/analytics"
+import { fetchFoodbankSummary, fetchPickupMapData } from "../services/analytics"
 import { useAppSelector } from "../redux/hooks"
 
 const Dashboard: React.FC = () => {
@@ -27,12 +28,12 @@ const Dashboard: React.FC = () => {
     const loadData = async () => {
       try {
         setLoading(true);
-  
+
         const [summary, pickupData] = await Promise.all([
           fetchFoodbankSummary(foodbankId),
           fetchPickupMapData(foodbankId),
         ]);
-  
+
         setSummaryData({
           ...summary,
           avgPickupDistance: pickupData.avgDistance,
@@ -42,7 +43,7 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }
     };
-  
+
     if (foodbankId) loadData();
   }, [foodbankId]);
 
@@ -108,6 +109,7 @@ const Dashboard: React.FC = () => {
           </>
         )}
       </div>
+      <AIAssistant />
     </div>
   )
 }

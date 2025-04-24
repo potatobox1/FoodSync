@@ -8,6 +8,7 @@ import { fetchReviewsByRestaurant } from "../services/review";
 import { fetchFoodItemById } from "../services/foodItems"; 
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { fetchUserById } from "../services/user";
+import AIAssistant from '../components/ai-assistant'
 
 // Define types for our data
 interface Review {
@@ -184,6 +185,7 @@ const OrderReviews: React.FC = () => {
             </div>
           )}
         </div>
+         <AIAssistant />
       </div>
     </>
   );

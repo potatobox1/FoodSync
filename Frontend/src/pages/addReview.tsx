@@ -12,6 +12,7 @@ import { useAppSelector } from "../redux/hooks"
 import { addReview, getExistingReview } from "../services/review"
 import { fetchFoodItemById } from "../services/foodItems"
 import { sendEmail } from "../services/email"
+import AIAssistant from '../components/ai-assistant'
 
 interface Restaurant {
   _id: string
@@ -117,7 +118,7 @@ const Review: React.FC = () => {
         rating,
         feedback,
       })
-      
+
       const fullFoodItem = await fetchFoodItemById(selectedOrder.food_id._id);
       const restaurant = await fetchRestaurantById(selectedOrder.food_id.restaurant._id);
       const restaurantUser = await fetchUserById(restaurant.user_id);
@@ -139,7 +140,7 @@ const Review: React.FC = () => {
           </div>
         `,
       });
-      
+
       console.log("✅ Review submitted")
     } catch (error) {
       console.error("❌ Error submitting review:", error)
@@ -208,6 +209,7 @@ const Review: React.FC = () => {
           onSubmit={(rating, feedback) => submitReview(selectedOrder._id, rating, feedback)}
         />
       )}
+      <AIAssistant />
     </div>
   )
 }
