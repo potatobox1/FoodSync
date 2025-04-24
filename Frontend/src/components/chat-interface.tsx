@@ -4,32 +4,82 @@ import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
 import { Send } from "lucide-react"
+import { fetchAIResponse } from "../services/sendChatbotMessage"
+import restaurantPrompt from "../services/restaurantPrompt"
+import foodbankPrompt from "../services/foodbankPrompt"
+import { useAppSelector } from "../redux/hooks";
+
+type Message = {
+  text: string
+  sender: "user" | "ai"
+}
+
+type ChatHistoryMessage = {
+  role: "user" | "assistant" | "system"
+  content: string
+}
+
 
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<{ text: string; sender: "user" | "ai" }[]>([
+  const role = useAppSelector((state:any) => state.user.user_type);
+  const getPrompt = () => {
+    if (role === "restaurant") {
+      return restaurantPrompt
+    } else {
+      return foodbankPrompt
+    }
+  }
+  const prompt = getPrompt()
+  const [messages, setMessages] = useState<Message[]>([
     { text: "Hello! I'm your AI assistant. How can I help you today?", sender: "ai" },
   ])
   const [input, setInput] = useState("")
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const handleSend = () => {
+  useEffect(() => {
+    const saved = localStorage.getItem("chat-history")
+    if (saved) {
+      setMessages(JSON.parse(saved))
+    } else {
+      // First time default message
+      setMessages([{ text: "Hello! I'm your AI assistant. How can I help you today?", sender: "ai" }])
+    }
+  }, [])
+
+  // Save messages to localStorage on every update
+  useEffect(() => {
+    localStorage.setItem("chat-history", JSON.stringify(messages))
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
+
+  const handleSend = async () => {
     if (input.trim() === "") return
 
-    // Add user message
-    setMessages([...messages, { text: input, sender: "user" }])
+    const userMessage = { text: input, sender: "user" as const }
+    const updatedMessages = [...messages, userMessage]
+    setMessages(updatedMessages)
+    setInput("")
 
-    // Simulate AI response
-    setTimeout(() => {
+    const chatHistory: ChatHistoryMessage[] = [
+      {
+        role: "system",
+        content: prompt,
+      },
+      ...updatedMessages.map((msg): ChatHistoryMessage => ({
+        role: msg.sender === "user" ? "user" : "assistant",
+        content: msg.text,
+      })),
+    ]
+
+    try {
+      const reply = await fetchAIResponse(chatHistory);  // Call the function
+      setMessages((prev) => [...prev, { text: reply, sender: "ai" }]);
+    } catch (err) {
       setMessages((prev) => [
         ...prev,
-        {
-          text: `Sheraz say barra chutiya is duniya mein nahi fr fr fr.`,
-          sender: "ai",
-        },
-      ])
-    }, 1000)
-
-    setInput("")
+        { text: "Something went wrong. Please try again.", sender: "ai" },
+      ]);
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
