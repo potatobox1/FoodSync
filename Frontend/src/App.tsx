@@ -3,7 +3,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import InfoPage from "./pages/InfoPage";
-import Dashboard from "./pages/dashboard";
+import 'leaflet/dist/leaflet.css';
+import RDashboard from "./pages/dashboard";
 import Landing from "./pages/LandingPage";
 import Learn from "./pages/learn-more";
 import Contact from "./pages/contact";
@@ -15,6 +16,7 @@ import IncomingOrders from "./pages/IncomingOrders";
 import AboutUsPage from "./pages/AboutUsPage";
 import OrderReviews from "./pages/ViewReviews";
 import ReviewPage from "./pages/addReview";
+import FBDashboard from "./pages/FBdashboard";
 
 const App: React.FC = () => {
   return (
@@ -22,7 +24,8 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<InfoPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/FBdashboard" element={<FBDashboard />} />         
+        <Route path="/Rdashboard" element={<RDashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/learn-more" element={<Learn />} />

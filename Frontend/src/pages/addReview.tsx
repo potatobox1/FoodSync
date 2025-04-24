@@ -159,7 +159,7 @@ const Review: React.FC = () => {
 
   return (
     <div className={styles.reviewPage}>
-      <FNavbar active="review" />
+      <FNavbar active="reviews" />
       <main className={styles.main}>
         <h1 className={styles.title}>My Completed Orders</h1>
         <p className={styles.subtitle}>Review your past orders and share your feedback</p>

@@ -1,0 +1,41 @@
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.tableHeader,
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  padding: 12px 0;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.tableHeader {
+  font-weight: bold;
+  color: #666;
+  font-size: 14px;
+}
+
+.name {
+  padding-right: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.donations {
+  text-align: right;
+  font-weight: 500;
+  color: #00a896;
+}

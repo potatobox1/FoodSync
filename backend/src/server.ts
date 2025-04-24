@@ -13,6 +13,8 @@ import donationRequestRoutes from "./routes/donationRequestRoutes";
 import foodbankRoutes from './routes/foodbank'; // path depends on your folder structure
 import completedorders from "./routes/completedOrders"
 import reviewRoutes from "./routes/review"
+import analyticsRoutes from "./routes/analyticsRoutes"; // 👈 add this at the top
+
 import emailRoutes from './routes/email';
 // Load environment variables
 dotenv.config();
@@ -45,6 +47,7 @@ app.use("/api/donation-requests", donationRequestRoutes)
 app.use('/api/foodbank', foodbankRoutes);
 app.use('/api/completed-orders', completedorders)
 app.use('/api/review',reviewRoutes)
+app.use("/api/analytics", analyticsRoutes);
 app.use('/api/email',emailRoutes)
 // Start the server
 app.listen(PORT, () => {

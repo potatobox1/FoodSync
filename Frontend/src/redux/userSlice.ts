@@ -9,13 +9,13 @@ interface UserState {
   user_id : string
   type_id : string    // will hold either food bank id or restaurant id depending on the type
 }
-const localUid = localStorage.getItem("firebase_uid") || "";
-const localemail = localStorage.getItem("email") || "";
-const localname = localStorage.getItem("name") || "";
-const localtype = localStorage.getItem("user_type") || "";
-const localurl = localStorage.getItem("photoURL") || null;
-const localid = localStorage.getItem("user_id") || "";
-const localtypeid = localStorage.getItem("type_id") || "";
+const localUid = sessionStorage.getItem("firebase_uid") || "";
+const localemail = sessionStorage.getItem("email") || "";
+const localname = sessionStorage.getItem("name") || "";
+const localtype = sessionStorage.getItem("user_type") || "";
+const localurl = sessionStorage.getItem("photoURL") || null;
+const localid = sessionStorage.getItem("user_id") || "";
+const localtypeid = sessionStorage.getItem("type_id") || "";
 
 
 const initialState: UserState = {
@@ -33,33 +33,33 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
-      localStorage.setItem("firebase_uid", action.payload.firebase_uid);
-      localStorage.setItem("email", action.payload.email );
-      localStorage.setItem("name", action.payload.name );
-      localStorage.setItem("user_type", action.payload.user_type );
-      localStorage.setItem("photoURL", action.payload.photoURL?? "" );
-      localStorage.setItem("user_id", action.payload.user_id );
-      localStorage.setItem("type_id", action.payload.type_id );
+      sessionStorage.setItem("firebase_uid", action.payload.firebase_uid);
+      sessionStorage.setItem("email", action.payload.email );
+      sessionStorage.setItem("name", action.payload.name );
+      sessionStorage.setItem("user_type", action.payload.user_type );
+      sessionStorage.setItem("photoURL", action.payload.photoURL?? "" );
+      sessionStorage.setItem("user_id", action.payload.user_id );
+      sessionStorage.setItem("type_id", action.payload.type_id );
       
 
       return { ...state, ...action.payload };
     },
     setFirebaseUid: (state, action: PayloadAction<{ firebase_uid: string, photoURL: string | null }>) => {
-      localStorage.setItem("firebase_uid", action.payload.firebase_uid);
-      localStorage.setItem("photoURL", action.payload.photoURL ?? "");
+      sessionStorage.setItem("firebase_uid", action.payload.firebase_uid);
+      sessionStorage.setItem("photoURL", action.payload.photoURL ?? "");
       
       state.firebase_uid = action.payload.firebase_uid;
       state.photoURL = action.payload.photoURL;
 
     },
     clearUser: () => {
-      localStorage.removeItem("firebase_uid"); // clear on logout
-      localStorage.removeItem("email")
-      localStorage.removeItem("name")
-      localStorage.removeItem("user_type")
-      localStorage.removeItem("photoURL")
-      localStorage.removeItem("user_id")
-      localStorage.removeItem("type_id")
+      sessionStorage.removeItem("firebase_uid"); // clear on logout
+      sessionStorage.removeItem("email")
+      sessionStorage.removeItem("name")
+      sessionStorage.removeItem("user_type")
+      sessionStorage.removeItem("photoURL")
+      sessionStorage.removeItem("user_id")
+      sessionStorage.removeItem("type_id")
       
       return initialState;
     }

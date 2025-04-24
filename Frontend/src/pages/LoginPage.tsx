@@ -69,7 +69,7 @@ export default function LoginPage() {
         }
         else if (type == "foodbank"){
           console.log("Foodbank user type detected, navigating to inventory.");
-          navigate("/inventory")
+          navigate("/FBdashboard")
         } else {
           console.error("Unknown user type:", type);
         }
