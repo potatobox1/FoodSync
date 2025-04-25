@@ -2,11 +2,10 @@ import axios from "axios";
 
 const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 
-// Fetch food items by restaurant ID
 interface FoodItemRequest {
     restaurant_id: string;
     quantity: number;
-    expiration_date: string; // Keeping it as string to ensure correct formatting when sending JSON
+    expiration_date: string; 
     name: string;
     category: string;
    
@@ -22,7 +21,6 @@ export const fetchFoodItemsByRestaurant = async (restaurantId: string) => {
   }
 };
 
-// Add a new food item
 export const addFoodItem = async (foodItemData:FoodItemRequest) => {
   try {
     const response = await API.post("/api/fooditems/additem", foodItemData);
