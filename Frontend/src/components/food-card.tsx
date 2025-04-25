@@ -36,7 +36,6 @@ export default function FoodCard({ item }: FoodCardProps) {
       };
 
       const result = await addDonationRequest(donation);
-      console.log("Donation request submitted:", result);
       setIsClaimed(true);
       alert("Donation claimed successfully!"); // can remove if u want
       const fullFoodItem = await fetchFoodItemById(item._id);
