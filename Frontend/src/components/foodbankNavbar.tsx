@@ -27,7 +27,7 @@ const FNavbar: React.FC<NavbarProps> = ({ active }) => {
       </button>
       <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
         <Link to="/foodbank/dashboard" className={active === "dashboard" ? styles.active : ""}>Dashboard</Link>
-        <Link to="/foodbank/avaialbleItems" className={active === "inventory" ? styles.active : ""}>Available Items</Link>
+        <Link to="/foodbank/availableItems" className={active === "inventory" ? styles.active : ""}>Available Items</Link>
         <Link to="/foodbank/ordersPage" className={active === "orders" ? styles.active : ""}>My Orders</Link>
         <Link to="/leaderboard" className={active === "leaderboard" ? styles.active : ""}>Leaderboard</Link>
         <Link to="/foodbank/reviews" className={active === "reviews" ? styles.active : ""}>Review</Link>
