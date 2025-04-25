@@ -11,6 +11,7 @@ import OrdersChart from "../components/RestaurantDashboard/orderChart";
 import TopFoodbanks from "../components/RestaurantDashboard/TopFoodbanks";
 import PickupMap from "../components/RestaurantDashboard/pickupMap";
 import ReviewsChart from "../components/RestaurantDashboard/ReviewsChart";
+import AIAssistant from "../components/ai-assistant";
 
 import { TrendingUp, BarChart3, MapPin, Star } from "lucide-react";
 import {
@@ -133,6 +134,7 @@ const RestaurantDashboard: React.FC = () => {
           </>
         )}
       </div>
+      <AIAssistant />
     </div>
   );
 };
