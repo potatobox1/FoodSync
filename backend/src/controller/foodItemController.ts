@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { FoodItem } from '../models/foodItem';
+import { io } from '../server';
 
 // GET /api/fooditems/:restaurantId
 export const getFoodItemsByRestaurant = async (req: any, res:any) => {
@@ -45,26 +46,33 @@ export const updateFoodItemQuantity = async (req: any, res: any) => {
 };
 
 // POST /api/fooditems/additem
-export const addFoodItem = async (req:any, res: any) => {
-  const { restaurant_id, quantity, expiration_date, name, category } = req.body;
+export const addFoodItem = async (req: any, res: any) => {
   try {
-    if (!restaurant_id || quantity === undefined || !expiration_date || !name || !category) {
-      return res.status(400).json({ message: 'All fields are required.' });
+    const { restaurant_id, quantity, expiration_date, name, category } = req.body;
+
+    // Validate required fields
+    if (!restaurant_id || !quantity || !expiration_date || !name || !category) {
+      return res.status(400).json({ message: "All fields are required." });
     }
     const restaurantObjectId = new mongoose.Types.ObjectId(restaurant_id);
-    const newItem = new FoodItem({
+
+    const newFoodItem = new FoodItem({
       restaurant_id: restaurantObjectId,
       quantity,
       expiration_date: new Date(expiration_date),
       name,
       category,
-      status: 'available'
+      status: "available",
     });
-    const saved = await newItem.save();
-    return res.status(201).json(saved);
-  } catch (err) {
-    console.error('Error saving food item:', err);
-    return res.status(500).json({ message: 'Internal Server Error' });
+
+    const savedItem = await newFoodItem.save();
+
+    io.emit("newFoodItemAvailable", savedItem);
+
+    res.status(201).json(savedItem);
+  } catch (error) {
+    console.error("Error saving food item:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

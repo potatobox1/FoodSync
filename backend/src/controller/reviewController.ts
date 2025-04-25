@@ -2,27 +2,37 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { Review } from '../models/review';
+import { io } from '../server';
 
 // POST /api/review/addreview - Create a new review
 export const addReview = async (req: any, res: any) => {
-  const { foodbank_id, restaurant_id, food_id, rating, feedback } = req.body;
   try {
-    if (!food_id || rating === undefined || !feedback) {
-      return res.status(400).json({ message: 'Required fields: food_id, rating, feedback' });
+    const { foodbank_id, restaurant_id, food_id, rating, feedback } = req.body;
+
+    if (!foodbank_id || !restaurant_id || !food_id || !rating) {
+      return res.status(400).json({ message: "Missing required fields." });
     }
+
     const review = new Review({
       foodbank_id: new mongoose.Types.ObjectId(foodbank_id),
       restaurant_id: new mongoose.Types.ObjectId(restaurant_id),
       food_id: new mongoose.Types.ObjectId(food_id),
       rating,
       feedback,
-      created_at: new Date()
+      created_at: new Date(),
     });
+
     const savedReview = await review.save();
-    return res.status(201).json(savedReview);
-  } catch (err) {
-    console.error('Error creating review:', err);
-    return res.status(500).json({ message: 'Server error' });
+
+    console.log("sending to", restaurant_id);
+    io.to(restaurant_id).emit("newReview", {
+      review: savedReview,
+    });
+
+    res.status(201).json(savedReview);
+  } catch (error) {
+    console.error("Error creating review:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
