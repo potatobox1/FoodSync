@@ -15,7 +15,7 @@ interface FoodCardProps {
 
 
 export default function FoodCard({ item }: FoodCardProps) {
-  // Get the appropriate image based on subcategory
+  
   const [isClaimed, setIsClaimed] = useState(false);
   const imageUrl = getCategoryImage(item.subCategory)
   const user = useAppSelector((state:any) => state.user);
@@ -27,9 +27,9 @@ export default function FoodCard({ item }: FoodCardProps) {
         foodbank_id: string;
         food_id: string;
         requested_quantity: number;
-        status: "pending" | "accepted" | "cancelled" | "completed"; // 👈 Use union type
+        status: "pending" | "accepted" | "cancelled" | "completed"; 
       } = {
-        foodbank_id: user.type_id, // Add live reduxx state here
+        foodbank_id: user.type_id, 
         food_id: item._id,
         requested_quantity: item.quantity,
         status: "pending",
@@ -37,7 +37,7 @@ export default function FoodCard({ item }: FoodCardProps) {
 
       const result = await addDonationRequest(donation);
       setIsClaimed(true);
-      alert("Donation claimed successfully!"); // can remove if u want
+      alert("Donation claimed successfully!"); 
       const fullFoodItem = await fetchFoodItemById(item._id);
       const restaurant = await fetchRestaurantById(fullFoodItem.restaurant_id);
       const restaurantUser = await fetchUserById(restaurant.user_id);
@@ -105,7 +105,7 @@ export default function FoodCard({ item }: FoodCardProps) {
         <button 
           className="food-card-button" 
           onClick={handleClaim}
-          disabled={isClaimed} // Disable the button if claimed
+          disabled={isClaimed} 
         >
           {isClaimed ? "Success!" : "Claim"}
         </button>

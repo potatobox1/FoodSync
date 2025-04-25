@@ -9,7 +9,7 @@ import { useAppSelector } from "../../redux/hooks";
 
 interface Restaurant {
   name: string;
-  coordinates: [number, number]; // [lat, lng]
+  coordinates: [number, number]; 
   distance: number;
 }
 
@@ -47,12 +47,11 @@ const MapComponent: React.FC = () => {
           attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         />
 
-        {/* Foodbank marker */}
+       
         <Marker position={foodbankLocation}>
           <Popup>Foodbank</Popup>
         </Marker>
 
-        {/* Restaurant markers */}
         {restaurants.map((r, i) => (
           <Marker key={i} position={r.coordinates}>
             <Popup>
