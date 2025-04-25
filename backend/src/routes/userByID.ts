@@ -1,23 +1,10 @@
-import express from "express";
-import { User } from "../models/user";
+// routes/userRoutes.ts
+import { Router, Request, Response, NextFunction } from 'express';
+import { getUserById } from '../controller/userController';
 
-const router = express.Router();
+const router = Router();
 
-// GET /api/users/:id - Fetch a user by ID
-router.get("/:id", async (req: any, res: any) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findById(id);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.json(user);
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
+// Fetch a user by ID
+router.get('/:id', getUserById);
 
 export default router;

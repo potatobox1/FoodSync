@@ -127,23 +127,27 @@ const LandingPage: React.FC = () => {
     <div className={styles.footerItem}>
       <img src="../../email.svg" alt="Email" className={styles.footerIcon} />
       <h3>Email</h3>
-      <p>Stunting in children can have long<br />term effect on their growth and development</p>
-      <a href="mailto:cegastuntinginqlm@gmail.com">cegastuntinginqlm@gmail.com</a>
+      <p>If you have any questions or want to partner with us, reach out via email.</p>
+      <a href="mailto:foodsync9@gmail.com">foodsync9@gmail.com</a>
     </div>
 
     <div className={styles.footerItem}>
       <img src="../../phone.svg" alt="Phone" className={styles.footerIcon} />
       <h3>Phone</h3>
-      <p>Stunting in children can have long<br />term effect on their growth and development</p>
-      <a href="tel:+923211105090">+92 321 110 50 90</a>
+      <p>For support, collaborations, or inquiries, give us a call anytime.</p>
+      <a href="tel:+923094850415">0309 4850415</a>
     </div>
 
     <div className={styles.footerItem}>
       <img src="../../location.svg" alt="Office" className={styles.footerIcon} />
       <h3>Office</h3>
-      <p>Stunting in children can have long<br />term effect on their growth and development</p>
-      <a href="https://www.google.com/maps?q=Punjab+Small+Industries+Housing" target="_blank" rel="noopener noreferrer">
-        Punjab Small Industries Housing
+      <p>Our team is based in Lahore, working from the heart of LUMS to drive food impact.</p>
+      <a
+        href="https://www.google.com/maps?q=LUMS+Lahore+Pakistan"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        LUMS, Lahore, Pakistan
       </a>
     </div>
   </div>

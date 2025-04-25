@@ -141,7 +141,6 @@ const Review: React.FC = () => {
         `,
       });
 
-      console.log("✅ Review submitted")
     } catch (error) {
       console.error("❌ Error submitting review:", error)
     }
