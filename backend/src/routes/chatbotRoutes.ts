@@ -6,7 +6,7 @@ dotenv.config()
 
 const router = Router()
 
-// Initialize Google Gemini API client with the API key
+
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 
 interface ChatMessage {
@@ -22,13 +22,13 @@ router.post("/", async (req: any, res: any) => {
   }
 
   try {
-    // Generate content using the Gemini API
+   
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",
       contents: messages.map((message) => message.content).join("\n"),
     })
 
-    // Gemini API response text
+ 
     const reply = response.text
     res.json({ reply })
   } catch (err: any) {

@@ -80,12 +80,12 @@
     color: white;
   }
 
-  /* Red border for input with error */
+  
 input.error {
     border: 1px solid red;
   }
   
-  /* Optional: error message styling */
+
   .error-message {
     color: red;
     font-size: 0.75rem;

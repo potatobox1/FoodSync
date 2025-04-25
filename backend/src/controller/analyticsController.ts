@@ -12,7 +12,7 @@ import {
   Location
 } from '../models';
 
-// GET /api/analytics/foodbank/summary/:foodbankId
+
 export const getFoodbankSummary = async (req: any,res: any)=> {
   const { foodbankId } = req.params;
   try {
@@ -57,7 +57,7 @@ export const getFoodbankSummary = async (req: any,res: any)=> {
   }
 };
 
-// GET /api/analytics/foodbank/top-restaurants/:foodbankId
+
 export const getTopRestaurants = async (req: Request, res: Response) => {
   const { foodbankId } = req.params;
   try {
@@ -100,7 +100,7 @@ export const getTopRestaurants = async (req: Request, res: Response) => {
   }
 };
 
-// GET /api/analytics/foodbank/category-breakdown/:foodbankId
+
 export const getCategoryBreakdown = async (req: Request, res: Response) => {
   const { foodbankId } = req.params;
   try {
@@ -125,7 +125,7 @@ export const getCategoryBreakdown = async (req: Request, res: Response) => {
   }
 };
 
-// GET /api/analytics/foodbank/donations-chart/:foodbankId
+
 export const getDonationsChart = async (req: Request, res: Response) => {
   const { foodbankId } = req.params;
   const range = (req.query.range as string) || 'month';
@@ -174,7 +174,7 @@ export const getDonationsChart = async (req: Request, res: Response) => {
   }
 };
 
-// GET /api/analytics/foodbank/reviews-chart/:foodbankId
+
 export const getReviewsChart = async (req: Request, res: Response) => {
   const { foodbankId } = req.params;
   const range = (req.query.range as string) || 'month';
@@ -225,7 +225,7 @@ export const getReviewsChart = async (req: Request, res: Response) => {
   }
 };
 
-// GET /api/analytics/foodbank/pickup-map/:foodbankId
+
 export const getPickupMap = async (req:any,res:any)=> {
   const { foodbankId } = req.params;
   try {
@@ -295,20 +295,20 @@ export const getRestaurantSummary = async (req: Request, res: Response) => {
   const { restaurantId } = req.params;
 
   try {
-    // 1. All food items from this restaurant
+  
     const foodItems = await FoodItem.find({ restaurant_id: restaurantId });
     const foodItemIds = foodItems.map(item => item._id);
 
-    // 2. Find completed donation requests involving these food items
+   
     const completedRequests = await DonationRequest.find({
       food_id: { $in: foodItemIds },
       status: "accepted"
     });
 
-    // 3. Count unique food banks
+   
     const foodbankIds = new Set(completedRequests.map(req => req.foodbank_id.toString()));
 
-    // 4. Average rating
+  
     const reviews = await Review.find({ restaurant_id: restaurantId });
     const avgRating = reviews.length
       ? parseFloat((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(2))
@@ -326,16 +326,16 @@ export const getRestaurantSummary = async (req: Request, res: Response) => {
 };
 
 
-// GET /api/analytics/restaurant/category-breakdown/:restaurantId
+
 export const getRestaurantCategoryBreakdown = async (req: Request, res: Response) => {
   const { restaurantId } = req.params;
 
   try {
-    // Get all food items for this restaurant
+    
     const foodItems = await FoodItem.find({ restaurant_id: restaurantId });
     const foodIds = foodItems.map(item => item._id);
 
-    // Get completed orders for these food items
+    
     const completedOrders = await CompletedOrder.find({ food_id: { $in: foodIds } }).populate("food_id");
 
     const categoryCount: Record<string, number> = {};
@@ -402,22 +402,22 @@ export const getRestaurantOrdersChart = async (req: Request, res: Response) => {
 };
 
 
-// GET /api/analytics/restaurant/top-foodbanks/:restaurantId
+
 export const getTopFoodbanks = async (req: Request, res: Response) => {
   const { restaurantId } = req.params;
 
   try {
-    // 1. Get all food items of this restaurant
+   
     const foodItems = await FoodItem.find({ restaurant_id: restaurantId });
     const foodItemIds = foodItems.map(item => item._id);
 
-    // 2. Get all accepted donation requests for these food items
+  
     const donationRequests = await DonationRequest.find({
       food_id: { $in: foodItemIds },
       status: 'accepted'
     }).populate('foodbank_id');
 
-    // 3. Count how many times each foodbank has received donations
+    
     const countMap = new Map<string, number>();
     donationRequests.forEach((req) => {
       const foodbank = req.foodbank_id as any;
@@ -427,7 +427,7 @@ export const getTopFoodbanks = async (req: Request, res: Response) => {
       }
     });
 
-    // 4. Prepare result with foodbank names
+   
     const result = await Promise.all(
       Array.from(countMap.entries()).map(async ([id, count]) => {
         const fb = await FoodBank.findById(id).populate('user_id');
@@ -444,7 +444,6 @@ export const getTopFoodbanks = async (req: Request, res: Response) => {
   }
 };
 
-// GET /api/analytics/restaurant/pickup-map/:restaurantId
 export const getRestaurantPickupMap = async (req: any, res: any) => {
   const { restaurantId } = req.params;
 

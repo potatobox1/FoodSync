@@ -1,4 +1,4 @@
-/* Reset and base styles */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,7 +11,7 @@ body {
   color: #111827;
 }
 
-/* Layout */
+
 .container {
   width: 100%;
   max-width: 1200px;
@@ -23,7 +23,7 @@ body {
   min-height: 100vh;
 }
 
-/* Header */
+
 .header {
   border-bottom: 1px solid #e5e7eb;
 }
@@ -72,7 +72,7 @@ body {
   font-weight: 500;
 }
 
-/* Main content */
+
 .main-content {
   padding: 1.5rem 1rem;
 }
@@ -83,7 +83,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* Flex and grid layouts */
+
 .flex {
   display: flex;
 }
@@ -134,7 +134,7 @@ body {
   }
 }
 
-/* Category filter */
+
 .category-filter {
   display: flex;
   gap: 0.5rem;
@@ -161,7 +161,7 @@ body {
   color: #115e59;
 }
 
-/* Filter button */
+
 .filter-button {
   display: flex;
   align-items: center;
@@ -182,7 +182,7 @@ body {
   height: 1.25rem;
 }
 
-/* Filter sidebar */
+
 .filter-sidebar {
   width: 100%;
   background-color: #f9fafb;
@@ -244,7 +244,7 @@ body {
   color: #374151;
 }
 
-/* Food card */
+
 .food-card {
   border-radius: 0.5rem;
   overflow: hidden;
@@ -340,7 +340,6 @@ body {
   background-color: #0f766e;
 }
 
-/* Empty state */
 .empty-state {
   text-align: center;
   padding: 3rem 0;
@@ -350,7 +349,7 @@ body {
   color: #6b7280;
 }
 
-/* Utilities */
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }

@@ -21,9 +21,7 @@ export interface FoodItem {
   subCategory: "Savoury" | "Sweet" | "Beverage"
 }
 
-/**
- * Returns a generic image URL based on the food category
- */
+
 export function getCategoryImage(subCategory: string): string {
   switch (subCategory) {
     case "Savoury":
@@ -37,9 +35,7 @@ export function getCategoryImage(subCategory: string): string {
   }
 }
 
-/**
- * Determines the subcategory based on the main category
- */
+
 export function determineSubCategory(category: string): "Savoury" | "Sweet" | "Beverage" {
   const lowerCategory = category.toLowerCase()
 
@@ -62,13 +58,11 @@ export function determineSubCategory(category: string): "Savoury" | "Sweet" | "B
   }
 }
 
-/**
- * Formats the expiration date into a human-readable string
- */
+
 export function formatExpiryTime(expirationDate: Date | string): string {
   const expDate = expirationDate instanceof Date ? expirationDate : new Date(expirationDate);
   const now = new Date();
-  let expiry = expDate.getTime() - (1000 * 60 * 60 * 5); // Adjust for timezone difference
+  let expiry = expDate.getTime() - (1000 * 60 * 60 * 5); 
   const diffMs = expiry - now.getTime();
   const diffHrs = Math.round(diffMs / (1000 * 60 * 60));
 

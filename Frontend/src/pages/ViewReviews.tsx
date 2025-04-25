@@ -1,4 +1,4 @@
-// import type React from "react"
+
 import React, { useEffect, useState } from "react";
 import styles from '../styles/ViewReviews.module.css'
 import { Star } from "lucide-react"
@@ -11,7 +11,7 @@ import { fetchUserById } from "../services/user";
 import AIAssistant from '../components/ai-assistant'
 import socket from "../services/socket";
 
-// Define types for our data
+
 interface Review {
   _id: string
   foodbank_id: string
@@ -27,7 +27,7 @@ interface Review {
 }
 
 const OrderReviews: React.FC = () => {
-  // Sample data - in a real app, this would come from an API
+  
   const restaurant_id:string = useAppSelector((state:any) => state.user.type_id);  
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,7 +46,7 @@ const OrderReviews: React.FC = () => {
             let itemCategory = "Unknown";
             let reviewerName = "Anonymous";
 
-            // Get food item name/category
+          
             try {
               const food = await fetchFoodItemById(review.food_id);
               itemName = food.name || "Unknown";
@@ -55,7 +55,7 @@ const OrderReviews: React.FC = () => {
               console.error(`Failed to fetch food item for ID ${review.food_id}`, err);
             }
 
-            // Get reviewer name
+    
             try {
               const restaurant = await getUserIdByFoodbankId(review.foodbank_id);
               const user = await fetchUserById(restaurant);

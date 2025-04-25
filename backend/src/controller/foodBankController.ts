@@ -1,9 +1,9 @@
-// controllers/foodBankController.ts
+
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { FoodBank } from '../models/foodBank';
 
-// POST /api/foodbank/getbyuserid
+
 export const getFoodBankByUserId = async (req: any, res: any) => {
   const { user_id } = req.body;
   try {
@@ -23,7 +23,7 @@ export const getFoodBankByUserId = async (req: any, res: any) => {
   }
 };
 
-// PATCH /api/foodbank/update-notes/:foodbankId
+
 export const updateTransportationNotes = async (req: any, res: any) => {
   const { foodbankId } = req.params;
   const { transportation_notes } = req.body;
@@ -50,7 +50,7 @@ export const updateTransportationNotes = async (req: any, res: any) => {
   }
 };
 
-// GET /api/foodbank/user/:foodbankId
+
 export const getUserIdByFoodBank = async (req: any, res: any) => {
   const { foodbankId } = req.params;
   try {

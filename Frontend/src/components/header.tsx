@@ -10,9 +10,7 @@ export default function Header() {
           </a>
 
           <nav className="nav">
-            {/* <a href="/dashboard" className="nav-link">
-              Dashboard
-            </a> */}
+           
             <a href="/inventory" className="nav-link-active">
               Available Food
             </a>

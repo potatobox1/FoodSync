@@ -59,9 +59,9 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
   await User.deleteMany({});
   console.log("Existing users removed");
   
-  // Hash a sample password
+
   const userData = [
-    // Restaurant users
+    
     {
       uid: "1",
       name: "Italian Bistro",
@@ -107,7 +107,7 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
       user_type: "restaurant" as const,
       location_id: locations[1]._id as unknown as mongoose.Types.ObjectId,
     },
-    // Food bank users
+    
     {
       uid: "6",
       name: "NYC Food Bank",
@@ -146,7 +146,7 @@ const seedRestaurants = async (users: IUser[]): Promise<IRestaurant[]> => {
   await Restaurant.deleteMany({});
   console.log("Existing restaurants removed");
 
-  // Get the restaurant users
+  
   const restaurantUsers = users.filter(user => user.user_type === "restaurant");
   if (restaurantUsers.length === 0) {
     throw new Error("No restaurant users found!");
@@ -159,10 +159,9 @@ const seedRestaurants = async (users: IUser[]): Promise<IRestaurant[]> => {
     average_rating: (Math.random() * 3) + 2,
   }));
 
-  // Use create instead of insertMany and explicitly cast the result
   const restaurants = await Restaurant.create(restaurantData);
   
-  // Make sure we have an array by converting to array if needed
+ 
   const restaurantsArray = Array.isArray(restaurants) ? restaurants : [restaurants];
   
   console.log(`${restaurantsArray.length} Restaurants Seeded!`);
@@ -192,27 +191,27 @@ const seedFoodItems = async (restaurants: IRestaurant[]): Promise<void> => {
     status: 'available' | 'expired';
   }> = [];
 
-  // Generate 10-15 food items per restaurant with varied statuses and expiration dates
+  
   for (const restaurant of restaurants) {
-    const numItems = Math.floor(Math.random() * 6) + 10; // 10-15 items per restaurant
+    const numItems = Math.floor(Math.random() * 6) + 10; 
     
     for (let i = 0; i < numItems; i++) {
       const category = categories[Math.floor(Math.random() * categories.length)];
       const nameOptions = foodNames[category as keyof typeof foodNames];
       const name = nameOptions[Math.floor(Math.random() * nameOptions.length)];
       
-      // Generate random expiration dates (some in the past for expired items)
+      
       const today = new Date();
       let expirationDate;
-      const status = Math.random() > 0.8 ? "expired" : "available"; // 20% chance of being expired
+      const status = Math.random() > 0.8 ? "expired" : "available"; 
       
       if (status === "expired") {
-        // Expired items: 1-30 days in the past
+      
         const daysAgo = Math.floor(Math.random() * 30) + 1;
         expirationDate = new Date(today);
         expirationDate.setDate(today.getDate() - daysAgo);
       } else {
-        // Available items: 1-60 days in the future
+       
         const daysAhead = Math.floor(Math.random() * 60) + 1;
         expirationDate = new Date(today);
         expirationDate.setDate(today.getDate() + daysAhead);
@@ -220,11 +219,11 @@ const seedFoodItems = async (restaurants: IRestaurant[]): Promise<void> => {
       
       foodItemsData.push({
         restaurant_id: restaurant._id,
-        quantity: Math.floor(Math.random() * 20) + 1, // 1-20 quantity
+        quantity: Math.floor(Math.random() * 20) + 1, 
         expiration_date: expirationDate,
         name: name,
         category: category,
-        status: status as 'available' | 'expired',  // Type assertion for the enum
+        status: status as 'available' | 'expired', 
       });
     }
   }
@@ -252,7 +251,5 @@ const seedDatabase = async () => {
   }
 };
 
-/* Note: This function will erase all data in the db and seed it with 
-sample data, if you only want to seed a specific table, comment the
-other functions e.g (seedUsers) from the seedDatabase function */
+
 seedDatabase();

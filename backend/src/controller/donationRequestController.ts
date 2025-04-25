@@ -1,4 +1,4 @@
-// controllers/donationRequestController.ts
+
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { DonationRequest } from '../models/donationRequest';
@@ -6,21 +6,21 @@ import { FoodItem } from "../models/foodItem";
 import { io } from "../server";
 
 
-// POST /api/donations/add-request
+
 export const addDonationRequest = async (req: any, res: any) => {
   try {
     const { foodbank_id, food_id, requested_quantity, status } = req.body;
 
-    // Validate required fields
+  
     if (!foodbank_id || !food_id || !requested_quantity || !status) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    // Convert IDs to ObjectId
+   
     const foodbankObjectId = new mongoose.Types.ObjectId(foodbank_id);
     const foodObjectId = new mongoose.Types.ObjectId(food_id);
 
-    // Create a new donation request
+    
     const newDonationRequest = new DonationRequest({
       foodbank_id: foodbankObjectId,
       food_id: foodObjectId,
@@ -29,7 +29,7 @@ export const addDonationRequest = async (req: any, res: any) => {
       created_at: new Date(),
     });
 
-    // Save to database
+  
     const savedRequest = await newDonationRequest.save();
 
     const foodItem = await FoodItem.findById(foodObjectId);
@@ -49,7 +49,7 @@ export const addDonationRequest = async (req: any, res: any) => {
   }
 };
 
-// GET /api/donations/restaurant/:restaurantId
+
 export const getRequestsByRestaurant = async (req: any, res: any) => {
   const { restaurantId } = req.params;
   try {
@@ -72,7 +72,7 @@ export const getRequestsByRestaurant = async (req: any, res: any) => {
   }
 };
 
-// GET /api/donations/foodbank/:foodbankId
+
 export const getRequestsByFoodbank = async (req: any, res: any) => {
   const { foodbankId } = req.params;
   try {
@@ -89,7 +89,7 @@ export const getRequestsByFoodbank = async (req: any, res: any) => {
   }
 };
 
-// PATCH /api/donations/update-status/:requestId
+
 export const updateRequestStatus = async (req: any, res: any) => {
   try {
     const { requestId } = req.params;
@@ -125,7 +125,7 @@ export const updateRequestStatus = async (req: any, res: any) => {
   }
 };
 
-// GET /api/donations/:requestId
+
 export const getRequestById = async (req: any, res: any) => {
   const { requestId } = req.params;
   try {

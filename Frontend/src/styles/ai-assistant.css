@@ -1,14 +1,14 @@
-/* AI Assistant Container */
+
 .ai-assistant-container {
     position: fixed;
     z-index: 1000;
     bottom: 20px;
     right: 20px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    pointer-events: none; /* Allow clicks to pass through the container */
+    pointer-events: none; 
   }
   
-  /* Robot Icon */
+
   .ai-bot-icon {
     position: relative;
     width: 70px;
@@ -23,7 +23,7 @@
     transition: box-shadow 0.3s ease;
     user-select: none;
     touch-action: none;
-    pointer-events: auto; /* Make the bot clickable */
+    pointer-events: auto;
   }
   
   .ai-bot-icon:hover {
@@ -35,7 +35,7 @@
     box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
   }
   
-  /* Robot Design */
+  
   .robot {
     display: flex;
     flex-direction: column;
@@ -141,7 +141,7 @@
     height: 6px;
     background: #f80000;
     border-radius: 6px 6px 10px 10px;
-    /* border: 2px solid #4f46e5; */
+    
     border-top: none;
     transition: all 0.3s ease;
   }
@@ -183,7 +183,7 @@
     transition: transform 0.3s ease;
   }
   
-  /* Waving Animation */
+ 
   .waving .robot-arm.left {
     animation: wave 0.6s infinite alternate;
   }
@@ -209,7 +209,7 @@
     }
   }
   
-  /* Greeting Bubble */
+ 
   .greeting-bubble {
     position: absolute;
     top: -45px;
@@ -249,7 +249,7 @@
     }
   }
   
-  /* Chat Container */
+  
   .chat-container {
     position: fixed;
     width: 320px;
@@ -306,10 +306,10 @@
   
   .close-button:hover {
     color: red;
-    /* background: rgba(255, 255, 255, 0.2); */
+   
   }
   
-  /* Chat Interface */
+
   .chat-interface {
     display: flex;
     flex-direction: column;
@@ -403,9 +403,9 @@
   .input-container button:disabled {
     background: #526469;
     cursor: not-allowed;
-    box-shadow: none;/* ai-assistant.css */
+    box-shadow: none;
 
-    /* Container stays the same */
+   
     .ai-assistant-container {
       position: fixed;
       z-index: 1000;
@@ -413,12 +413,12 @@
       pointer-events: none;
     }
     
-    /* The “bot” is now a strawberry */
+    
     .ai-bot-icon {
       width: 80px;
       height: 90px;
-      background: #ef4f6f;              /* strawberry red */
-      border-radius: 50% 50% 45% 45%;    /* plump top, tapered bottom */
+      background: #ef4f6f;              
+      border-radius: 50% 50% 45% 45%;    
       position: relative;
       box-shadow: 0 6px 12px rgba(0,0,0,0.2);
       pointer-events: auto;
@@ -436,7 +436,7 @@
       opacity: 0.9;
     }
     
-    /* Strawberry seeds */
+ 
     .ai-bot-icon::before,
     .ai-bot-icon::after {
       content: "";
@@ -464,9 +464,9 @@
         60px 25px #fff;
     }
     
-    /* Green leafy top */
+    
     .robot-antenna, .antenna {
-      width: 0; height: 0; /* hide original antenna */
+      width: 0; height: 0; 
     }
     .ai-bot-icon .robot > .robot-antenna {
       position: absolute;
@@ -474,14 +474,14 @@
       left: calc(50% - 8px);
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-bottom: 14px solid #51a351;  /* leaf green */
+      border-bottom: 14px solid #51a351;  
       transform: rotate(-20deg);
     }
     .ai-bot-icon .robot .robot-antenna::before {
       display: none;
     }
     
-    /* Eyes & mouth inside */
+   
     .robot-head, .robot-face {
       all: unset;
     }
@@ -515,7 +515,7 @@
       95% { transform: scaleY(0.1); }
     }
     
-    /* Smiling mouth */
+  
     .ai-bot-icon .robot-mouth {
       width: 24px;
       height: 12px;
@@ -526,7 +526,7 @@
       bottom: 25%;
     }
     
-    /* Waving “arm” leaf */
+   
     .robot-arm, .robot-body { display: none; }
     .ai-bot-icon.waving::after {
       content: "";
@@ -544,7 +544,7 @@
       to   { transform: rotate(30deg); }
     }
     
-    /* Greeting bubble unchanged */
+   
     .greeting-bubble {
       position: absolute;
       top: -45px; right: -10px;
@@ -559,7 +559,7 @@
     
   }
   
-  /* Badge for message icon */
+ 
   .icon-badge {
     position: absolute;
     bottom: -2px;
@@ -576,7 +576,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  /* Touch device support */
+  
   @media (pointer: coarse) {
     .ai-bot-icon {
       width: 80px;
@@ -594,15 +594,13 @@
     }
   }
   
-  /* ——— Burger‑Bot Skin ——— */
-
-/* Top bun for the head */
+  
 .robot-head {
   background: linear-gradient(to bottom, #f5d194 0%, #d29a6c 60%, #b07a4f 100%);
   border-radius: 50% 50% 40% 40%;
 }
 
-/* Sesame seeds on the bun */
+
 .robot-head::before {
   content: "";
   position: absolute;
@@ -617,17 +615,16 @@
     18px 18px #fff3c4;
 }
 
-/* Patty + lettuce in the body */
+
 .robot-body {
   background:
-    linear-gradient(to bottom, #7ec850 0%, #7ec850 30%,    /* lettuce */
-                    #c07c40 30%, #c07c40 60%,             /* cheese */
-                    #6b4226 60%, #6b4226 100%);           /* patty */
+    linear-gradient(to bottom, #7ec850 0%, #7ec850 30%,   
+                    #c07c40 30%, #c07c40 60%,            
+                    #6b4226 60%, #6b4226 100%);           
   border-radius: 30% 30% 10% 10%;
 }
 
-/* Keep the eyes, arms, antenna, waving & blinking as before */
-/* No changes needed to those rules */
+
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -636,13 +633,13 @@
 .chat-header {
   position: sticky;
   top: 0;
-  z-index: 2;       /* sit above the messages */
-  flex: 0 0 auto;   /* don’t grow or shrink */
+  z-index: 2;     
+  flex: 0 0 auto;  
   
 }
 
 .messages-container {
-  flex: 1 1 auto;   /* fill the rest of the height */
-  overflow-y: auto; /* scroll only the messages */
+  flex: 1 1 auto;  
+  overflow-y: auto; 
 }
 

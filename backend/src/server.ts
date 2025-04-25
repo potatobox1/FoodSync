@@ -6,47 +6,46 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';  
 
 import userRoutes from "./routes/userRoutes";
-import authRoutes from "./routes/authRoutes"; // New import for auth routes
+import authRoutes from "./routes/authRoutes"; 
 import inventoryRoutes from "./routes/inventoryRoutes"
 import restaurantRoutes from "./routes/restaurantRoutes"
 import userbyID from "./routes/userByID";
 import locationRoutes from "./routes/locationRoutes";
 import footitem from "./routes/fooditem"
 import donationRequestRoutes from "./routes/donationRequestRoutes";
-import foodbankRoutes from './routes/foodbank'; // path depends on your folder structure
+import foodbankRoutes from './routes/foodbank'; 
 import completedorders from "./routes/completedOrders"
 import reviewRoutes from "./routes/review"
 import chatbotRoutes from "./routes/chatbotRoutes"
-import analyticsRoutes from "./routes/analyticsRoutes"; // 👈 add this at the top
+import analyticsRoutes from "./routes/analyticsRoutes";
 import emailRoutes from './routes/email';
 
-// Load environment variables
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI as string;
 
-// Middleware
-app.use(express.json()); // For parsing JSON request bodies
+app.use(express.json()); 
 app.use(cors());
 
-// Create HTTP server and Socket.IO server
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "*", // Or specify your frontend URL
+    origin: "*", 
     methods: ["GET", "POST"]
   }
 });
 
-// Store socket connections per restaurant
-const restaurantSockets = new Map<string, string>(); // restaurantId -> socket.id
+
+const restaurantSockets = new Map<string, string>(); 
 
 io.on("connection", (socket) => {
   console.log(`🔌 New socket connected: ${socket.id}`);
 
-  // Optional: Join restaurant room
+
   socket.on("joinRestaurantRoom", (restaurantId: string) => {
     socket.join(restaurantId);
     restaurantSockets.set(restaurantId, socket.id);
@@ -59,7 +58,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log(`❌ Socket disconnected: ${socket.id}`);
-    // Optionally clean up restaurantSockets map
+    
     for (const [rid, sid] of restaurantSockets.entries()) {
       if (sid === socket.id) {
         restaurantSockets.delete(rid);
@@ -69,10 +68,10 @@ io.on("connection", (socket) => {
   });
 });
 
-// Export io to use in donation request route/controller
+
 export { io };
 
-// Connect to MongoDB
+
 if (!MONGO_URI) {
     console.error("❌ MongoDB URI is missing in the environment variables.");
     process.exit(1);
@@ -80,11 +79,11 @@ if (!MONGO_URI) {
 
 connectDB(MONGO_URI);
 
-// Routes
-app.use("/api/users", userRoutes); // Attach user routes
-app.use("/api/auth", authRoutes); // Add auth routes
-app.use("/api/inventory", inventoryRoutes) // Inventory routes
-app.use("/api/restaurant", restaurantRoutes) // Inventory routes
+
+app.use("/api/users", userRoutes); 
+app.use("/api/auth", authRoutes); 
+app.use("/api/inventory", inventoryRoutes) 
+app.use("/api/restaurant", restaurantRoutes) 
 app.use("/api/user", userbyID);
 app.use("/api/location", locationRoutes);
 app.use("/api/fooditems", footitem)
@@ -96,12 +95,7 @@ app.use("/api/chat", chatbotRoutes)
 app.use("/api/analytics", analyticsRoutes);
 app.use('/api/email',emailRoutes)
 
-// Start the server
-// app.listen(PORT, () => {
-//     console.log(`🚀 Server is running on port ${PORT}`);
-// });
 
-// use this now
 httpServer.listen(PORT, () => {
     console.log(`🚀 Server with Socket.IO running on port ${PORT}`);
   });

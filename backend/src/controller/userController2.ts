@@ -1,9 +1,9 @@
-// controllers/userController.ts
+
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { User } from '../models/user';
 
-// GET /api/users/:id - Fetch a user by ID
+
 export const getUserById = async (req: any, res: any) => {
   const { id } = req.params;
   try {
@@ -21,7 +21,6 @@ export const getUserById = async (req: any, res: any) => {
   }
 };
 
-// GET /api/users - Fetch all users
 export const getAllUsers = async (_req: any, res: any) => {
   try {
     const users = await User.find();
@@ -32,7 +31,7 @@ export const getAllUsers = async (_req: any, res: any) => {
   }
 };
 
-// GET /api/users/testing - Test endpoint
+
 export const testEndpoint = async (_req: any, res: any) => {
   try {
     return res.json({ message: 'Backend working' });

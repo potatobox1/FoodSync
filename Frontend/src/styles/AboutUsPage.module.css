@@ -4,7 +4,7 @@ body {
   line-height: 1.6;
 }
 
-/* Scoped styles */
+
 .aboutPage {
   max-width: 1200px;
   margin: 0 auto;
@@ -16,7 +16,7 @@ body {
 .header {
   display: flex;
   align-items: center;
-  justify-content: center; /* Center the logo */
+  justify-content: center; 
   padding: 30px 20px;
   border-bottom: 1px solid #eaeaea;
   position: relative;
@@ -26,7 +26,7 @@ body {
   color: #0078a0;
   font-size: 32px;
   font-weight: bold;
-  position: static; /* Remove absolute */
+  position: static; 
   transform: none;
 }
 

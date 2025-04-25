@@ -1,4 +1,4 @@
-// routes/authRoutes.ts
+
 import { Router } from 'express';
 import { signup, getUser, addRestaurant, addFoodBank } from '../controller/authRoutesController' ;
 

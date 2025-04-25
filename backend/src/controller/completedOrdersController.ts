@@ -1,11 +1,9 @@
-// controllers/completedOrderController.ts
+
 import { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import { CompletedOrder } from "../models/completedOrder";
 
-/**
- * POST /api/completed-orders/add
- */
+
 export const addCompletedOrder = async (
   req: any,
   res: any,
@@ -34,5 +32,4 @@ export const addCompletedOrder = async (
   }
 };
 
-// you can add more exports here, e.g.:
-// export const getAllCompletedOrders = async (req, res, next) => { … }
+

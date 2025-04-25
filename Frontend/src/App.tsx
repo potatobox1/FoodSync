@@ -1,5 +1,5 @@
 import React from "react";
-// import UserList from "./components/table";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import InfoPage from "./pages/InfoPage";

@@ -22,7 +22,7 @@ export default function AIAssistant() {
   const botRef = useRef<HTMLDivElement>(null)
   const chatRef = useRef<HTMLDivElement>(null)
 
-  // Load saved position or default to bottom-right based on actual size
+
   useEffect(() => {
     const savedPosition = localStorage.getItem("aiAssistantPosition")
     if (savedPosition) {
@@ -34,12 +34,12 @@ export default function AIAssistant() {
       }
     }
 
-    // Wait for bot to render before calculating its size
+
     const handleDefaultPosition = () => {
         if (botRef.current) {
             const rect = botRef.current.getBoundingClientRect()
             
-            // 👇 Change this padding value as needed
+           
             const paddingRight = 10
             const paddingBottom = 10
         
@@ -50,7 +50,7 @@ export default function AIAssistant() {
           }
     }
 
-    // Slight delay to ensure DOM is ready
+ 
     setTimeout(handleDefaultPosition, 50)
   }, [])
 
@@ -171,11 +171,11 @@ export default function AIAssistant() {
   }, [isDragging, startPos])
 
   useEffect(() => {
-    const maxOffset = 2; // how far the pupil can move inside the eye
+    const maxOffset = 2; 
 
     function handlePupilFollow(e: MouseEvent) {
       document.querySelectorAll<HTMLDivElement>('.pupil').forEach(pupil => {
-        const eye = pupil.parentElement!;  // the .eye
+        const eye = pupil.parentElement!;  
         const rect = eye.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
@@ -186,7 +186,7 @@ export default function AIAssistant() {
         const offsetX = (dx / dist) * maxOffset;
         const offsetY = (dy / dist) * maxOffset;
 
-        // apply inline transform
+        
         pupil.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
       })
     }

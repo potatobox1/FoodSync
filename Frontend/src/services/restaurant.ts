@@ -40,7 +40,7 @@ export const updateTotalDonations = async (Id: string, amount: number) => {
       id: Id,
       amount: amount,
     });
-    return response.data; // return the updated restaurant data
+    return response.data; 
   } catch (error) {
     console.error("Error updating total donations:", error);
     throw error;

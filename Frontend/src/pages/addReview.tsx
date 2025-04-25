@@ -63,7 +63,7 @@ const Review: React.FC = () => {
               ...order.food_id,
               restaurant: { _id: restaurant._id, name: user.name },
             },
-            review, // includes { exists, rating }
+            review, 
           }
         })
       )
@@ -83,7 +83,7 @@ const Review: React.FC = () => {
     setIsModalOpen(false)
     setSelectedOrder(null)
 
-    // Refresh reviews to fetch the new rating
+   
     const data = await fetchDonationRequestsForFoodbank(foodbankId)
     const completed = data.filter((d: any) => d.status === "accepted")
 
@@ -126,7 +126,7 @@ const Review: React.FC = () => {
       const recipientEmail = restaurantUser.email;
 
       await sendEmail({
-        to: recipientEmail, // make sure this is available in `item.restaurant`
+        to: recipientEmail, 
         subject: `Food Item Reviewed`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: linear-gradient(135deg, #000000, #00a9cd); border-radius: 8px;">

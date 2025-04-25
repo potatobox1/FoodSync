@@ -1,9 +1,9 @@
-// controllers/restaurantController.ts
+
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { Restaurant } from '../models/restaurant';
 
-// GET /api/restaurant - Fetch all restaurants
+
 export const getAllRestaurants = async (req:any, res: any) => {
   try {
     const restaurants = await Restaurant.find();
@@ -14,7 +14,7 @@ export const getAllRestaurants = async (req:any, res: any) => {
   }
 };
 
-// GET /api/restaurant/:id - Fetch a restaurant by ID
+
 export const getRestaurantById = async (req: any, res: any) => {
   const { id } = req.params;
   try {
@@ -32,7 +32,7 @@ export const getRestaurantById = async (req: any, res: any) => {
   }
 };
 
-// POST /api/restaurant/getbyuserid - Fetch a restaurant by user ID
+
 export const getRestaurantByUserId = async (req: any, res: any) => {
   const { user_id } = req.body;
   try {
@@ -50,7 +50,7 @@ export const getRestaurantByUserId = async (req: any, res: any) => {
   }
 };
 
-// PATCH /api/restaurant/updatedonations - Update total donations
+
 export const updateTotalDonations = async (req: any, res: any) => {
   const { id, amount } = req.body;
   try {

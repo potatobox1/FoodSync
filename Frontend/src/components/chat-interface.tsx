@@ -72,7 +72,7 @@ export default function ChatInterface() {
     ]
 
     try {
-      const reply = await fetchAIResponse(chatHistory);  // Call the function
+      const reply = await fetchAIResponse(chatHistory);  
       setMessages((prev) => [...prev, { text: reply, sender: "ai" }]);
     } catch (err) {
       setMessages((prev) => [
@@ -89,7 +89,7 @@ export default function ChatInterface() {
     }
   }
 
-  // Auto scroll to bottom when new messages arrive
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])

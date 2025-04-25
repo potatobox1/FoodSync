@@ -51,7 +51,7 @@ function App() {
     </div>
     
     <div className="app">
-      {/* Conditionally render navbar based on user type */}
+     
       
 
       <main className="container">

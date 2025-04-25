@@ -7,7 +7,7 @@ import { useAppSelector } from "../redux/hooks";
 interface AddItemModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onItemAdded: () => void;  // <-- new
+  onItemAdded: () => void;  
 }
 
 export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemModalProps) {
@@ -71,9 +71,9 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
     if (hasErrors) return;
 
     try {
-      const restaurant_id =  rest_id // TODO:done
+      const restaurant_id =  rest_id 
 
-      const formattedDate = new Date(formData.expiration).toISOString(); // Ensures format like 2025-03-21T00:16:22.461Z
+      const formattedDate = new Date(formData.expiration).toISOString(); 
 
       await addFoodItem({
         restaurant_id,
@@ -86,7 +86,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
 
       onItemAdded();
 
-      // Reset form and close modal
+      
       setFormData({
         quantity: "",
         expiration: "",
@@ -97,7 +97,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
       onClose();
     } catch (error) {
       console.error("Failed to add food item:", error);
-      // Optional: show error to user
+      
     }
   };
 
@@ -114,7 +114,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
         </div>
 
         <form onSubmit={handleSubmit} className="modal-form">
-          {/* Quantity */}
+         
           <div className="form-group">
             <label htmlFor="quantity">Quantity</label>
             <input
@@ -130,7 +130,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
             )}
           </div>
 
-          {/* Expiration */}
+        
           <div className="form-group">
             <label htmlFor="expiration">Expiration</label>
             <input
@@ -146,7 +146,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
             )}
           </div>
 
-          {/* Name */}
+     
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input
@@ -162,7 +162,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
             )}
           </div>
 
-          {/* Category Dropdown */}
+         
           <div className="form-group">
             <label htmlFor="category">Category</label>
             <select
@@ -182,7 +182,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
             )}
           </div>
 
-          {/* Submit / Cancel Buttons */}
+         
           <div className="modal-actions">
             <button type="button" onClick={onClose} className="cancel-btn">
               Cancel

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers } from "../services/user_list_api";  // Import fetchUsers
+import { fetchUsers } from "../services/user_list_api";  
 
 interface User {
   _id: string;
@@ -16,7 +16,7 @@ const UserList: React.FC = () => {
 
   useEffect(() => {
     const getUsers = async () => {
-      const data = await fetchUsers(); // Use the API function
+      const data = await fetchUsers(); 
       if (data.length === 0) {
         setError("Failed to fetch users");
       } else {

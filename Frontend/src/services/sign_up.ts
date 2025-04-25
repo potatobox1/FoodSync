@@ -3,7 +3,7 @@ import axios from "axios";
 const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 
 export const signUp = async (userData: {
-  uid: string; // Added Firebase UID
+  uid: string; 
   name: string;
   email: string;
   contact_no: string;
@@ -24,9 +24,9 @@ export const signUp = async (userData: {
 };
 
 
-// Registers a restaurant in the database.
+
 export const registerRestaurant = async (restaurantData: {
-  uid: string; // Firebase UID
+  uid: string; 
   cuisine_type: string;
 }) => {
   try {
@@ -38,10 +38,10 @@ export const registerRestaurant = async (restaurantData: {
   }
 };
 
- //Registers a food bank in the database. 
+ 
 export const registerFoodBank = async (foodBankData: {
-  uid: string; // Firebase UID
-  transportation_notes?: string; // Optional
+  uid: string; 
+  transportation_notes?: string; 
 }) => {
   try {
     const response = await API.post("/api/auth/addfoodbank", foodBankData);
@@ -55,7 +55,7 @@ export const registerFoodBank = async (foodBankData: {
 export const getUserByFirebaseUID = async (uid: string) => {
   try {
     const response = await API.post("/api/auth/getuser", { uid });
-    return response.data.user; // returns user object
+    return response.data.user; 
   } catch (error) {
     console.error("Error fetching user by UID:", error);
     throw error;

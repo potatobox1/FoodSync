@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { clearUser } from "../redux/userSlice";
 
 import styles from "../styles/Navbar.module.css";
-import { Menu, X } from "lucide-react"; // or any icon library you use
+import { Menu, X } from "lucide-react"; 
 
 interface NavbarProps {
   active: "inventory" | "orders" | "leaderboard" | "reviews" | "dashboard";

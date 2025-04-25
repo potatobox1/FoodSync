@@ -61,7 +61,7 @@ const OrderChart: React.FC<OrderChartProps> = ({ timeRange }) => {
       y: {
         beginAtZero: true,
         ticks: {
-          stepSize: 1, // For small ranges, otherwise increase if data grows
+          stepSize: 1, 
         },
         grid: {
           color: "#eee",

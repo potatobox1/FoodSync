@@ -1,4 +1,4 @@
-/* Base styles */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,7 +13,7 @@
     background-color: #f5f5f5;
   }
   
-  /* Container */
+
   .register-container {
     display: flex;
     min-height: 100vh;
@@ -22,7 +22,7 @@
     padding: 1rem;
   }
   
-  /* Card */
+
   .register-card {
     background-color: white;
     border-radius: 8px;
@@ -32,7 +32,7 @@
     padding: 2rem;
   }
   
-  /* Header */
+ 
   .register-header {
     text-align: center;
     margin-bottom: 2rem;
@@ -49,7 +49,7 @@
     font-size: 0.875rem;
   }
   
-  /* Form */
+ 
   .register-form {
     display: flex;
     flex-direction: column;
@@ -98,7 +98,6 @@
     font-size: 0.75rem;
   }
   
-  /* Radio buttons */
   .radio-group {
     display: flex;
     gap: 1.5rem;
@@ -111,7 +110,7 @@
     cursor: pointer;
   }
   
-  /* Submit button */
+ 
   .submit-button {
     background-color: #187795;
     color: white;
@@ -134,7 +133,6 @@
     cursor: not-allowed;
   }
   
-  /* Message */
   .message {
     padding: 0.75rem;
     border-radius: 4px;
@@ -154,7 +152,7 @@
     border: 1px solid #fecaca;
   }
   
-  /* Responsive */
+  
   @media (max-width: 640px) {
     .register-card {
       padding: 1.5rem;
