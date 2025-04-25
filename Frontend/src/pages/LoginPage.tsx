@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { doSignInWithGoogle } from "../../../backend/src/firebase/auth";
 import {useAppDispatch} from "../redux/hooks"
 import { setUser, setFirebaseUid } from "../redux/userSlice"
-import { getUserByFirebaseUID } from "../services/sign_up";
+import { getUserByFirebaseUID } from "../services/signUp";
 import {getRestaurantByUserId} from "../services/restaurant"
 import {getFoodBankByUserId } from "../services/foodbank"
 import socket from "../services/socket";
-import "../styles/LoginPage.css"; // Import the new CSS file
+import "../styles/loginPage.css"; // Import the new CSS file
 
 export default function LoginPage() {
   const navigate = useNavigate(); // React Router hook for navigation
@@ -70,18 +70,15 @@ export default function LoginPage() {
         if (type == "restaurant"){
           console.log("Restaurant user type detected, navigating to restaurant dashboard.");
           socket.emit("joinRestaurantRoom", rest_id);
-          navigate("/restaurant-dashboard")
+          navigate("/restaurant/dashboard")
         }
         else if (type == "foodbank"){
           console.log("Foodbank user type detected, navigating to inventory.");
           socket.emit("joinFoodbankRoom",fb_id);
 
-          navigate("/restaurant-dashboard")
+          navigate("/foodbank/dashboard")
         }
-        else if (type == "foodbank"){
-        
-          navigate("/FBdashboard")
-        } else {
+        else {
           console.error("Unknown user type:", type);
         }
       }

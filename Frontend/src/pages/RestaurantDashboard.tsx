@@ -1,103 +1,142 @@
-import React, { useState, useEffect, useCallback } from "react";
-import styles from "../styles/RestaurantDashboard.module.css";
-import AddItemModal from "./addItemModal";
-import { fetchFoodItemsByRestaurant } from "../services/foodItems";
+"use client";
+
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../redux/hooks";
-import Navbar from "../components/NavBar";
-import AIAssistant from '../components/ai-assistant'
+import styles from "../styles/dashboard.module.css";
 
-export default function Dashboard() {
-  const restaurantId: string = useAppSelector((state: any) => state.user.type_id);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [foodItems, setFoodItems] = useState<any[]>([]);
+import MetricCard from "../components/foodbankDashboard/metricCard";
+import Navbar from "../components/navBar";
+import CategoryChart from "../components/restaurantDashboard/CategoryChart";
+import OrdersChart from "../components/restaurantDashboard/orderChart";
+import TopFoodbanks from "../components/restaurantDashboard/TopFoodbanks";
+import PickupMap from "../components/restaurantDashboard/pickupMap";
+import ReviewsChart from "../components/restaurantDashboard/ReviewsChart";
+import AIAssistant from "../components/aiAssistant";
 
-  const loadFoodItems = useCallback(async () => {
-    try {
-      const response = await fetchFoodItemsByRestaurant(restaurantId);
+import { TrendingUp, BarChart3, MapPin, Star } from "lucide-react";
+import {
+  fetchRestaurantSummary,
+  fetchRestaurantPickupMapData,
+} from "../services/analytics";
 
-      // ✅ Only keep items with status === "available"
-      const availableItems = (response || []).filter((item: any) => item.status === "available");
-
-      // ✅ Sort by creation date (latest first)
-      const sortedItems = availableItems.sort((a: any, b: any) => {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      });
-
-      setFoodItems(sortedItems);
-    } catch (error) {
-      console.error("Failed to fetch food items:", error);
-    }
-  }, [restaurantId]);
+const RestaurantDashboard: React.FC = () => {
+  const restaurantId = useAppSelector((state: any) => state.user.type_id);
+  const [summaryData, setSummaryData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [timeRange, setTimeRange] = useState("month");
 
   useEffect(() => {
-    loadFoodItems();
-  }, [loadFoodItems]);
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const [summary, pickupMap] = await Promise.all([
+          fetchRestaurantSummary(restaurantId),
+          fetchRestaurantPickupMapData(restaurantId),
+        ]);
+        setSummaryData({
+          ...summary,
+          avgPickupDistance: pickupMap.avgDistance,
+        });
+      } catch (err) {
+        console.error("❌ Failed to load restaurant data", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (restaurantId) loadData();
+  }, [restaurantId]);
 
   return (
-    <>
-      <div>
-        <Navbar active="inventory" />
-      </div>
-      <div className={styles.container}>
+    <div className={styles.dashboardContainer}>
+      <Navbar active="dashboard" />
 
-        <div className={styles.section}>
-          <h2 className={styles.title}>My Inventory</h2>
-
-          <div className={styles.cards}>
-            {foodItems.length > 0 ? (
-              foodItems.map((item) => (
-                <div className={styles.card} key={item._id}>
-                  <img
-                    src={
-                      item.category === "Savoury"
-                        ? "/images/savoury.jpg"
-                        : item.category === "Sweet"
-                          ? "/images/sweet.jpg"
-                          : item.category === "Beverage"
-                            ? "/images/beverage.jpg"
-                            : "/placeholder.svg"
-                    }
-                    alt={item.name}
-                  />
-                  <div className={styles.info}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <h3 style={{ margin: 0 }}>{item.name}</h3>
-                      <div className={styles.expiry}>
-                        Expires on <br />
-                        {item.expiration_date
-                          ? new Date(item.expiration_date).toLocaleDateString()
-                          : "N/A"}
-                      </div>
-                    </div>
-                    <p>
-                      Quantity available: <strong>{item.quantity || "N/A"}</strong>
-                    </p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p style={{ margin: "1rem 0" }}>No food items listed yet.</p>
-            )}
+      <div className={styles.dashboardContent}>
+        <div className={styles.dashboardHeader}>
+          <h1>Restaurant Analytics Dashboard</h1>
+          <div className={styles.timeRangeSelector}>
+            <button
+              className={timeRange === "week" ? styles.active : ""}
+              onClick={() => setTimeRange("week")}
+            >
+              Week
+            </button>
+            <button
+              className={timeRange === "month" ? styles.active : ""}
+              onClick={() => setTimeRange("month")}
+            >
+              Month
+            </button>
+            <button
+              className={timeRange === "year" ? styles.active : ""}
+              onClick={() => setTimeRange("year")}
+            >
+              Year
+            </button>
           </div>
-
-          <button className={styles.addBtn} onClick={() => setIsModalOpen(true)}>
-            Add Item
-          </button>
         </div>
 
-        <AddItemModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onItemAdded={loadFoodItems}
-        />
-        <AIAssistant />
+        {loading ? (
+          <p>Loading data...</p>
+        ) : (
+          <>
+            <div className={styles.metricsOverview}>
+              <MetricCard
+                title="Total Items Donated"
+                value={summaryData?.totalItemsDonated ?? "—"}
+                icon={<TrendingUp />}
+              />
+              <MetricCard
+                title="Foodbanks Contributed To"
+                value={summaryData?.totalFoodbanksContributed ?? "—"}
+                icon={<BarChart3 />}
+              />
+              <MetricCard
+                title="Avg. Pickup Distance"
+                value={`${summaryData?.avgPickupDistance ?? "—"} km`}
+                icon={<MapPin />}
+              />
+              <MetricCard
+                title="Avg. Rating"
+                value={summaryData?.averageRating ?? "—"}
+                icon={<Star />}
+              />
+            </div>
+
+            <div className={styles.chartsContainer}>
+              <div className={styles.chartRow}>
+                <div className={styles.chartCard}>
+                  <h2>Completed Orders Over Time</h2>
+                  <OrdersChart timeRange={timeRange} />
+                </div>
+                <div className={styles.chartCard}>
+                  <h2>Completed Orders by Category</h2>
+                  <CategoryChart />
+                </div>
+              </div>
+
+              <div className={styles.chartRow}>
+                <div className={styles.chartCard}>
+                  <h2>Pickup Map</h2>
+                  <PickupMap />
+                </div>
+                <div className={styles.chartCard}>
+                  <h2>Top Foodbanks</h2>
+                  <TopFoodbanks />
+                </div>
+              </div>
+
+              <div className={styles.chartCard}>
+                <h2>Reviews & Feedback Trends</h2>
+                <ReviewsChart timeRange={timeRange} />
+              </div>
+            </div>
+          </>
+        )}
       </div>
-    </>
+      <AIAssistant />
+    </div>
   );
-}
+};
+
+export default RestaurantDashboard;

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import styles from "../styles/StarRating.module.css"
+import styles from "../styles/starRating.module.css"
 
 interface StarRatingProps {
   rating: number

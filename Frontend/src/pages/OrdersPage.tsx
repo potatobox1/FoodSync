@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/OrdersPage.css';
-import { fetchDonationRequestsForFoodbank } from '../services/addDonationRequest';
+import '../styles/ordersPage.css';
+import { fetchDonationRequestsForFoodbank } from '../services/donationRequests';
 import { fetchRestaurantById } from '../services/restaurant';
 import { fetchUserById } from '../services/user';
 import { useAppSelector } from "../redux/hooks";
-import FNavbar from '../components/foodbank_navbar';
-import AIAssistant from '../components/ai-assistant'
+import FNavbar from '../components/foodbankNavbar';
+import AIAssistant from '../components/aiAssistant'
 import socket from '../services/socket';
 
 interface Restaurant {

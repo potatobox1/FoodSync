@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
 import { Send } from "lucide-react"
-import { fetchAIResponse } from "../services/sendChatbotMessage"
+import { fetchAIResponse } from "../services/chatbot"
 import restaurantPrompt from "../services/restaurantPrompt"
 import foodbankPrompt from "../services/foodbankPrompt"
 import { useAppSelector } from "../redux/hooks";

@@ -1,18 +1,18 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import FNavbar from "../components/foodbank_navbar"
-import CategoryFilter from "../components/category-filter"
-import FoodListings from "../components/food-listings"
-import FilterSidebar from "../components/filter-sidebar"
-import { type FoodItem, determineSubCategory, formatExpiryTime } from "../types/food-item"
-import "../styles/main_inventory.css"
+import FNavbar from "../components/foodbankNavbar"
+import CategoryFilter from "../components/categoryFilter"
+import FoodListings from "../components/foodListing"
+import FilterSidebar from "../components/filterSidebar"
+import { type FoodItem, determineSubCategory, formatExpiryTime } from "../types/foodItems"
+import "../styles/mainInventory.css"
 import { fetchInventory } from "../services/inventory";
 import { fetchRestaurantById } from "../services/restaurant";
 import { fetchUserById } from "../services/user";
 import { fetchLocationById } from "../services/location";
 import { useAppSelector } from "../redux/hooks";
-import AIAssistant from '../components/ai-assistant'
+import AIAssistant from '../components/aiAssistant'
 import socket from "../services/socket"; 
 // import axios from "axios";
 

@@ -2,10 +2,10 @@
 
 import type React from "react"
 import { useState } from "react"
-import "../styles/InfoPage.css"
-import { signUp, registerFoodBank, registerRestaurant } from "../services/sign_up"
+import "../styles/register.css"
+import { signUp, registerFoodBank, registerRestaurant } from "../services/signUp"
 import { useAppSelector } from "../redux/hooks";
-import { getUserByFirebaseUID } from "../services/sign_up";
+import { getUserByFirebaseUID } from "../services/signUp";
 import { getRestaurantByUserId } from "../services/restaurant";
 import { getFoodBankByUserId } from "../services/foodbank";
 import {useAppDispatch} from "../redux/hooks"
@@ -257,9 +257,9 @@ const RegisterForm: React.FC = () => {
       setLongitude("")
 
       if (formData.user_type === "restaurant") {
-        window.location.href = "/restaurant-dashboard"
+        window.location.href = "/restaurant/dashboard"
       } else{
-        window.location.href = "/inventory"
+        window.location.href = "/foodbank/avaialableItems"
       }
     } catch (error) {
       console.error("Registration error:", error)

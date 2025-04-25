@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { MessageSquare, X } from "lucide-react"
-import ChatInterface from "./chat-interface"
+import ChatInterface from "./chatInterface"
 import "../styles/ai-assistant.css"
 
 export default function AIAssistant() {

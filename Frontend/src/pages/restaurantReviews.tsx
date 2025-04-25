@@ -1,14 +1,14 @@
 // import type React from "react"
 import React, { useEffect, useState } from "react";
-import styles from '../styles/ViewReviews.module.css'
+import styles from '../styles/viewReviews.module.css'
 import { Star } from "lucide-react"
-import Navbar from "../components/NavBar"
+import Navbar from "../components/navBar"
 import { useAppSelector } from "../redux/hooks";
-import { fetchReviewsByRestaurant } from "../services/review";
+import { fetchReviewsByRestaurant } from "../services/reviews";
 import { fetchFoodItemById } from "../services/foodItems"; 
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { fetchUserById } from "../services/user";
-import AIAssistant from '../components/ai-assistant'
+import AIAssistant from '../components/aiAssistant'
 import socket from "../services/socket";
 
 // Define types for our data

@@ -1,5 +1,5 @@
 "use client"
-import "../styles/main_inventory.css"
+import "../styles/mainInventory.css"
 
 interface CategoryFilterProps {
   selectedCategory: string

@@ -2,17 +2,17 @@
 
 import React, { useEffect, useState } from "react"
 import styles from "../styles/addReview.module.css"
-import ReviewModal from "../components/ReviewModal"
-import StarRating from "../components/StarRating"
-import FNavbar from "../components/foodbank_navbar"
-import { fetchDonationRequestsForFoodbank } from "../services/addDonationRequest"
+import ReviewModal from "../components/reviewModal"
+import StarRating from "../components/starRating"
+import FNavbar from "../components/foodbankNavbar"
+import { fetchDonationRequestsForFoodbank } from "../services/donationRequests"
 import { fetchRestaurantById } from "../services/restaurant"
 import { fetchUserById } from "../services/user"
 import { useAppSelector } from "../redux/hooks"
-import { addReview, getExistingReview } from "../services/review"
+import { addReview, getExistingReview } from "../services/reviews"
 import { fetchFoodItemById } from "../services/foodItems"
-import { sendEmail } from "../services/email"
-import AIAssistant from '../components/ai-assistant'
+import { sendEmail } from "../services/emails"
+import AIAssistant from '../components/aiAssistant'
 
 interface Restaurant {
   _id: string

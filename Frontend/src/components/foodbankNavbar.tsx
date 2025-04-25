@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { clearUser } from "../redux/userSlice";
-import styles from "../styles/Navbar.module.css";
+import styles from "../styles/navBar.module.css";
 import { Menu, X } from "lucide-react"; // Or use emoji/icons if preferred
 
 interface NavbarProps {
@@ -26,11 +26,11 @@ const FNavbar: React.FC<NavbarProps> = ({ active }) => {
         {menuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
       <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
-        <Link to="/FBdashboard" className={active === "dashboard" ? styles.active : ""}>Dashboard</Link>
-        <Link to="/inventory" className={active === "inventory" ? styles.active : ""}>Available Items</Link>
-        <Link to="/OrdersPage" className={active === "orders" ? styles.active : ""}>My Orders</Link>
+        <Link to="/foodbank/dashboard" className={active === "dashboard" ? styles.active : ""}>Dashboard</Link>
+        <Link to="/foodbank/avaialbleItems" className={active === "inventory" ? styles.active : ""}>Available Items</Link>
+        <Link to="/foodbank/ordersPage" className={active === "orders" ? styles.active : ""}>My Orders</Link>
         <Link to="/leaderboard" className={active === "leaderboard" ? styles.active : ""}>Leaderboard</Link>
-        <Link to="/Review" className={active === "reviews" ? styles.active : ""}>Review</Link>
+        <Link to="/foodbank/reviews" className={active === "reviews" ? styles.active : ""}>Review</Link>
 
         {/* Show userArea inside the menu on mobile */}
         <div className={styles.userAreaMobile}>

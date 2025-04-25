@@ -1,7 +1,7 @@
 import type React from "react"
 import { Package } from "lucide-react"
-import styles from "../styles/LandingPage.module.css"
-import AIAssistant from '../components/ai-assistant'
+import styles from "../styles/landingPage.module.css"
+import AIAssistant from '../components/aiAssistant'
 
 const LandingPage: React.FC = () => {
   return (
@@ -32,7 +32,7 @@ const LandingPage: React.FC = () => {
             Our innovative web application connects restaurants and food banks, ensuring that surplus food reaches those
             in need. Together, we can make a significant impact on reducing food wastage and feeding our communities.
           </p>
-          <a href="/AboutUs" className={styles.learnMoreButton}>
+          <a href="/aboutUs" className={styles.learnMoreButton}>
             Learn More
           </a>
         </div>

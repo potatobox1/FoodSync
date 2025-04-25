@@ -1,4 +1,4 @@
-import "../styles/main_inventory.css"
+import "../styles/mainInventory.css"
 
 export default function Header() {
   return (

@@ -12,4 +12,14 @@ export const fetchUserById = async (userId: string) => {
   }
 };
 
+export const fetchUsers = async () => {
+  try {
+    const response = await API.get("/api/users");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};
+
 export default API;

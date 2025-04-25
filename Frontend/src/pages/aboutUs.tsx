@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from '../styles/AboutUsPage.module.css';
-import AIAssistant from '../components/ai-assistant'
+import styles from '../styles/aboutUs.module.css';
+import AIAssistant from '../components/aiAssistant'
 const AboutUsPage: React.FC = () => {
   return (
     <div className={styles.aboutPage}>

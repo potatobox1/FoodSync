@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers } from "../services/user_list_api";  // Import fetchUsers
+import { fetchUsers } from "../services/user";  // Import fetchUsers
 
 interface User {
   _id: string;

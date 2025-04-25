@@ -4,14 +4,14 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import styles from "../styles/dashboard.module.css"
 
-import DonationChart from "../components/FBdashboard/donationChart"
-import TopRestaurants from "../components/FBdashboard/topRestaurants"
-import PickupMap from "../components/FBdashboard/pickupMap"
-import FoodCategoryChart from "../components/FBdashboard/categoryChart"
-import ReviewsChart from "../components/FBdashboard/reviewChart"
-import MetricCard from "../components/FBdashboard/metricCard"
-import Navbar from "../components/foodbank_navbar"
-import AIAssistant from '../components/ai-assistant'
+import DonationChart from "../components/foodbankDashboard/donationChart"
+import TopRestaurants from "../components/foodbankDashboard/topRestaurants"
+import PickupMap from "../components/foodbankDashboard/pickupMap"
+import FoodCategoryChart from "../components/foodbankDashboard/categoryChart"
+import ReviewsChart from "../components/foodbankDashboard/reviewChart"
+import MetricCard from "../components/foodbankDashboard/metricCard"
+import Navbar from "../components/foodbankNavbar"
+import AIAssistant from '../components/aiAssistant'
 import { BarChart3, MapPin, Star, TrendingUp } from "lucide-react"
 
 import { fetchFoodbankSummary, fetchPickupMapData } from "../services/analytics"

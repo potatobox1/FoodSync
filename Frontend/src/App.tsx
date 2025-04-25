@@ -1,42 +1,39 @@
 import React from "react";
-// import UserList from "./components/table";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import InfoPage from "./pages/InfoPage";
+import LoginPage from "./pages/loginPage";
+import Register from "./pages/register";
 import 'leaflet/dist/leaflet.css';
-import RDashboard from "./pages/dashboard";
-import Landing from "./pages/LandingPage";
-import Learn from "./pages/learn-more";
+import RestaurantDashboard from "./pages/restaurantDashboard";
+import LandingPage from "./pages/landingPage";
 import Contact from "./pages/contact";
-import RestaurantDashboard from "./pages/RestaurantDashboard";
+import RestaurantInventory from "./pages/restaurantInventory";
 import Leaderboard from "./pages/leaderboard";
-import Inventory from "./pages/MainInventory";
+import AvailableItems from "./pages/availableItems";
 import OrdersPage from "./pages/OrdersPage";
-import IncomingOrders from "./pages/IncomingOrders";
-import AboutUsPage from "./pages/AboutUsPage";
-import OrderReviews from "./pages/ViewReviews";
-import ReviewPage from "./pages/addReview";
-import FBDashboard from "./pages/FBdashboard";
+import IncomingOrders from "./pages/restaurantOrders";
+import AboutUs from "./pages/aboutUs";
+import OrderReviews from "./pages/restaurantReviews";
+import ReviewPage from "./pages/foodbankReviews";
+import FoodbankDashboard from "./pages/foodbankDashboard";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/register" element={<InfoPage />} />
-        <Route path="/FBdashboard" element={<FBDashboard />} />         
-        <Route path="/Rdashboard" element={<RDashboard />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/foodbank/dashboard" element={<FoodbankDashboard />} />         
+        <Route path="/restaurant/dashboard" element={<RestaurantDashboard/>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/learn-more" element={<Learn />} />
-        <Route path="/restaurant-dashboard" element={<RestaurantDashboard />} />
-        <Route path="/inventory" element={<Inventory />} />
+        <Route path="/restaurant/inventory" element={<RestaurantInventory/>} />
+        <Route path="/foodbank/avaialableItems" element={<AvailableItems/>} />
         <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/OrdersPage" element={<OrdersPage />} />
-        <Route path="/incoming-orders" element={<IncomingOrders />} />
-        <Route path="/AboutUs" element={<AboutUsPage />} />
-        <Route path="/Review" element={<ReviewPage />} />
-        <Route path="/viewreview" element= {<OrderReviews/>}/>
+        <Route path="/foodbank/ordersPage" element={<OrdersPage />} />
+        <Route path="/restaurant/incomingOrders" element={<IncomingOrders />} />
+        <Route path="/aboutUs" element={<AboutUs/>} />
+        <Route path="/foodbank/reviews" element={<ReviewPage />} />
+        <Route path="/restaurant/reviews" element= {<OrderReviews/>}/>
       </Routes>
     </BrowserRouter>
   );

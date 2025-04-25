@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { fetchRestaurants } from "../services/restaurant";
 import { fetchUserById } from "../services/user";
 import "../styles/leaderboard.css";
-import FNavbar from "../components/foodbank_navbar";
-import Navbar from "../components/NavBar";
+import FNavbar from "../components/foodbankNavbar";
+import Navbar from "../components/navBar";
 import { useAppSelector } from "../redux/hooks";
-import AIAssistant from '../components/ai-assistant'
+import AIAssistant from '../components/aiAssistant'
 
 type Restaurant = {
   user_id: string;

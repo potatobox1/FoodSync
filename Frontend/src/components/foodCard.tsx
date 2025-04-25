@@ -1,9 +1,9 @@
-import { type FoodItem, getCategoryImage } from "../types/food-item"
-import "../styles/main_inventory.css"
-import { addDonationRequest } from "../services/addDonationRequest"; // Step 1: import function
+import { type FoodItem, getCategoryImage } from "../types/foodItems"
+import "../styles/mainInventory.css"
+import { addDonationRequest } from "../services/donationRequests"; // Step 1: import function
 import { useState } from "react";
 import { useAppSelector } from "../redux/hooks";
-import { sendEmail } from "../services/email";
+import { sendEmail } from "../services/emails";
 import { fetchFoodItemById } from "../services/foodItems";
 import { fetchRestaurantById } from "../services/restaurant";
 import { fetchUserById } from "../services/user";

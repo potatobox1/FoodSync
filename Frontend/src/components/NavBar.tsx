@@ -31,11 +31,11 @@ const Navbar: React.FC<NavbarProps> = ({ active }) => {
       </button>
 
       <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
-        <Link to="/Rdashboard" className={active === "dashboard" ? styles.active : ""}>Dashboard</Link>
-        <Link to="/restaurant-dashboard" className={active === "inventory" ? styles.active : ""}> My Inventory </Link>
-        <Link to="/incoming-orders" className={active === "orders" ? styles.active : ""}> My Orders </Link>
+        <Link to="/restaurant/dashboard" className={active === "dashboard" ? styles.active : ""}>Dashboard</Link>
+        <Link to="/restaurant/inventory" className={active === "inventory" ? styles.active : ""}> My Inventory </Link>
+        <Link to="/restaurant/incomingOrders" className={active === "orders" ? styles.active : ""}> My Orders </Link>
         <Link to="/leaderboard" className={active === "leaderboard" ? styles.active : ""} > Leaderboard </Link>
-        <Link to="/viewreview" className={active === "reviews" ? styles.active : ""} > Reviews </Link>
+        <Link to="/restaurant/reviews" className={active === "reviews" ? styles.active : ""} > Reviews </Link>
 
         <div className={styles.userAreaMobile}>
           <div className={styles.userIcon}>👤</div>

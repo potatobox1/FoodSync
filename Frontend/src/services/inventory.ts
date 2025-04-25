@@ -1,5 +1,5 @@
 import axios from "axios";
-import { fetchDonationRequestsForFoodbank } from "./addDonationRequest";
+import { fetchDonationRequestsForFoodbank } from "./donationRequests";
 
 const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 

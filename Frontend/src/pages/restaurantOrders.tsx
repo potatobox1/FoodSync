@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Check, Clock, X } from "lucide-react";
-import styles from "../styles/IncomingOrders.module.css";
-import { fetchDonationRequestsForRestaurant } from "../services/addDonationRequest";
-import { updateDonationRequestStatus } from "../services/addDonationRequest";
+import styles from "../styles/incomingOrders.module.css";
+import { fetchDonationRequestsForRestaurant } from "../services/donationRequests";
+import { updateDonationRequestStatus } from "../services/donationRequests";
 import { fetchFoodItemById, updateFoodItemStatus } from "../services/foodItems";
-import { addCompletedOrder } from "../services/completedorders";
+import { addCompletedOrder } from "../services/completedOrders";
 import { fetchUserById } from "../services/user";
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { useAppSelector } from "../redux/hooks";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/navBar";
 import { updateTotalDonations } from "../services/restaurant";
-import { sendEmail } from "../services/email";
-import { getDonationRequestById } from "../services/addDonationRequest";
+import { sendEmail } from "../services/emails";
+import { getDonationRequestById } from "../services/donationRequests";
 import socket from "../services/socket"; 
-import AIAssistant from '../components/ai-assistant'
-
-
-
+import AIAssistant from '../components/aiAssistant'
 
 interface DonationRequest {
   _id: string;

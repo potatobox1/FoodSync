@@ -1,6 +1,6 @@
-import FoodCard from "./food-card"
-import type { FoodItem } from "../types/food-item"
-import "../styles/main_inventory.css"
+import FoodCard from "./foodCard"
+import type { FoodItem } from "../types/foodItems"
+import "../styles/mainInventory.css"
 
 interface FoodListingsProps {
   items: FoodItem[]
