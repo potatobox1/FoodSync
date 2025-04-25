@@ -5,7 +5,13 @@ import {
   getCategoryBreakdown,
   getDonationsChart,
   getReviewsChart,
-  getPickupMap
+  getPickupMap,
+  getRestaurantSummary,
+  getRestaurantCategoryBreakdown,
+  getRestaurantOrdersChart,
+  getTopFoodbanks,
+  getRestaurantPickupMap,
+  getRestaurantReviewsChart
 } from '../controller/analyticsController';
 
 const router = Router();
@@ -27,5 +33,20 @@ router.get('/foodbank/reviews-chart/:foodbankId', getReviewsChart);
 
 // Geographic pickup map and average distance
 router.get('/foodbank/pickup-map/:foodbankId', getPickupMap);
+
+// Restaurant dashboard summary
+router.get("/restaurant/summary/:restaurantId", getRestaurantSummary);
+
+// Restaurant - Category Breakdown
+router.get("/restaurant/category-breakdown/:restaurantId", getRestaurantCategoryBreakdown);
+
+router.get("/restaurant/orders-chart/:restaurantId", getRestaurantOrdersChart);
+
+router.get("/restaurant/top-foodbanks/:restaurantId", getTopFoodbanks);
+
+router.get("/restaurant/pickup-map/:restaurantId", getRestaurantPickupMap);
+
+router.get("/restaurant/reviews-chart/:restaurantId", getRestaurantReviewsChart);
+
 
 export default router;
