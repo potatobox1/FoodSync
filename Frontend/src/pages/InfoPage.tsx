@@ -183,7 +183,6 @@ const RegisterForm: React.FC = () => {
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude),
       })
-      console.log("User Registered:", response);
 
 
       if (formData.user_type === "restaurant") {
@@ -194,15 +193,12 @@ const RegisterForm: React.FC = () => {
           uid,
           cuisine_type: formData.cuisine_type,
         });
-        console.log("Restaurant Registered", ret_api.restaurant.id);
       } else {
         const ret_api = await registerFoodBank({
           uid,
           transportation_notes: "", // Add input field for this if needed
         });
-        console.log("Food Bank Registered", ret_api.foodbank.id);
       }
-      console.log("Form submitted successfully:", response)
       setMessage({
         text: "Registration successful! Your account has been created.",
         type: "success",
@@ -243,7 +239,6 @@ const RegisterForm: React.FC = () => {
                   
             
       
-                  console.log("Fetched user:", userData);
                 } catch (err) {
                   console.error("Could not fetch user", err);
                 }
