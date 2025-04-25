@@ -1,9 +1,7 @@
-// controllers/userController.ts
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { User } from '../models/user';
 
-// GET /api/users/:id - Fetch a user by ID
 export const getUserById = async (req: any, res: any) => {
   const { id } = req.params;
   try {

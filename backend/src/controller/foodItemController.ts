@@ -1,10 +1,8 @@
-// controllers/foodItemController.ts
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { FoodItem } from '../models/foodItem';
 import { io } from '../server';
 
-// GET /api/fooditems/:restaurantId
 export const getFoodItemsByRestaurant = async (req: any, res:any) => {
   const { restaurantId } = req.params;
   try {
@@ -19,7 +17,6 @@ export const getFoodItemsByRestaurant = async (req: any, res:any) => {
   }
 };
 
-// PATCH /api/fooditems/update-quantity/:itemId
 export const updateFoodItemQuantity = async (req: any, res: any) => {
   const { itemId } = req.params;
   const { quantity } = req.body;
@@ -45,12 +42,10 @@ export const updateFoodItemQuantity = async (req: any, res: any) => {
   }
 };
 
-// POST /api/fooditems/additem
 export const addFoodItem = async (req: any, res: any) => {
   try {
     const { restaurant_id, quantity, expiration_date, name, category } = req.body;
 
-    // Validate required fields
     if (!restaurant_id || !quantity || !expiration_date || !name || !category) {
       return res.status(400).json({ message: "All fields are required." });
     }
@@ -76,7 +71,6 @@ export const addFoodItem = async (req: any, res: any) => {
   }
 };
 
-// PATCH /api/fooditems/update-status/:foodItemId
 export const updateFoodItemStatus = async (req: any, res: any) => {
   const { foodItemId } = req.params;
   const { status } = req.body;
@@ -103,7 +97,6 @@ export const updateFoodItemStatus = async (req: any, res: any) => {
   }
 };
 
-// GET /api/fooditems/get-item/:foodId
 export const getFoodItemById = async (req: any, res: any) => {
   const { foodId } = req.params;
   try {
@@ -120,6 +113,3 @@ export const getFoodItemById = async (req: any, res: any) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-
-

@@ -1,8 +1,6 @@
-// controllers/inventoryController.ts
 import { Request, Response } from 'express';
 import { FoodItem } from '../models/foodItem';
 
-// GET /api/inventory
 export const getInventory = async (req: any, res:any) => {
   try {
     const { available } = req.query;

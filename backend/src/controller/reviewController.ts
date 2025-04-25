@@ -1,10 +1,8 @@
-// controllers/reviewController.ts
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { Review } from '../models/review';
 import { io } from '../server';
 
-// POST /api/review/addreview - Create a new review
 export const addReview = async (req: any, res: any) => {
   try {
     const { foodbank_id, restaurant_id, food_id, rating, feedback } = req.body;
@@ -36,7 +34,6 @@ export const addReview = async (req: any, res: any) => {
   }
 };
 
-// GET /api/review/restaurant/:id - Get reviews by restaurant_id
 export const getReviewsByRestaurant = async (req: any, res: any) => {
   const { id } = req.params;
   try {
@@ -48,7 +45,6 @@ export const getReviewsByRestaurant = async (req: any, res: any) => {
   }
 };
 
-// GET /api/review/check?foodbank_id=...&food_id=... - Check if review exists
 export const checkReviewExists = async (req: any, res: any) => {
   const { foodbank_id, food_id } = req.query;
   try {
@@ -66,5 +62,3 @@ export const checkReviewExists = async (req: any, res: any) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
-
-

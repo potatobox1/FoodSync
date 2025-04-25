@@ -1,8 +1,6 @@
-// controllers/locationController.ts
 import { Request, Response } from 'express';
 import { Location } from '../models/location';
 
-// GET /api/locations/:id
 export const getLocationById = async (req: any, res: any) => {
   const { id } = req.params;
   try {

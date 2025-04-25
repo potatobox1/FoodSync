@@ -10,7 +10,7 @@ const connectDB = async (uri: string): Promise<void> => {
         } else {
             console.error('An unknown error occurred');
         }
-        process.exit(1); // Exit process with failure
+        process.exit(1);
     }
 };
 

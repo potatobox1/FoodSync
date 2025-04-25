@@ -1,4 +1,3 @@
-// controllers/authController.ts
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { User } from '../models/user';
@@ -6,7 +5,6 @@ import { Location } from '../models/location';
 import { Restaurant } from '../models/restaurant';
 import { FoodBank } from '../models/foodBank';
 
-// POST /api/auth/signup
 export const signup = async (req: any, res: any) => {
   const {
     uid,
@@ -53,7 +51,6 @@ export const signup = async (req: any, res: any) => {
   }
 };
 
-// POST /api/auth/getuser
 export const getUser = async (req: any, res: any) => {
   const { uid } = req.body;
   try {
@@ -77,7 +74,6 @@ export const getUser = async (req: any, res: any) => {
   }
 };
 
-// POST /api/auth/addrestaurant
 export const addRestaurant = async (req: any, res: any) => {
   const { uid, cuisine_type } = req.body;
   try {
@@ -107,7 +103,6 @@ export const addRestaurant = async (req: any, res: any) => {
   }
 };
 
-// POST /api/auth/addfoodbank
 export const addFoodBank = async (req:any, res: any) => {
   const { uid, transportation_notes } = req.body;
   try {
@@ -134,5 +129,3 @@ export const addFoodBank = async (req:any, res: any) => {
     return res.status(500).json({ message: 'Server error during food bank registration', error: true });
   }
 };
-
-
