@@ -14,7 +14,6 @@ import { fetchLocationById } from "../services/location";
 import { useAppSelector } from "../redux/hooks";
 import AIAssistant from '../components/aiAssistant'
 import socket from "../services/socket"; 
-// import axios from "axios";
 
 export default function MainInventory() {
   const [foodItems, setFoodItems] = useState<FoodItem[]>([])
@@ -22,20 +21,19 @@ export default function MainInventory() {
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [minQuantity, setMinQuantity] = useState<number>(0)
   const [sortByLocation, setSortByLocation] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(true) // Added loading state
+  const [loading, setLoading] = useState<boolean>(true)
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number }>({
     latitude: 40.7128,
     longitude: -74.006,
   })
-  const foodbankId = useAppSelector((state: any) => state.user.type_id); // replace with reduxx state
-  const userId = useAppSelector((state: any) => state.user.user_id); // replace with reduxx state
+  const foodbankId = useAppSelector((state: any) => state.user.type_id); 
+  const userId = useAppSelector((state: any) => state.user.user_id); 
 
-  // Get user's location on component mount
   useEffect(() => {
     async function fetchUserLocation() {
       try {
-        const user = await fetchUserById(userId); // Fetch user instance
-        const location = await fetchLocationById(user.location_id); // Fetch location using location_id
+        const user = await fetchUserById(userId); 
+        const location = await fetchLocationById(user.location_id); 
         setUserLocation({
           latitude: location.latitude,
           longitude: location.longitude,
@@ -108,7 +106,6 @@ export default function MainInventory() {
           expiresIn,
         }
   
-        // 📦 Add to current list
         setFoodItems((prevItems) => [newItem, ...prevItems])
       } catch (error) {
         console.error("Error processing new item:", error)
@@ -122,22 +119,19 @@ export default function MainInventory() {
     }
   }, [])
 
-  // Filter items based on selected category and minimum quantity
   const filteredItems = foodItems
     .filter((item) => selectedCategory === "All Items" || item.subCategory === selectedCategory)
     .filter((item) => item.quantity >= minQuantity)
 
-  // Sort items based on the selected criteria
   const sortedItems = [...filteredItems].sort((a, b) => {
     if (sortByLocation) {
       const distanceA = calculateDistance(userLocation, a.restaurant.location);
       const distanceB = calculateDistance(userLocation, b.restaurant.location);
       return distanceA - distanceB;
     }
-    return b.quantity - a.quantity; // Default to sorting by highest quantity
+    return b.quantity - a.quantity; 
   });
 
-  // Calculate distance between two coordinates using Haversine formula
   function calculateDistance(userLoc: { latitude: number; longitude: number }, restLoc: { latitude: number; longitude: number }) {
     const R = 6371
     const dLat = deg2rad(restLoc.latitude - userLoc.latitude)
@@ -154,8 +148,8 @@ export default function MainInventory() {
   return (
     <div className="main-inventory-page">
       <FNavbar active="inventory" />
-      <main className="min-h-screen" style={{ marginTop: 0 }}> {/* Ensure no extra margin */}
-        <div className="container main-content" style={{ paddingTop: 0 }}> {/* Remove extra padding */}
+      <main className="min-h-screen" style={{ marginTop: 0 }}> 
+        <div className="container main-content" style={{ paddingTop: 0 }}> 
           <h1 className="page-title">Available Food Donations</h1>
 
           <div className="flex flex-col md-flex-row gap-6">
@@ -190,7 +184,7 @@ export default function MainInventory() {
                 </button>
               </div>
 
-              {loading ? ( // Show loading state
+              {loading ? ( 
                 <div className="text-center text-gray-500">Loading...</div>
               ) : (
                 <FoodListings items={sortedItems} />

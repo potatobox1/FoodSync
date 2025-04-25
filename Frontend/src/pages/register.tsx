@@ -1,4 +1,3 @@
-// "use client"
 
 import type React from "react"
 import { useState } from "react"
@@ -196,27 +195,26 @@ const RegisterForm: React.FC = () => {
       } else {
         const ret_api = await registerFoodBank({
           uid,
-          transportation_notes: "", // Add input field for this if needed
+          transportation_notes: "", 
         });
       }
       setMessage({
         text: "Registration successful! Your account has been created.",
         type: "success",
       })
-      ////////////////
       try {
                   const userData = await getUserByFirebaseUID(uid);
                   if (userData.user_type == "restaurant")
                   {
                     const restaurant = await getRestaurantByUserId(userData.id);
                     dispatch(setUser({
-                      firebase_uid: uid, //
-                      email: userData.email, //
-                      name:userData.name,    //
-                      user_type: userData.user_type, //
-                      photoURL: photoURL, //
-                      user_id: userData.id,  //
-                      type_id: restaurant._id, ///
+                      firebase_uid: uid, 
+                      email: userData.email, 
+                      name:userData.name,   
+                      user_type: userData.user_type, 
+                      photoURL: photoURL, 
+                      user_id: userData.id, 
+                      type_id: restaurant._id, 
         
                     }));
                   }
@@ -224,13 +222,13 @@ const RegisterForm: React.FC = () => {
                     const foodBank = await getFoodBankByUserId(userData.id);
       
                     dispatch(setUser({
-                      firebase_uid: uid, //
-                      email: userData.email, //
-                      name:userData.name,    //
-                      user_type: userData.user_type, //
-                      photoURL: photoURL, //
-                      user_id: userData.id,  //
-                      type_id: foodBank._id, ///
+                      firebase_uid: uid, 
+                      email: userData.email, 
+                      name:userData.name,    
+                      user_type: userData.user_type, 
+                      photoURL: photoURL, 
+                      user_id: userData.id,  
+                      type_id: foodBank._id,
         
                     }));
       
@@ -444,7 +442,6 @@ const RegisterForm: React.FC = () => {
                     setLatitude(position.coords.latitude.toString())
                     setLongitude(position.coords.longitude.toString())
 
-                    // Clear previous errors
                     setErrors((prev) => ({
                       ...prev,
                       latitude: "",

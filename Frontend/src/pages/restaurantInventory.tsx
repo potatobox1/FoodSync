@@ -15,10 +15,8 @@ export default function Dashboard() {
     try {
       const response = await fetchFoodItemsByRestaurant(restaurantId);
 
-      // ✅ Only keep items with status === "available"
       const availableItems = (response || []).filter((item: any) => item.status === "available");
 
-      // ✅ Sort by creation date (latest first)
       const sortedItems = availableItems.sort((a: any, b: any) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
       });
