@@ -259,7 +259,7 @@ const RegisterForm: React.FC = () => {
       if (formData.user_type === "restaurant") {
         window.location.href = "/restaurant/dashboard"
       } else{
-        window.location.href = "/foodbank/avaialableItems"
+        window.location.href = "/foodbank/availableItems"
       }
     } catch (error) {
       console.error("Registration error:", error)
