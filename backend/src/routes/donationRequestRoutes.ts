@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import { DonationRequest } from "../models/donationRequest";
+import { FoodItem } from "../models/foodItem";
+import { io } from "../server";
 
 const router = express.Router();
 
@@ -29,6 +31,16 @@ router.post("/add-donation-request", async (req: any, res: any) => {
 
     // Save to database
     const savedRequest = await newDonationRequest.save();
+
+    const foodItem = await FoodItem.findById(foodObjectId);
+    const restaurantId = foodItem?.restaurant_id?.toString();
+
+    if (restaurantId) {
+      io.to(restaurantId).emit("newDonationRequest", {
+        request: savedRequest,
+        foodItem,
+      });
+    }
 
     res.status(201).json(savedRequest);
   } catch (error) {
@@ -122,6 +134,12 @@ router.patch("/update-status/:requestId", async (req: any, res: any) => {
     // Update the status of the donation request
     donationRequest.status = status;
     await donationRequest.save();
+    
+    const foodbankId = donationRequest.foodbank_id.toString(); // assuming this is stored on the donationRequest
+    io.to(`foodbank-${foodbankId}`).emit("donationStatusUpdated", {
+      requestId: donationRequest._id,
+      newStatus: donationRequest.status,
+    });
 
     res.status(200).json({ message: "Donation request status updated successfully.", donationRequest });
   } catch (error) {

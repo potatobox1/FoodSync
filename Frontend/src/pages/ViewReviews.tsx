@@ -9,6 +9,7 @@ import { fetchFoodItemById } from "../services/foodItems";
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { fetchUserById } from "../services/user";
 import AIAssistant from '../components/ai-assistant'
+import socket from "../services/socket";
 
 // Define types for our data
 interface Review {
@@ -81,6 +82,46 @@ const OrderReviews: React.FC = () => {
     };
 
     fetchReviews();
+  }, [restaurant_id]);
+
+
+  useEffect(() => {
+    if (!restaurant_id) return;
+  
+    socket.on("newReview", async (data: { review: Review }) => {
+      const { review } = data;
+      let itemName = "Unknown";
+      let itemCategory = "Unknown";
+      let reviewerName = "Anonymous";
+  
+      try {
+        const food = await fetchFoodItemById(review.food_id);
+        itemName = food.name || "Unknown";
+        itemCategory = food.category || "Unknown";
+      } catch (err) {
+        console.error(`Socket: Failed to fetch food item for ID ${review.food_id}`, err);
+      }
+  
+      try {
+        const restaurant = await getUserIdByFoodbankId(review.foodbank_id);
+        const user = await fetchUserById(restaurant);
+        reviewerName = user.name || "Anonymous";
+      } catch (err) {
+        console.error(`Socket: Failed to fetch user for review ${review._id}`, err);
+      }
+
+      console.log(review,itemName,itemCategory,reviewerName)
+
+      const enrichedReview = {
+        ...review,
+        itemName,
+        itemCategory,
+        reviewerName,
+      };
+  
+      setReviews(prev => [enrichedReview, ...prev]);
+    });
+  
   }, [restaurant_id]);
 
 

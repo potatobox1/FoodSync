@@ -12,6 +12,7 @@ import Navbar from "../components/NavBar";
 import { updateTotalDonations } from "../services/restaurant";
 import { sendEmail } from "../services/email";
 import { getDonationRequestById } from "../services/addDonationRequest";
+import socket from "../services/socket"; 
 import AIAssistant from '../components/ai-assistant'
 
 
@@ -66,6 +67,36 @@ export default function IncomingOrders() {
     };
 
     loadRequests();
+
+    socket.on("newDonationRequest", (data) => {
+      console.log("📦 New donation request received:", data);
+    
+      const { request, foodItem } = data;
+    
+      const mappedOrder: DonationRequest = {
+        _id: request._id.toString(),
+        requested_quantity: request.requested_quantity,
+        status: request.status,
+        created_at: request.created_at,
+        food_id: request.food_id.toString(),
+        foodbank_id: request.foodbank_id.toString(),
+        foodItem: {
+          _id: foodItem._id.toString(),
+          name: foodItem.name,
+          category: foodItem.category,
+          expiration_date: foodItem.expiration_date.toString(),
+        },
+      };
+    
+      console.log("🧾 Mapped Order:", mappedOrder);
+      setOrders((prevOrders) => [mappedOrder, ...prevOrders]);
+    });
+    
+  
+    return () => {
+      socket.off("newDonationRequest"); // 🧹 Cleanup on unmount
+    };
+    
   }, []);
 
   const handleAccept = async (id: string, foodItemId: string) => {

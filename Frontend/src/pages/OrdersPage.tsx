@@ -6,6 +6,7 @@ import { fetchUserById } from '../services/user';
 import { useAppSelector } from "../redux/hooks";
 import FNavbar from '../components/foodbank_navbar';
 import AIAssistant from '../components/ai-assistant'
+import socket from '../services/socket';
 
 interface Restaurant {
   _id: string;
@@ -107,6 +108,25 @@ const OrdersPage: React.FC = () => {
 
     fetchOrders();
   }, [foodbankId]);
+
+  useEffect(() => {
+    const handleStatusUpdate = (data: { requestId: string; newStatus: DonationRequest["status"] }) => {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === data.requestId
+            ? { ...order, status: data.newStatus }
+            : order
+        )
+      );
+    };
+  
+    socket.on("donationStatusUpdated", handleStatusUpdate);
+  
+    return () => {
+      socket.off("donationStatusUpdated", handleStatusUpdate);
+    };
+  }, []);
+  
 
   const filteredOrders = filter === 'all'
     ? orders

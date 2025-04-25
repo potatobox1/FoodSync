@@ -13,6 +13,7 @@ import { fetchUserById } from "../services/user";
 import { fetchLocationById } from "../services/location";
 import { useAppSelector } from "../redux/hooks";
 import AIAssistant from '../components/ai-assistant'
+import socket from "../services/socket"; 
 // import axios from "axios";
 
 export default function MainInventory() {
@@ -83,6 +84,43 @@ export default function MainInventory() {
     }
     fetchData()
   }, [foodbankId])
+
+  useEffect(() => {
+    const handleNewItem = async (item: any) => {
+      try {
+        const restaurant = await fetchRestaurantById(item.restaurant_id)
+        const user = await fetchUserById(restaurant.user_id)
+        const location = await fetchLocationById(user.location_id)
+        const subCategory = determineSubCategory(item.category)
+        const expiresIn = formatExpiryTime(item.expiration_date)
+  
+        const newItem: FoodItem = {
+          ...item,
+          restaurant: {
+            _id: restaurant._id,
+            name: user.name,
+            location: {
+              latitude: location.latitude,
+              longitude: location.longitude,
+            },
+          },
+          subCategory,
+          expiresIn,
+        }
+  
+        // 📦 Add to current list
+        setFoodItems((prevItems) => [newItem, ...prevItems])
+      } catch (error) {
+        console.error("Error processing new item:", error)
+      }
+    }
+  
+    socket.on("newFoodItemAvailable", handleNewItem)
+  
+    return () => {
+      socket.off("newFoodItemAvailable", handleNewItem)
+    }
+  }, [])
 
   // Filter items based on selected category and minimum quantity
   const filteredItems = foodItems

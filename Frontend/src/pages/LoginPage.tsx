@@ -5,6 +5,7 @@ import { setUser, setFirebaseUid } from "../redux/userSlice"
 import { getUserByFirebaseUID } from "../services/sign_up";
 import {getRestaurantByUserId} from "../services/restaurant"
 import {getFoodBankByUserId } from "../services/foodbank"
+import socket from "../services/socket";
 import "../styles/LoginPage.css"; // Import the new CSS file
 
 export default function LoginPage() {
@@ -25,6 +26,8 @@ export default function LoginPage() {
        
       else {
         ////
+          let rest_id = "none"
+          let fb_id = "none"
           try {
             const userData = await getUserByFirebaseUID(user.user.uid);
             if (userData.user_type == "restaurant")
@@ -42,6 +45,7 @@ export default function LoginPage() {
   
               }));
               // navigate("/dashboard");
+              rest_id = restaurant._id
             }
             else{
               type = "foodbank"
@@ -58,6 +62,8 @@ export default function LoginPage() {
   
               }));
               // navigate("/dashboard");
+              fb_id =  foodBank._id
+
             }
             console.log("Fetched user:", userData);
           } catch (err) {
@@ -65,10 +71,12 @@ export default function LoginPage() {
           }
         if (type == "restaurant"){
           console.log("Restaurant user type detected, navigating to restaurant dashboard.");
+          socket.emit("joinRestaurantRoom", rest_id);
           navigate("/restaurant-dashboard")
         }
         else if (type == "foodbank"){
           console.log("Foodbank user type detected, navigating to inventory.");
+          socket.emit("joinFoodbankRoom",fb_id);
           navigate("/FBdashboard")
         } else {
           console.error("Unknown user type:", type);

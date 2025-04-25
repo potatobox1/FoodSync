@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import { FoodItem } from "../models/foodItem"; // Import the FoodItem model
+import { io } from "../server"; // make sure you import the socket instance
 
 const router = express.Router();
 
@@ -84,6 +85,7 @@ router.post("/additem", async (req:any, res:any) => {
 
     // Save to database
     const savedItem = await newFoodItem.save();
+    io.emit("newFoodItemAvailable", savedItem);
 
     res.status(201).json(savedItem);
   } catch (error) {

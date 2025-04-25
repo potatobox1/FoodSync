@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { Review } from "../models/review";
+import { io } from "../server";
 
 const router = express.Router();
 
@@ -24,6 +25,11 @@ router.post("/addreview", async (req: any, res: any) => {
     });
 
     const savedReview = await review.save();
+    // const restaurantRoom = `restaurant-${restaurant_id}`;
+    console.log("sending to",restaurant_id)
+    io.to(restaurant_id).emit("newReview", {
+      review: savedReview,
+});
     res.status(201).json(savedReview);
   } catch (error) {
     console.error("Error creating review:", error);
