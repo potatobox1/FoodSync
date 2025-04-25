@@ -88,7 +88,7 @@ const OrderReviews: React.FC = () => {
   useEffect(() => {
     if (!restaurant_id) return;
   
-    socket.on("newReview", async (data: { review: Review }) => {
+    const handleNewReview = async (data: { review: Review }) => {
       const { review } = data;
       let itemName = "Unknown";
       let itemCategory = "Unknown";
@@ -109,9 +109,7 @@ const OrderReviews: React.FC = () => {
       } catch (err) {
         console.error(`Socket: Failed to fetch user for review ${review._id}`, err);
       }
-
-      console.log(review,itemName,itemCategory,reviewerName)
-
+  
       const enrichedReview = {
         ...review,
         itemName,
@@ -119,10 +117,17 @@ const OrderReviews: React.FC = () => {
         reviewerName,
       };
   
-      setReviews(prev => [enrichedReview, ...prev]);
-    });
+      setReviews((prev) => [enrichedReview, ...prev]);
+    };
   
+    socket.on("newReview", handleNewReview);
+  
+    // Cleanup function to remove the listener
+    return () => {
+      socket.off("newReview", handleNewReview);
+    };
   }, [restaurant_id]);
+  
 
 
   const renderStars = (rating: number) => {

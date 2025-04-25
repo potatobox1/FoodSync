@@ -44,22 +44,19 @@ const io = new Server(httpServer, {
 const restaurantSockets = new Map<string, string>(); // restaurantId -> socket.id
 
 io.on("connection", (socket) => {
-  console.log(`🔌 New socket connected: ${socket.id}`);
 
-  // Optional: Join restaurant room
   socket.on("joinRestaurantRoom", (restaurantId: string) => {
     socket.join(restaurantId);
     restaurantSockets.set(restaurantId, socket.id);
-    console.log(`🍽️ Restaurant ${restaurantId} joined room`);
+    
   });
   socket.on("joinFoodbankRoom", (foodbankId: string) => {
     socket.join(`foodbank-${foodbankId}`);
-    console.log(`🏦 Foodbank ${foodbankId} joined room foodbank-${foodbankId}`);
+    
   });
 
   socket.on("disconnect", () => {
-    console.log(`❌ Socket disconnected: ${socket.id}`);
-    // Optionally clean up restaurantSockets map
+
     for (const [rid, sid] of restaurantSockets.entries()) {
       if (sid === socket.id) {
         restaurantSockets.delete(rid);
@@ -69,10 +66,8 @@ io.on("connection", (socket) => {
   });
 });
 
-// Export io to use in donation request route/controller
 export { io };
 
-// Connect to MongoDB
 if (!MONGO_URI) {
     console.error("❌ MongoDB URI is missing in the environment variables.");
     process.exit(1);
@@ -96,10 +91,6 @@ app.use("/api/chat", chatbotRoutes)
 app.use("/api/analytics", analyticsRoutes);
 app.use('/api/email',emailRoutes)
 
-// Start the server
-// app.listen(PORT, () => {
-//     console.log(`🚀 Server is running on port ${PORT}`);
-// });
 
 // use this now
 httpServer.listen(PORT, () => {
