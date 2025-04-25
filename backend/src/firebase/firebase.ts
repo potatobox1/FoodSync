@@ -3,7 +3,7 @@ import { getAuth, Auth } from "firebase/auth";
 import { getAnalytics, Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: "AIzaSyBdK9AoLeqSwIQl1vdtDV6SeqU8FBQP2Cs",
   authDomain: "foodsync-8fb63.firebaseapp.com",
   projectId: "foodsync-8fb63",
   storageBucket: "foodsync-8fb63.firebasestorage.app",
