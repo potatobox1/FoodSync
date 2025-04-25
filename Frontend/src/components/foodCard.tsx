@@ -1,6 +1,6 @@
 import { type FoodItem, getCategoryImage } from "../types/foodItems"
 import "../styles/mainInventory.css"
-import { addDonationRequest } from "../services/donationRequests"; // Step 1: import function
+import { addDonationRequest } from "../services/donationRequests";
 import { useState } from "react";
 import { useAppSelector } from "../redux/hooks";
 import { sendEmail } from "../services/emails";
@@ -11,8 +11,6 @@ import { fetchUserById } from "../services/user";
 interface FoodCardProps {
   item: FoodItem
 }
-
-
 
 export default function FoodCard({ item }: FoodCardProps) {
   
