@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import styles from "../styles/ReviewModal.module.css"
+import styles from "../styles/reviewModal.module.css"
 import StarRating from "./starRating"
 
 interface Order {
