@@ -76,7 +76,7 @@ export default function LoginPage() {
           console.log("Foodbank user type detected, navigating to inventory.");
           socket.emit("joinFoodbankRoom",fb_id);
 
-          navigate("/restaurant-dashboard")
+          navigate("/FBdashboard")
         }
         else if (type == "foodbank"){
         
