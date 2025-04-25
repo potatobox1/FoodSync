@@ -10,16 +10,13 @@
     "Helvetica Neue", sans-serif;
 }
 
-body {
+
+/* Container */
+.order-reviews-container {
   margin: 0;
   padding: 0;
   font-family: var(--font-family);
   color: var(--text-color);
-  background-color: #fff;
-}
-
-/* Container */
-.order-reviews-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
