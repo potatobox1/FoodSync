@@ -1,3 +1,4 @@
+
 import express from "express";
 import mongoose from "mongoose";
 import { DonationRequest } from "../models/donationRequest";
@@ -173,3 +174,24 @@ router.get("/getReq/:requestId", async (req: any, res: any) => {
 
 
 export default router;
+=======
+// routes/donationRequestRoutes.ts
+import { Router } from 'express';
+import {
+  addDonationRequest,
+  getRequestsByRestaurant,
+  getRequestsByFoodbank,
+  updateRequestStatus,
+  getRequestById
+} from '../controller/donationRequestController';
+
+const router = Router();
+
+router.post('/add-donation-request', addDonationRequest);
+router.get('/restaurant/:restaurantId', getRequestsByRestaurant);
+router.get('/foodbank/:foodbankId', getRequestsByFoodbank);
+router.patch('/update-status/:requestId', updateRequestStatus);
+router.get('/:requestId', getRequestById);
+
+export default router;
+

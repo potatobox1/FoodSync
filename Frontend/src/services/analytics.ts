@@ -45,3 +45,37 @@ export const fetchPickupMapData = async (foodbankId: string) => {
     const response = await API.get(`/api/analytics/foodbank/pickup-map/${foodbankId}`);
     return response.data;
     };
+
+
+export const fetchRestaurantSummary = async (restaurantId: string) => {
+  const response = await API.get(`/api/analytics/restaurant/summary/${restaurantId}`);
+  return response.data;
+};
+
+
+export const fetchRestaurantCategoryBreakdown = async (restaurantId: string) => {
+  const response = await API.get(`/api/analytics/restaurant/category-breakdown/${restaurantId}`);
+  return response.data;
+};
+
+export const fetchRestaurantOrdersChart = async (restaurantId: string, range: string) => {
+  const response = await API.get(`/api/analytics/restaurant/orders-chart/${restaurantId}`, {
+    params: { range },
+  });
+  return response.data;
+};
+
+export const fetchTopFoodbanks = async (restaurantId: string) => {
+  const response = await API.get(`/api/analytics/restaurant/top-foodbanks/${restaurantId}`);
+  return response.data;
+};
+
+export const fetchRestaurantPickupMapData = async (restaurantId: string) => {
+  const response = await API.get(`/api/analytics/restaurant/pickup-map/${restaurantId}`);
+  return response.data;
+};
+
+export const fetchRestaurantReviewTrends = async (restaurantId: string, range: string) => {
+  const response = await API.get(`/api/analytics/restaurant/reviews-chart/${restaurantId}?range=${range}`);
+  return response.data;
+};

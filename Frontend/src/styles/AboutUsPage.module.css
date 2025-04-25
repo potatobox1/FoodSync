@@ -14,18 +14,20 @@ body {
 }
 
 .header {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the logo */
   padding: 30px 20px;
   border-bottom: 1px solid #eaeaea;
+  position: relative;
 }
 
 .logo {
   color: #0078a0;
   font-size: 32px;
   font-weight: bold;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: static; /* Remove absolute */
+  transform: none;
 }
 
 .homeLink {
@@ -33,10 +35,6 @@ body {
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .homeIcon {

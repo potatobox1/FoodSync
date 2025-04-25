@@ -1,23 +1,10 @@
-import express from "express";
-import { Location } from "../models/location";
+// routes/locationRoutes.ts
+import { Router } from 'express';
+import { getLocationById } from '../controller/locationController';
 
-const router = express.Router();
+const router = Router();
 
-// GET /api/locations/:id - Fetch a location by ID
-router.get("/:id", async (req: any, res: any) => {
-  try {
-    const { id } = req.params;
-    const location = await Location.findById(id);
-
-    if (!location) {
-      return res.status(404).json({ message: "Location not found" });
-    }
-
-    res.json(location);
-  } catch (error) {
-    console.error("Error fetching location:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
+// Fetch a location by ID
+router.get('/:id', getLocationById);
 
 export default router;

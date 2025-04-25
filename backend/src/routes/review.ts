@@ -1,19 +1,28 @@
+
 import express, { Request, Response } from "express";
 import { Review } from "../models/review";
 import { io } from "../server";
 
-const router = express.Router();
+// routes/reviewRoutes.ts
+import { Router } from 'express';
+import {
+  addReview,
+  getReviewsByRestaurant,
+  checkReviewExists
+} from '../controller/reviewController';
 
-// POST /api/review - Create a new review
-import mongoose from "mongoose";
 
-router.post("/addreview", async (req: any, res: any) => {
-  try {
-    const { foodbank_id, restaurant_id, food_id, rating, feedback } = req.body;
+const router = Router();
 
-    if (!food_id || !rating || !feedback) {
-      return res.status(400).json({ message: "Required fields: food_id, rating, feedback" });
-    }
+// Create a new review
+router.post('/addreview', addReview);
+
+// Get reviews by restaurant ID
+router.get('/restaurant/:id', getReviewsByRestaurant);
+
+// Check if a review exists for a given foodbank & food
+router.get('/check', checkReviewExists);
+
 
     const review = new Review({
       foodbank_id: new mongoose.Types.ObjectId(foodbank_id),
@@ -71,3 +80,4 @@ router.get("/check", async (req: any, res: any) => {
 });
 
 export default router;
+

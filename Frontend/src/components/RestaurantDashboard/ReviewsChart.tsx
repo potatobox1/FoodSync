@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react"
 import styles from "../../styles/reviewChart.module.css"
 import { useAppSelector } from "../../redux/hooks"
-import { fetchReviewTrends } from "../../services/analytics"
+import { fetchRestaurantReviewTrends } from "../../services/analytics"
 
 ChartJS.register(LineElement, BarElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend)
 
@@ -23,7 +23,7 @@ interface ReviewsChartProps {
 }
 
 const ReviewsChart: React.FC<ReviewsChartProps> = ({ timeRange }) => {
-  const foodbankId = useAppSelector((state: any) => state.user.type_id)
+  const restaurantId = useAppSelector((state: any) => state.user.type_id)
   const [chartData, setChartData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -31,7 +31,7 @@ const ReviewsChart: React.FC<ReviewsChartProps> = ({ timeRange }) => {
     const loadData = async () => {
       try {
         setLoading(true)
-        const data = await fetchReviewTrends(foodbankId, timeRange)
+        const data = await fetchRestaurantReviewTrends(restaurantId, timeRange)
         setChartData({
           labels: data.labels,
           datasets: [
@@ -60,11 +60,11 @@ const ReviewsChart: React.FC<ReviewsChartProps> = ({ timeRange }) => {
       }
     }
 
-    if (foodbankId) loadData()
-  }, [foodbankId, timeRange])
+    if (restaurantId) loadData()
+  }, [restaurantId, timeRange])
 
   const averageRating =
-    chartData && chartData.datasets[1].data.length > 0
+    chartData && chartData.datasets[0].data.length > 0
       ? (() => {
           const ratings = chartData.datasets[0].data
           const counts = chartData.datasets[1].data

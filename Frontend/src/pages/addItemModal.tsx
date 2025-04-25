@@ -72,7 +72,6 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
 
     try {
       const restaurant_id =  rest_id // TODO:done
-      console.log(restaurant_id)
 
       const formattedDate = new Date(formData.expiration).toISOString(); // Ensures format like 2025-03-21T00:16:22.461Z
 
@@ -84,7 +83,6 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
         category: formData.category,
       });
 
-      console.log("Food item added successfully.");
 
       onItemAdded();
 

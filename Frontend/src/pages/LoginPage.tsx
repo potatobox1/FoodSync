@@ -15,7 +15,6 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     try {
       const { user, isNewUser } = await doSignInWithGoogle(); // Destructure correctly
-      console.log("User signed in:", user.user.uid);
     
       if (isNewUser) {
         dispatch(setFirebaseUid({ 
@@ -65,7 +64,6 @@ export default function LoginPage() {
               fb_id =  foodBank._id
 
             }
-            console.log("Fetched user:", userData);
           } catch (err) {
             console.error("Could not fetch user", err);
           }
@@ -77,6 +75,11 @@ export default function LoginPage() {
         else if (type == "foodbank"){
           console.log("Foodbank user type detected, navigating to inventory.");
           socket.emit("joinFoodbankRoom",fb_id);
+
+          navigate("/restaurant-dashboard")
+        }
+        else if (type == "foodbank"){
+        
           navigate("/FBdashboard")
         } else {
           console.error("Unknown user type:", type);

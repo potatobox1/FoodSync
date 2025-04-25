@@ -49,23 +49,32 @@ const AboutUsPage: React.FC = () => {
           <p className={styles.sectionDescription}>
             We make it easier for businesses to make a difference. Through our platform, food providers can list excess prepared or perishable food that would otherwise go to waste. Food banks, shelters, and charities can then request and coordinate pickups quickly and safely.
           </p>
-          <div className={styles.featuresContainer}>
+
+          <div className={styles.featuresContainer}> 
             <div className={styles.featureCard}>
               <div className={styles.featureIcon}>🔔</div>
-              <div className={styles.featureTitle}>Real-time notifications</div>
-              <div className={styles.featureDescription}>Food banks receive alerts when food becomes available nearby</div>
+              <div className={styles.featureTitle}>Real-time Notifications</div>
+              <div className={styles.featureDescription}>
+                Food banks are instantly notified when new food items are listed in their area.
+              </div>
             </div>
+
             <div className={styles.featureCard}>
-              <div className={styles.featureIcon}>🛡️</div>
-              <div className={styles.featureTitle}>Safe handling guidelines</div>
-              <div className={styles.featureDescription}>Maintain quality and hygiene throughout the process</div>
+              <div className={styles.featureIcon}>📍</div>
+              <div className={styles.featureTitle}>Location-based Pickup Coordination</div>
+              <div className={styles.featureDescription}>
+                We calculate distances and visualize nearby donors to help food banks plan efficient pickups.
+              </div>
             </div>
+
             <div className={styles.featureCard}>
-              <div className={styles.featureIcon}>📊</div>
-              <div className={styles.featureTitle}>Impact tracking</div>
-              <div className={styles.featureDescription}>Donors can see how their contributions feed people, not landfills</div>
+              <div className={styles.featureIcon}>📈</div>
+              <div className={styles.featureTitle}>Donation & Review Insights</div>
+              <div className={styles.featureDescription}>
+                Both restaurants and food banks can view charts and feedback to track their impact over time.
+              </div>
             </div>
-          </div>
+          </div> 
         </section>
 
         <section className={styles.visionSection}>
@@ -87,7 +96,7 @@ const AboutUsPage: React.FC = () => {
         <div className={styles.footerContent}>
           <div className={styles.footerLogo}>FoodSync</div>
           <div className={styles.footerTagline}>Connecting excess to need</div>
-          <div className={styles.footerCopyright}>© 2023 FoodSync. All rights reserved.</div>
+          <div className={styles.footerCopyright}>© 2025 FoodSync. All rights reserved.</div>
         </div>
       </footer>
     
