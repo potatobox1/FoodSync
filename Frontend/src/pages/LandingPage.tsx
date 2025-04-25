@@ -13,9 +13,6 @@ const LandingPage: React.FC = () => {
           </span>
         </div>
         <div className={styles.headerButtons}>
-          {/* <a href="/contact" className={styles.contactLink}>
-            Contact Us
-          </a> */}
           <a href="/login" className={styles.joinButton}>
             Join
           </a>

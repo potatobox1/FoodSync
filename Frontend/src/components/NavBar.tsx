@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../redux/userSlice";
 import styles from "../styles/navBar.module.css";
-import { Menu, X } from "lucide-react"; // or any icon library you use
+import { Menu, X } from "lucide-react"; 
 
 interface NavbarProps {
   active: "inventory" | "orders" | "leaderboard" | "reviews" | "dashboard";

@@ -21,15 +21,15 @@
     margin-top: 16px;
     padding-top: 16px;
     border-top: 1px solid #eee;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    flex-wrap: wrap; 
     gap: 12px;
   }
   
   .feedbackItem {
     text-align: center;
     flex: 1;
-    min-width: 0; /* Allow proper text truncation */
-    min-width: 100px; /* Ensure minimum width */
+    min-width: 0; 
+    min-width: 100px; 
   }
   
   .feedbackLabel {
@@ -49,7 +49,7 @@
     white-space: nowrap;
   }
   
-  /* Add responsive adjustments */
+
   @media (max-width: 480px) {
     .feedbackSummary {
       flex-direction: column;

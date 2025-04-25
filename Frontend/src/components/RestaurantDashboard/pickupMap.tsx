@@ -9,7 +9,7 @@ import { fetchRestaurantPickupMapData } from "../../services/analytics";
 
 interface FoodBank {
   name: string;
-  coordinates: [number, number]; // [lat, lng]
+  coordinates: [number, number]; 
   distance: number;
 }
 

@@ -1,6 +1,6 @@
-// components/RestaurantDashboard/TopFoodbanks.tsx
+
 import React, { useEffect, useState } from "react";
-import styles from "../../styles/topRestaurants.module.css"; // Reusing the same style
+import styles from "../../styles/topRestaurants.module.css"; 
 import { useAppSelector } from "../../redux/hooks";
 import { fetchTopFoodbanks } from "../../services/analytics";
 

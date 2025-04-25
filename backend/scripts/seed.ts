@@ -59,9 +59,9 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
   await User.deleteMany({});
   console.log("Existing users removed");
   
-  // Hash a sample password
+ 
   const userData = [
-    // Restaurant users
+
     {
       uid: "1",
       name: "Italian Bistro",
@@ -107,7 +107,7 @@ const seedUsers = async (locations: ILocation[]): Promise<IUser[]> => {
       user_type: "restaurant" as const,
       location_id: locations[1]._id as unknown as mongoose.Types.ObjectId,
     },
-    // Food bank users
+    
     {
       uid: "6",
       name: "NYC Food Bank",

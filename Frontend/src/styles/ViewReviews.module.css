@@ -1,4 +1,4 @@
-/* Global styles */
+
 :root {
   --primary-color: #00b8d4;
   --primary-hover: #00a0b8;
@@ -11,7 +11,7 @@
 }
 
 
-/* Container */
+
 .order-reviews-container {
   margin: 0;
   padding: 0;
@@ -23,7 +23,7 @@
   padding: 0;
 }
 
-/* Header */
+
 .header {
   display: flex;
   align-items: center;
@@ -77,7 +77,7 @@
   background-color: var(--primary-color);
 }
 
-/* Content */
+
 .content {
   padding: 2rem 0;
 }
@@ -88,7 +88,7 @@
   font-weight: 600;
 }
 
-/* Filter section */
+
 .filter-section {
   display: flex;
   align-items: center;
@@ -104,7 +104,7 @@
   min-width: 150px;
 }
 
-/* Reviews list */
+
 .reviews-list {
   display: flex;
   flex-direction: column;
@@ -201,7 +201,7 @@
   margin: 0;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
   .order-reviews-container {
     padding: 0 1rem;
