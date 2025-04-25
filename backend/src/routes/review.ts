@@ -10,3 +10,5 @@ const router = Router();
 router.post('/addreview', addReview);
 router.get('/restaurant/:id', getReviewsByRestaurant);
 router.get('/check', checkReviewExists);
+
+export default router;
