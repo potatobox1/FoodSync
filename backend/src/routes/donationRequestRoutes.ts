@@ -10,7 +10,7 @@ import {
 
 const router = Router();
 
-router.post('/add-request', addDonationRequest);
+router.post('/add-donation-request', addDonationRequest);
 router.get('/restaurant/:restaurantId', getRequestsByRestaurant);
 router.get('/foodbank/:foodbankId', getRequestsByFoodbank);
 router.patch('/update-status/:requestId', updateRequestStatus);
