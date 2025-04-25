@@ -37,7 +37,6 @@ interface DonationRequest {
   foodItem?: FoodItem;
 }
 
-// Get appropriate image
 function getCategoryImage(subCategory: string): string {
   switch (subCategory) {
     case "Savoury":
@@ -51,7 +50,6 @@ function getCategoryImage(subCategory: string): string {
   }
 }
 
-// Format expiration time
 function formatExpiryTime(expirationDate: Date): string {
   const now = new Date();
   let expire = new Date(expirationDate).getTime() - (1000 * 60 * 60 * 5);
@@ -74,7 +72,6 @@ const OrdersPage: React.FC = () => {
       try {
         const data: DonationRequest[] = await fetchDonationRequestsForFoodbank(foodbankId);
 
-        // For each order, enrich with subCategory and restaurant name
         const enrichedOrders = await Promise.all(data.map(async (order) => {
           const enrichedOrder = { ...order };
           enrichedOrder.foodItem = { ...order.food_id };
@@ -171,11 +168,9 @@ const OrdersPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Display loading indicator */}
         {loading ? (
           <div className="no-orders">Loading...</div>
         ) : (
-          // If not loading, check if there are orders to display
           filteredOrders.length === 0 ? (
             <div className="no-orders">No items to display.</div>
           ) : (

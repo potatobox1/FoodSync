@@ -7,7 +7,7 @@ interface UserState {
   user_type: string 
   photoURL: string | null;
   user_id : string
-  type_id : string    // will hold either food bank id or restaurant id depending on the type
+  type_id : string    
 }
 const localUid = sessionStorage.getItem("firebase_uid") || "";
 const localemail = sessionStorage.getItem("email") || "";
@@ -53,7 +53,7 @@ const userSlice = createSlice({
 
     },
     clearUser: () => {
-      sessionStorage.removeItem("firebase_uid"); // clear on logout
+      sessionStorage.removeItem("firebase_uid"); 
       sessionStorage.removeItem("email")
       sessionStorage.removeItem("name")
       sessionStorage.removeItem("user_type")
