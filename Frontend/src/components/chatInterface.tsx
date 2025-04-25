@@ -41,12 +41,12 @@ export default function ChatInterface() {
     if (saved) {
       setMessages(JSON.parse(saved))
     } else {
-      // First time default message
+   
       setMessages([{ text: "Hello! I'm your AI assistant. How can I help you today?", sender: "ai" }])
     }
   }, [])
 
-  // Save messages to localStorage on every update
+ 
   useEffect(() => {
     localStorage.setItem("chat-history", JSON.stringify(messages))
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -72,7 +72,7 @@ export default function ChatInterface() {
     ]
 
     try {
-      const reply = await fetchAIResponse(chatHistory);  // Call the function
+      const reply = await fetchAIResponse(chatHistory); 
       setMessages((prev) => [...prev, { text: reply, sender: "ai" }]);
     } catch (err) {
       setMessages((prev) => [
@@ -89,7 +89,7 @@ export default function ChatInterface() {
     }
   }
 
-  // Auto scroll to bottom when new messages arrive
+ 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])

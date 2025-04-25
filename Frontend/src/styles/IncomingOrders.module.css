@@ -4,9 +4,7 @@
   padding: 0 2rem 2rem 2rem;
 }
 
-/* No need for .header or .nav now if using Navbar component */
 
-/* ---- MAIN SECTION ---- */
 .main {
   margin-top: 2.5rem;
 }

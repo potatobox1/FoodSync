@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { clearUser } from "../redux/userSlice";
 import styles from "../styles/navBar.module.css";
-import { Menu, X } from "lucide-react"; // Or use emoji/icons if preferred
+import { Menu, X } from "lucide-react"; 
 
 interface NavbarProps {
   active: "inventory" | "orders" | "leaderboard" | "reviews" | "dashboard";
@@ -32,14 +32,14 @@ const FNavbar: React.FC<NavbarProps> = ({ active }) => {
         <Link to="/leaderboard" className={active === "leaderboard" ? styles.active : ""}>Leaderboard</Link>
         <Link to="/foodbank/reviews" className={active === "reviews" ? styles.active : ""}>Review</Link>
 
-        {/* Show userArea inside the menu on mobile */}
+   
         <div className={styles.userAreaMobile}>
           <div className={styles.userIcon}>👤</div>
           <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
         </div>
       </nav>
 
-      {/* Show userArea on desktop only */}
+      
       <div className={styles.userArea}>
         <div className={styles.userIcon}>👤</div>
         <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>

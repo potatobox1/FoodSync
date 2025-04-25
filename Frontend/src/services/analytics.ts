@@ -20,7 +20,7 @@ export const fetchTopRestaurants = async (foodbankId: string) => {
 
 export const fetchCategoryBreakdown = async (foodbankId: string) => {
     const response = await API.get(`/api/analytics/foodbank/category-breakdown/${foodbankId}`)
-    return response.data // returns [{ category: "Savoury", count: 10 }, ...]
+    return response.data 
 }
 
 export const fetchDonationsChartData = async (foodbankId: string, range: string) => {

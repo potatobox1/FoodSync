@@ -1,16 +1,13 @@
-/* styles.css or global.css */
 body {
   font-family: 'Roboto', sans-serif;
 }
 
 
-/* Layout */
 .login-container {
   display: flex;
   min-height: 100vh;
 }
 
-/* Left column */
 .login-form {
   width: 100%;
   display: flex;
@@ -31,7 +28,6 @@ body {
   margin: 0 auto;
 }
 
-/* Logo */
 .logo {
   text-align: center;
   font-size: 40px;
@@ -46,19 +42,18 @@ body {
 .logo span:last-child {
   color: black;
 }
-/* Sign-in heading */
+
 .signin-heading {
   font-size: 22px;
   font-weight: bold;
-  color: #1f2937; /* Tailwind gray-900 */
+  color: #1f2937; 
 }
 
 .signin-subtext {
-  color: #a9aaac; /* Tailwind gray-600 */
+  color: #a9aaac; 
   margin-top: 0.5rem;
 }
 
-/* Google Sign-in Button */
 .google-signin {
   margin-top: 2rem;
 }
@@ -70,15 +65,15 @@ body {
   justify-content: center;
   border-radius: 10px;
   padding: 0.5rem;
-  border: 1px solid #187795; /* Tailwind gray-300 */
+  border: 1px solid #187795; 
   background-color: white;
-  color: #374151; /* Tailwind gray-700 */
+  color: #374151; 
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
   cursor: pointer;
 }
 
 .google-button:hover {
-  background-color: #f9fafb; /* Tailwind gray-50 */
+  background-color: #f9fafb; 
 }
 
 .google-logo {
@@ -87,21 +82,19 @@ body {
   margin-right: 8px;
 }
 
-/* Create account link */
 .create-account {
   margin-top: 2rem;
   text-align: center;
   font-size: 14px;
-  color: #4b5563; /* Tailwind gray-600 */
+  color: #4b5563; 
 }
 
 .create-account a {
   font-weight: 500;
-  color: #1f2937; /* Tailwind gray-900 */
+  color: #1f2937; 
   text-decoration: underline;
 }
 
-/* Right column - Image */
 .image-container {
   display: none;
 }

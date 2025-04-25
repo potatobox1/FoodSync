@@ -6,25 +6,24 @@ import { getUserByFirebaseUID } from "../services/signUp";
 import {getRestaurantByUserId} from "../services/restaurant"
 import {getFoodBankByUserId } from "../services/foodbank"
 import socket from "../services/socket";
-import "../styles/loginPage.css"; // Import the new CSS file
+import "../styles/loginPage.css"; 
 
 export default function LoginPage() {
-  const navigate = useNavigate(); // React Router hook for navigation
+  const navigate = useNavigate(); 
   const dispatch = useAppDispatch();
   let type = "none"
   const handleGoogleSignIn = async () => {
     try {
-      const { user, isNewUser } = await doSignInWithGoogle(); // Destructure correctly
+      const { user, isNewUser } = await doSignInWithGoogle(); 
     
       if (isNewUser) {
         dispatch(setFirebaseUid({ 
           firebase_uid: user.user.uid,
           photoURL: user.user.photoURL }));
-        navigate("/register"); // Redirect new users to registration
+        navigate("/register"); 
       }
        
       else {
-        ////
           let rest_id = "none"
           let fb_id = "none"
           try {
@@ -34,16 +33,15 @@ export default function LoginPage() {
               type = "restaurant"
               const restaurant = await getRestaurantByUserId(userData.id);
               dispatch(setUser({
-                firebase_uid: user.user.uid, //
-                email: userData.email, //
-                name:userData.name,    //
-                user_type: userData.user_type, //
-                photoURL: user.user.photoURL, //
-                user_id: userData.id,  //
-                type_id: restaurant._id, ///
+                firebase_uid: user.user.uid, 
+                email: userData.email, 
+                name:userData.name,    
+                user_type: userData.user_type, 
+                photoURL: user.user.photoURL, 
+                user_id: userData.id,  
+                type_id: restaurant._id, 
   
               }));
-              // navigate("/dashboard");
               rest_id = restaurant._id
             }
             else{
@@ -51,16 +49,15 @@ export default function LoginPage() {
               const foodBank = await getFoodBankByUserId(userData.id);
 
               dispatch(setUser({
-                firebase_uid: user.user.uid, //
-                email: userData.email, //
-                name:userData.name,    //
-                user_type: userData.user_type, //
-                photoURL: user.user.photoURL, //
-                user_id: userData.id,  //
-                type_id: foodBank._id, ///
+                firebase_uid: user.user.uid, 
+                email: userData.email, 
+                name:userData.name,    
+                user_type: userData.user_type, 
+                photoURL: user.user.photoURL, 
+                user_id: userData.id,  
+                type_id: foodBank._id, 
   
               }));
-              // navigate("/dashboard");
               fb_id =  foodBank._id
 
             }
@@ -89,22 +86,18 @@ export default function LoginPage() {
   
   return (
     <div className="login-container">
-      {/* Left column - Login form */}
       <div className="login-form">
         <div className="form-content">
-          {/* Logo */}
           <h1 className="logo">
             <span className="text-black">Food</span>
             <span className="text-teal-600">Sync</span>
           </h1>
 
-          {/* Sign in heading */}
           <h2 className="signin-heading">Sign in</h2>
           <p className="signin-subtext">
             Please login to continue to your account.
           </p>
 
-          {/* Google Sign in button */}
           <div className="google-signin">
             <button className="google-button" onClick={handleGoogleSignIn}>
               <img src="/google-logo.svg" alt="Google logo" className="google-logo" />
@@ -112,14 +105,12 @@ export default function LoginPage() {
             </button>
           </div>
 
-          {/* Create account link */}
           <p className="create-account">
             Need an account? <a href="/signup">Create one</a>
           </p>
         </div>
       </div>
 
-      {/* Right column - Image */}
       <div className="image-container">
         <img src="images/children-eating.jpg" alt="Children enjoying food" />
       </div>

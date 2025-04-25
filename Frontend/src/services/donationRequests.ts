@@ -22,7 +22,7 @@ export const addDonationRequest = async (
 export const fetchDonationRequestsForRestaurant = async (restaurantId: string) => {
   try {
     const response = await API.get(`/api/donation-requests/restaurant/${restaurantId}`);
-    return response.data; // Return the list of donation requests
+    return response.data; 
   } catch (error) {
     console.error("Error fetching donation requests for restaurant:", error);
     throw error;
@@ -32,7 +32,7 @@ export const fetchDonationRequestsForRestaurant = async (restaurantId: string) =
 export const fetchDonationRequestsForFoodbank = async (foodbankId: string) => {
   try {
     const response = await API.get(`/api/donation-requests/foodbank/${foodbankId}`);
-    return response.data; // Return the list of donation requests
+    return response.data; 
   } catch (error) {
     console.error("Error fetching donation requests for foodbank:", error);
     throw error;
@@ -42,21 +42,20 @@ export const fetchDonationRequestsForFoodbank = async (foodbankId: string) => {
 export const getDonationRequestById = async (requestId: string) => {
   try {
     const response = await API.get(`/api/donation-requests/getReq/${requestId}`);
-    return response.data; // Return the donation request
+    return response.data; 
   } catch (error) {
     console.error("Error fetching donation request by ID:", error);
     throw error;
   }
 };
 
-// Update the status of a donation request
 export const updateDonationRequestStatus = async (
   requestId: string,
   status: "completed" | "cancelled" | "accepted"
 ) => {
   try {
     const response = await API.patch(`/api/donation-requests/update-status/${requestId}`, { status });
-    return response.data; // Return updated donation request
+    return response.data; 
   } catch (error) {
     console.error("Error updating donation request status:", error);
     throw error;
