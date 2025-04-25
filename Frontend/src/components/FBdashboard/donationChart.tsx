@@ -27,7 +27,6 @@ const DonationChart: React.FC<DonationChartProps> = ({ timeRange }) => {
     const loadData = async () => {
       try {
         const data = await fetchDonationsChartData(foodbankId, timeRange)
-        console.log("📊 Donations chart data:", data)
         setChartData({
           labels: data.labels,
           datasets: [

@@ -32,8 +32,6 @@ const ReviewsChart: React.FC<ReviewsChartProps> = ({ timeRange }) => {
       try {
         setLoading(true)
         const data = await fetchReviewTrends(foodbankId, timeRange)
-        console.log("📈 Review trends data:", data)
-
         setChartData({
           labels: data.labels,
           datasets: [
