@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/loginPage";
 import Register from "./pages/register";
 import 'leaflet/dist/leaflet.css';
 import RestaurantDashboard from "./pages/restaurantDashboard";
