@@ -11,6 +11,7 @@ export const getInventory = async (req: any, res:any) => {
     }
 
     const items = await FoodItem.find(query);
+    console.log("Food items: ", items)
     return res.json(items);
   } catch (err) {
     console.error('Error fetching food items:', err);

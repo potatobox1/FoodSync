@@ -12,16 +12,17 @@ export const fetchInventory = async (foodbankId: string, available?: boolean) =>
     
     const response = await API.get("/api/inventory", { params });
     const inventoryData = response.data;
-
+    console.log("response: ", response.data)
 
     const donationRequests = await fetchDonationRequestsForFoodbank(foodbankId);
    
     const filteredItems = inventoryData.filter((item: any) => {
-     
       return !donationRequests.some(
-        (request: any) => request.food_id._id.toString() === item._id.toString()
+        (request: any) =>
+          request.food_id && request.food_id._id?.toString() === item._id?.toString()
       );
     });
+    
 
     return filteredItems; 
   } catch (error) {

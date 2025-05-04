@@ -28,7 +28,8 @@ export default function MainInventory() {
   })
   const foodbankId = useAppSelector((state: any) => state.user.type_id); 
   const userId = useAppSelector((state: any) => state.user.user_id); 
-
+  console.log("foodbank id: ", foodbankId)
+  console.log("user id: ", userId)
   useEffect(() => {
     async function fetchUserLocation() {
       try {
@@ -50,14 +51,24 @@ export default function MainInventory() {
       setLoading(true)
       try {
         const inventory = await fetchInventory(foodbankId, true)
+        console.log("Inventory: ",inventory)
         const itemsWithDetails = await Promise.all(
           inventory.map(async (item: any) => {
-            const restaurant = await fetchRestaurantById(item.restaurant_id)
-            const user = await fetchUserById(restaurant.user_id)
-            const location = await fetchLocationById(user.location_id)
-            const subCategory = determineSubCategory(item.category)
-            const expiresIn = formatExpiryTime(item.expiration_date)
-
+            const restaurant = await fetchRestaurantById(item.restaurant_id);
+            console.log("Fetched restaurant:", restaurant);
+            
+            const user = await fetchUserById(restaurant.user_id);
+            console.log("Fetched user:", user);
+            
+            const location = await fetchLocationById(user.location_id);
+            console.log("Fetched location:", location);
+            
+            const subCategory = determineSubCategory(item.category);
+            console.log("Determined subCategory:", subCategory);
+            
+            const expiresIn = formatExpiryTime(item.expiration_date);
+            console.log("Formatted expiry time:", expiresIn);
+            
             return {
               ...item,
               restaurant: {
@@ -146,26 +157,27 @@ export default function MainInventory() {
   }
 
   return (
-    <div className="main-inventory-page">
-      <FNavbar active="inventory" />
-      <main className="min-h-screen" style={{ marginTop: 0 }}> 
-        <div className="container main-content" style={{ paddingTop: 0 }}> 
-          <h1 className="page-title">Available Food Donations</h1>
+    <div className="main-inventory-page" data-testid="main-inventory-page">
+      <FNavbar active="inventory" data-testid="navbar" />
+      <main className="min-h-screen" style={{ marginTop: 0 }} data-testid="main-inventory-main"> 
+        <div className="container main-content" style={{ paddingTop: 0 }} data-testid="main-inventory-container"> 
+          <h1 className="page-title" data-testid="page-title">Available Food Donations</h1>
 
-          <div className="flex flex-col md-flex-row gap-6">
+          <div className="flex flex-col md-flex-row gap-6" data-testid="inventory-flex">
             {isFilterOpen && (
               <FilterSidebar
                 minQuantity={minQuantity}
                 setMinQuantity={setMinQuantity}
                 sortByLocation={sortByLocation}
                 setSortByLocation={setSortByLocation}
+                data-testid="filter-sidebar"
               />
             )}
 
-            <div className="flex-1">
-              <div className="flex justify-between items-center mb-6">
-                <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-                <button onClick={() => setIsFilterOpen(!isFilterOpen)} className="filter-button">
+            <div className="flex-1" data-testid="food-listings-container">
+              <div className="flex justify-between items-center mb-6" data-testid="filter-header">
+                <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} data-testid="category-filter" />
+                <button onClick={() => setIsFilterOpen(!isFilterOpen)} className="filter-button" data-testid="toggle-filter-button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -177,6 +189,7 @@ export default function MainInventory() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     className="filter-icon"
+                    data-testid="filter-icon"
                   >
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                   </svg>
@@ -185,16 +198,15 @@ export default function MainInventory() {
               </div>
 
               {loading ? ( 
-                <div className="text-center text-gray-500">Loading...</div>
+                <div className="text-center text-gray-500" data-testid="loading-message">Loading...</div>
               ) : (
-                <FoodListings items={sortedItems} />
+                <FoodListings items={sortedItems} data-testid="food-listings" />
               )}
             </div>
           </div>
         </div>
       </main>
-      <AIAssistant />
+      <AIAssistant data-testid="ai-assistant" />
     </div>
   )
 }
-

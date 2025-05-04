@@ -14,6 +14,7 @@ export default function CategoryFilter({ selectedCategory, setSelectedCategory }
       {categories.map((category) => (
         <button
           key={category}
+          data-testid={`category-button-${category.toLowerCase()}`}
           onClick={() => setSelectedCategory(category)}
           className={selectedCategory === category ? "category-button category-button-active" : "category-button"}
         >
