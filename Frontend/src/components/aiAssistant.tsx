@@ -175,7 +175,7 @@ export default function AIAssistant() {
 
     function handlePupilFollow(e: MouseEvent) {
       document.querySelectorAll<HTMLDivElement>('.pupil').forEach(pupil => {
-        const eye = pupil.parentElement!;  // the .eye
+        const eye = pupil.parentElement!;
         const rect = eye.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
