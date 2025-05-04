@@ -41,10 +41,14 @@ export default function Dashboard() {
         <div className={styles.section}>
           <h2 className={styles.title}>My Inventory</h2>
 
-          <div className={styles.cards}>
+          <div className={styles.cards} data-testid="inventory-list">
             {foodItems.length > 0 ? (
               foodItems.map((item) => (
-                <div className={styles.card} key={item._id}>
+                <div 
+                  className={styles.card} 
+                  key={item._id}
+                  data-testid={`inventory-item-${item._id}`}
+                >
                   <img
                     src={
                       item.category === "Savoury"
@@ -56,6 +60,7 @@ export default function Dashboard() {
                             : "/placeholder.svg"
                     }
                     alt={item.name}
+                    data-testid={`item-image-${item._id}`}
                   />
                   <div className={styles.info}>
                     <div
@@ -65,26 +70,37 @@ export default function Dashboard() {
                         alignItems: "center",
                       }}
                     >
-                      <h3 style={{ margin: 0 }}>{item.name}</h3>
-                      <div className={styles.expiry}>
+                      <h3 style={{ margin: 0 }} data-testid={`item-name-${item._id}`}>
+                        {item.name}
+                      </h3>
+                      <div 
+                        className={styles.expiry}
+                        data-testid={`item-expiry-${item._id}`}
+                      >
                         Expires on <br />
                         {item.expiration_date
                           ? new Date(item.expiration_date).toLocaleDateString()
                           : "N/A"}
                       </div>
                     </div>
-                    <p>
+                    <p data-testid={`item-quantity-${item._id}`}>
                       Quantity available: <strong>{item.quantity || "N/A"}</strong>
                     </p>
                   </div>
                 </div>
               ))
             ) : (
-              <p style={{ margin: "1rem 0" }}>No food items listed yet.</p>
+              <p style={{ margin: "1rem 0" }} data-testid="empty-inventory-message">
+                No food items listed yet.
+              </p>
             )}
           </div>
 
-          <button className={styles.addBtn} onClick={() => setIsModalOpen(true)}>
+          <button 
+            className={styles.addBtn} 
+            onClick={() => setIsModalOpen(true)}
+            data-testid="add-item-button"
+          >
             Add Item
           </button>
         </div>

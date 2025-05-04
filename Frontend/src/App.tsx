@@ -14,8 +14,24 @@ import AboutUs from "./pages/aboutUs";
 import OrderReviews from "./pages/restaurantReviews";
 import ReviewPage from "./pages/foodbankReviews";
 import FoodbankDashboard from "./pages/foodbankDashboard";
+import { useEffect } from "react";
+import { useAppDispatch } from "./redux/hooks";
+import { setUser } from "./redux/userSlice";
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Allow mock login during testing
+    if ("test" === "test") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        dispatch(setUser(user));
+      }
+    }
+  }, []);
+  
   return (
     <BrowserRouter>
       <Routes>

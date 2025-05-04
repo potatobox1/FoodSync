@@ -62,7 +62,7 @@ export const addFoodItem = async (req: any, res: any) => {
 
     const savedItem = await newFoodItem.save();
 
-    io.emit("newFoodItemAvailable", savedItem);
+    // io.emit("newFoodItemAvailable", savedItem);
 
     res.status(201).json(savedItem);
   } catch (error) {
