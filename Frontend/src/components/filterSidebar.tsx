@@ -15,7 +15,8 @@ export default function FilterSidebar({
   setSortByLocation,
 }: FilterSidebarProps) {
   return (
-    <div className="filter-sidebar">
+    // It might also be good to add a data-testid to this container div, e.g., data-testid="filter-sidebar"
+    <div className="filter-sidebar" data-testid="filter-sidebar"> 
       <h2 className="filter-title">Filters</h2>
 
       <div className="filter-section">
@@ -26,6 +27,8 @@ export default function FilterSidebar({
           value={minQuantity}
           onChange={(e) => setMinQuantity(Number.parseInt(e.target.value) || 0)}
           className="filter-input"
+          // *** Added data-testid here ***
+          data-testid="quantity-input" 
         />
         <p className="filter-help-text">Show items with at least {minQuantity} portions</p>
       </div>
@@ -37,6 +40,8 @@ export default function FilterSidebar({
             checked={sortByLocation}
             onChange={() => setSortByLocation(!sortByLocation)}
             className="filter-checkbox"
+            // Consider adding a data-testid here too, e.g., data-testid="sort-by-location-checkbox"
+            data-testid="sort-by-location-checkbox" 
           />
           <span className="filter-checkbox-text">Sort by nearest restaurant</span>
         </label>
@@ -45,4 +50,3 @@ export default function FilterSidebar({
     </div>
   )
 }
-
