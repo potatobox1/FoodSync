@@ -1,16 +1,16 @@
 Cypress.Commands.add("mockLogin", (userType = "restaurant") => {
   const commonUser = {
-    firebase_uid: "glM8SZXmDIeaOkJj67K5yUOqsf32",
-    email: "Talha",
+    firebase_uid: "0jiZSmBgsrYhRvmWcNmihO2a2ME3",
+    email: "foodsync9@gmail.com",
     name: "Baradari",
     photoURL: "https://example.com/test-photo.jpg",
-    user_id: "68175f7a061e54a57bebdab3",
+    user_id: "6828dec2b7183ee9c415398a",
   };
 
   const user = {
     ...commonUser,
     user_type: userType,
-    type_id: userType === "restaurant" ? "68175f7a061e54a57bebdab7" : "68175fc3061e54a57bebdafa",
+    type_id: userType === "restaurant" ? "6828dec3b7183ee9c415398e" : "6828de5db7183ee9c415397b",
   };
 
   window.localStorage.setItem("user", JSON.stringify(user));
@@ -18,17 +18,17 @@ Cypress.Commands.add("mockLogin", (userType = "restaurant") => {
 
 Cypress.Commands.add("mockLogin", (userType = "foodbank") => {
   const commonUser = {
-    firebase_uid: "Zoen3Gle7EgBXVrk2435eOGv04D3",
-    email: "foodsync9@gmail.com",
-    name: "SOS",
+    firebase_uid: "I8LPHC756XQfMDDaViFvqhOHYaR2",
+    email: "yahyakhawaja408@gmail.com",
+    name: "Haaji Orphanage",
     photoURL: "https://example.com/test-photo.jpg",
-    user_id: "68175fc2061e54a57bebdaf6",
+    user_id: "6828de5db7183ee9c4153977",
   };
 
   const user = {
     ...commonUser,
     user_type: userType,
-    type_id: userType === "foodbank" ? "68175fc3061e54a57bebdafa" : "68175f7a061e54a57bebdab7", // Replace with the actual foodbank ID
+    type_id: userType === "foodbank" ? "6828de5db7183ee9c415397b" : "6828dec3b7183ee9c415398e", // Replace with the actual foodbank ID
   };
 
   window.localStorage.setItem("user", JSON.stringify(user));

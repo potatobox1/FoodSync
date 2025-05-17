@@ -19,6 +19,7 @@ describe('TC-CB-01: Basic query - Foodbank', () => {
     ];
   
     beforeEach(() => {
+      cy.mockLogin("foodbank");
       cy.visit('http://localhost:5173/foodbank/dashboard');
   
       cy.window().then(win => {

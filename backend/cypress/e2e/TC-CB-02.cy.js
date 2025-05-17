@@ -19,6 +19,7 @@ describe('TC-CB-02: Basic query - Restaurant', () => {
     ];
   
     beforeEach(() => {
+      cy.mockLogin("restaurant");
       cy.visit('http://localhost:5173/restaurant/dashboard');
   
       cy.window().then(win => {

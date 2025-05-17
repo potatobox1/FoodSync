@@ -3,10 +3,10 @@ import { getAuth, Auth } from "firebase/auth";
 import { getAnalytics, Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBdK9AoLeqSwIQl1vdtDV6SeqU8FBQP2Cs",
-  authDomain: "foodsync-8fb63.firebaseapp.com",
-  projectId: "foodsync-8fb63",
-  storageBucket: "foodsync-8fb63.firebasestorage.app",
+  apiKey: "AIzaSyDR6rs9JNAZGz71GRPdNuD7cDSkajai7GY",
+  authDomain: "testingfoodsync.firebaseapp.com",
+  projectId: "testingfoodsync",
+  storageBucket: "testingfoodsync.firebasestorage.app",
   messagingSenderId: "824968634559",
   appId: "1:824968634559:web:03e44ff0751fec28e0260a",
   measurementId: "G-K76KX2VGC1"
