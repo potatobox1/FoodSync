@@ -1,48 +1,52 @@
 .container {
-  min-height: 100vh;
-  background-color: white;
+  /* min-height: 100vh; */
+  background-color: #121212;
   padding: 0 2rem 2rem 2rem;
 }
 
 
 .main {
   margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
 }
 
 .title {
   font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #333;
+  color: #ffffff;
 }
 
 .card {
-  background-color: #fff;
+  background-color: #1E1E1E;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   margin-bottom: 1.5rem;
-  border: 1px solid #eee;
+  /* border: 1px solid #2E2E2E; */
 }
 
 .cardHeader {
   padding: 1rem 1.5rem;
-  background-color: #f9f9f9;
+  background-color: #1E1E1E;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #2E2E2E;
 }
 
 .customerName {
   font-weight: 500;
   font-size: 1rem;
   margin-bottom: 0.2rem;
+  color: #00a896;
 }
 
 .orderTime {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #dbdde1;
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -54,13 +58,13 @@
 
 .orderId {
   font-size: 0.9rem;
-  color: #374151;
+  color: #dbdde1;
 }
 
 .orderAmount {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #000;
+  color: #ffffff;
 }
 
 .itemList {
@@ -86,7 +90,7 @@
   height: 64px;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #2E2E2E;
 }
 
 .itemInfo {
@@ -96,12 +100,13 @@
 
 .itemName {
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
+  color: #ffffff;
 }
 
 .itemDetail {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #BBBBBB;
 }
 
 .itemTotal {
@@ -112,18 +117,18 @@
 }
 
 .actions {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #2E2E2E;
   padding: 1rem 1.5rem;
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
-  background-color: #f9f9f9;
+  background-color: #1E1E1E;
 }
 
 .rejectBtn,
 .acceptBtn {
   padding: 0.5rem 1.2rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -133,23 +138,24 @@
 }
 
 .rejectBtn {
-  background: transparent;
-  border: 1px solid #ccc;
-  color: #333;
+  background: #b91c1c;
+  border: 1px solid #b91c1c;
+  color: #FFFFFF;
 }
 
 .rejectBtn:hover {
-  background-color: #f3f4f6;
+  background-color: #690d0d;
+  border-color: #690d0d ;
 }
 
 .acceptBtn {
-  background-color: #00a9c0;
-  color: white;
+  background-color: #00a896;
+  color: #FFFFFF;
   border: none;
 }
 
 .acceptBtn:hover {
-  background-color: #008ba1;
+  background-color: #00695f;
 }
 
 .statusBadge {
@@ -160,13 +166,13 @@
 }
 
 .accepted {
-  background-color: #e6f9f7;
-  color: #00867e;
+  background-color: #00a896;
+  color: #ffffff;
 }
 
 .rejected {
-  background-color: #fdecea;
-  color: #b91c1c;
+  background-color: #b91c1c;
+  color: #ffffff;
 }
 
 .filterContainer {
@@ -178,13 +184,14 @@
 
 .filterLabel {
   font-weight: 500;
-  color: #444;
+  color: #BBBBBB ;
 }
 
 .filterSelect {
+  color: #ffffff;
   padding: 0.4rem 0.75rem;
-  font-size: 0.9rem;
-  border: 1px solid #ccc;
+  font-size: 1rem;
+  border: 1px solid #00a896;
   border-radius: 6px;
-  background-color: white;
+  background-color: #00a896 ;
 }

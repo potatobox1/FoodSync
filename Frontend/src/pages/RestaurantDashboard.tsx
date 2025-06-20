@@ -5,12 +5,12 @@ import { useAppSelector } from "../redux/hooks";
 import styles from "../styles/dashboard.module.css";
 
 import MetricCard from "../components/foodbankDashboard/metricCard";
-import Navbar from "../components/navBar";
-import CategoryChart from "../components/restaurantDashboard/CategoryChart";
-import OrdersChart from "../components/restaurantDashboard/orderChart";
-import TopFoodbanks from "../components/restaurantDashboard/TopFoodbanks";
-import PickupMap from "../components/restaurantDashboard/pickupMap";
-import ReviewsChart from "../components/restaurantDashboard/ReviewsChart";
+import Navbar from "../components/NavBar"
+import RestaurantCategoryChart from "../components/RestaurantDashboard/CategoryChart";
+import OrderChart from "../components/RestaurantDashboard/orderChart";
+import TopFoodbanks from "../components/RestaurantDashboard/TopFoodbanks";
+import RestaurantPickupMap from "../components/RestaurantDashboard/pickupMap";
+import ReviewsChart from "../components/RestaurantDashboard/ReviewsChart";
 import AIAssistant from "../components/aiAssistant";
 
 import { TrendingUp, BarChart3, MapPin, Star } from "lucide-react";
@@ -107,18 +107,18 @@ const RestaurantDashboard: React.FC = () => {
               <div className={styles.chartRow}>
                 <div className={styles.chartCard}>
                   <h2>Completed Orders Over Time</h2>
-                  <OrdersChart timeRange={timeRange} />
+                  <OrderChart timeRange={timeRange} />
                 </div>
                 <div className={styles.chartCard}>
                   <h2>Completed Orders by Category</h2>
-                  <CategoryChart />
+                  <RestaurantCategoryChart />
                 </div>
               </div>
 
               <div className={styles.chartRow}>
                 <div className={styles.chartCard}>
                   <h2>Pickup Map</h2>
-                  <PickupMap />
+                  <RestaurantPickupMap />
                 </div>
                 <div className={styles.chartCard}>
                   <h2>Top Foodbanks</h2>

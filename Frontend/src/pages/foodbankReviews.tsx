@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react"
 import styles from "../styles/addReview.module.css"
-import ReviewModal from "../components/reviewModal"
-import StarRating from "../components/starRating"
+import ReviewModal from "../components/ReviewModal"
+import StarRating from "../components/StarRating"
 import FNavbar from "../components/foodbankNavbar"
 import { fetchDonationRequestsForFoodbank } from "../services/donationRequests"
 import { fetchRestaurantById } from "../services/restaurant"

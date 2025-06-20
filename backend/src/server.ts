@@ -27,15 +27,24 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI as string;
 
 app.use(express.json());
-app.use(cors());
+
+app.use(cors({
+  origin: "https://food-sync.vercel.app", // or the port your frontend runs on
+  credentials: true
+}));
+
+
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
+    origin: "https://food-sync.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  path: "/socket.io"
 });
+
 
 const restaurantSockets = new Map<string, string>();
 

@@ -2,10 +2,11 @@
   display: flex;
   align-items: center;
   gap: 2rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #1A1A1A;
   padding: 1.2rem 0;
   padding-left: 2rem;
   padding-right: 2rem;
+  background-color: #1A1A1A ;
 }
 
 .logo {
@@ -14,8 +15,17 @@
   color: #00a9cd;
   flex-shrink: 0;
 }
+.logo span:first-child {
+  color: #00a896; 
+}
+
+.logo span:last-child {
+  color:#ffffff;
+}
+
 
 .nav {
+  
   display: flex;
   gap: 2rem;
   font-size: 1rem;
@@ -25,7 +35,7 @@
 }
 
 .nav a {
-  color: #333;
+  color: #BBBBBB;
   text-decoration: none;
   font-weight: 500;
   position: relative;
@@ -33,14 +43,15 @@
   cursor: pointer;
 }
 
+
 .nav a:hover {
-  color: #00a9cd;
+  color: #ffffff;
 }
 
 .active {
   color: #00a9cd;
   font-weight: 600;
-  border-bottom: 2px solid #00a9cd;
+  border-bottom: 2px solid #00a896;
 }
 
 .userIcon {
@@ -61,9 +72,9 @@
 }
 
 .logoutButton {
-  background-color: transparent;
-  border: 1px solid #00a9cd;
-  color: #00a9cd;
+  color: #ffffff;
+  background-color: #00a896;
+  border: 1px solid #00a896;
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
   font-size: 0.9rem;
@@ -72,8 +83,10 @@
 }
 
 .logoutButton:hover {
-  background-color: #00a9cd;
-  color: white;
+  background-color: #cd0000;
+  border: 1px solid #cd0000;
+  transition: 0.3s;
+  /* color: #00a9cd; */
 }
 
 
@@ -82,7 +95,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #00a9cd;
+  color: #00a896;
 }
 
 @media (max-width: 768px) {
@@ -94,7 +107,7 @@
     top: 70px;
     left: 0;
     width: 100%;
-    background-color: white;
+    background-color: #1A1A1A;
     padding: 1rem 2rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     z-index: 10;

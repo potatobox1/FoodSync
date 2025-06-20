@@ -1,5 +1,5 @@
 .metricCard {
-    background-color: white;
+    background-color: #1E1E1E;
     border-radius: 8px;
     padding: 16px;
     display: flex;
@@ -27,7 +27,7 @@
   
   .metricContent h3 {
     font-size: 14px;
-    color: #666;
+    color: #BBBBBB;
     margin: 0 0 4px 0;
     font-weight: normal;
     white-space: nowrap;
@@ -38,7 +38,7 @@
   .metricValue {
     font-size: 24px;
     font-weight: bold;
-    color: #333;
+    color: #ffffff;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;

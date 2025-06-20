@@ -4,14 +4,30 @@ import React, { useEffect, useState } from "react"
 import { Doughnut } from "react-chartjs-2"
 import {
   Chart as ChartJS,
-  ArcElement,
+  LineElement,
+  BarElement,
+  ArcElement, 
+  CategoryScale,
+  LinearScale,
+  PointElement,
   Tooltip,
   Legend,
 } from "chart.js"
+
+ChartJS.register(
+  LineElement,
+  BarElement,
+  ArcElement, 
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend
+)
+
 import { fetchRestaurantCategoryBreakdown } from "../../services/analytics"
 import { useAppSelector } from "../../redux/hooks"
 
-ChartJS.register(ArcElement, Tooltip, Legend)
 
 const RestaurantCategoryChart: React.FC = () => {
   const [categoryData, setCategoryData] = useState<{ category: string; count: number }[]>([])
@@ -30,7 +46,7 @@ const RestaurantCategoryChart: React.FC = () => {
     if (restaurantId) loadData()
   }, [restaurantId])
 
-  const colors = ["#00A896", "#02C39A", "#00BFB2", "#028090", "#05668D"]
+  const colors = ["#00A896", "#02C39A","#00FFB2","#028090", "#028090", "#05668D"]
 
   const chartData = {
     labels: categoryData.map((c) => c.category),
@@ -49,7 +65,8 @@ const RestaurantCategoryChart: React.FC = () => {
       legend: {
         position: "bottom" as const,
         labels: {
-          boxWidth: 12,
+          boxWidth: 20,
+          boxHeight: 20,
           padding: 16,
         },
       },

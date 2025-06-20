@@ -92,7 +92,7 @@
   
   .feedbackInput:focus {
     outline: none;
-    border-color: #00bcd4;
+    border-color: #00a896;
   }
   
   .buttonContainer {
@@ -119,13 +119,13 @@
   }
   
   .submitButton {
-    background-color: #00bcd4;
+    background-color: #00a896;
     color: white;
     border: none;
   }
   
   .submitButton:hover {
-    background-color: #00a5bb;
+    background-color: #008477;
   }
   
   .errorText {

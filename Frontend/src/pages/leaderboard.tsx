@@ -3,7 +3,7 @@ import { fetchRestaurants } from "../services/restaurant";
 import { fetchUserById } from "../services/user";
 import "../styles/leaderboard.css";
 import FNavbar from "../components/foodbankNavbar";
-import Navbar from "../components/navBar";
+import Navbar from "../components/NavBar";
 import { useAppSelector } from "../redux/hooks";
 import AIAssistant from '../components/aiAssistant'
 
@@ -57,37 +57,34 @@ function App() {
         <h1 className="page-title">Leaderboard</h1>
 
         <div className="top-leaders">
-          {restaurants.slice(0, 3).map((restaurant, index) => (
-            <div
-              key={index}
-              className={`leader-card ${
-                index === 0 ? "gold" : index === 1 ? "silver" : "bronze"
-              }`}
-            >
+        {restaurants.slice(0, 3).map((restaurant, index) => {
+          const imageSrc =
+            index === 0
+              ? "/first.png"
+              : index === 1
+              ? "/second.png"
+              : "/third.png";
+
+          const tierClass = index === 0 ? "gold gold-border" : index === 1 ? "silver silver-border" : "bronze bronze-border";
+
+          return (
+            <div key={restaurant.user_id} className={`leader-card ${tierClass}`}>
               <div className="leader-image">
-                <img
-                  src="https://via.placeholder.com/160"
-                  alt={restaurant.name}
-                />
+                <img src={imageSrc} alt={`Rank ${index + 1}`} />
               </div>
               <div className="leader-info">
                 <h3>{restaurant.name}</h3>
                 <p>{restaurant.points} Points</p>
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
+      </div>
 
         <div className="leaderboard-list">
           {restaurants.slice(3).map((restaurant, index) => (
             <div key={index} className="list-item light-blue">
               <span className="rank">{index + 4}</span>
-              <div className="user-image">
-                <img
-                  src="https://via.placeholder.com/64"
-                  alt={restaurant.name}
-                />
-              </div>
               <span className="user-name">{restaurant.name}</span>
               <span className="points">{restaurant.points} Points</span>
             </div>

@@ -1,6 +1,3 @@
-body {
-  font-family: 'Roboto', sans-serif;
-}
 
 
 .login-container {
@@ -36,17 +33,17 @@ body {
 }
 
 .logo span:first-child {
-  color: #187795; 
+  color: #00a896; 
 }
 
 .logo span:last-child {
-  color: black;
+  color: rgb(255, 255, 255);
 }
 
 .signin-heading {
   font-size: 22px;
   font-weight: bold;
-  color: #1f2937; 
+  color: #ffffff; 
 }
 
 .signin-subtext {
@@ -73,7 +70,7 @@ body {
 }
 
 .google-button:hover {
-  background-color: #f9fafb; 
+  background-color: #BBBBBB; 
 }
 
 .google-logo {
@@ -86,13 +83,16 @@ body {
   margin-top: 2rem;
   text-align: center;
   font-size: 14px;
-  color: #4b5563; 
+  color: #BBBBBB; 
 }
 
 .create-account a {
   font-weight: 500;
-  color: #1f2937; 
+  color: #00a896; 
   text-decoration: underline;
+}
+.create-account a:hover {
+  color: #00786c;
 }
 
 .image-container {

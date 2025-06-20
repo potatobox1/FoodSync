@@ -8,7 +8,11 @@ const AboutUsPage: React.FC = () => {
         <a href="/" className={styles.homeLink} aria-label="Go to home page">
           <div className={styles.homeIcon}>🏠</div>
         </a>
-        <div className={styles.logo}>FoodSync</div>
+        <div className={styles.logo}>
+          <span className={styles.logoText}>
+            Food<span className={styles.logoHighlight}>Sync</span>
+          </span>
+        </div>
       </header>
 
       <main className={styles.aboutContent}>

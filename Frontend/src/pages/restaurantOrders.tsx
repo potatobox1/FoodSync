@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Check, Clock, X } from "lucide-react";
-import styles from "../styles/incomingOrders.module.css";
+import styles from "../styles/restInOrders.module.css"
 import { fetchDonationRequestsForRestaurant } from "../services/donationRequests";
 import { updateDonationRequestStatus } from "../services/donationRequests";
 import { fetchFoodItemById, updateFoodItemStatus } from "../services/foodItems";
-import { addCompletedOrder } from "../services/completedOrders";
+import { addCompletedOrder } from "../services/completedorders"
 import { fetchUserById } from "../services/user";
 import { getUserIdByFoodbankId } from "../services/foodbank";
 import { useAppSelector } from "../redux/hooks";
-import Navbar from "../components/navBar";
+import Navbar from "../components/NavBar";
 import { updateTotalDonations } from "../services/restaurant";
 import { sendEmail } from "../services/emails";
 import { getDonationRequestById } from "../services/donationRequests";
@@ -201,7 +201,6 @@ export default function IncomingOrders() {
       </div>
 
       <div className={styles.container}>
-        <main className={styles.main}>
           <h1 className={styles.title}>Incoming Orders</h1>
           <div className={styles.filterContainer}>
             <label htmlFor="statusFilter" className={styles.filterLabel}>Filter by status:</label>
@@ -217,6 +216,7 @@ export default function IncomingOrders() {
               <option value="cancelled">Cancelled</option>
             </select>
           </div>
+        <main className={styles.main}>
 
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/AddItemModal.css";
+import "../styles/addItemModal.css";
 import { addFoodItem } from "../services/foodItems";
 import { useAppSelector } from "../redux/hooks";
 

@@ -1,22 +1,21 @@
 
 :root {
-  --primary-color: #00b8d4;
+  /* --primary-color: #00b8d4;
   --primary-hover: #00a0b8;
   --text-color: #333;
-  --light-gray: #f5f5f5;
-  --border-color: #e0e0e0;
+  --light-gray: #f5f5f5; */
+  --border-color: #2E2E2E;
   --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-    "Helvetica Neue", sans-serif;
+  /* --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif; */
 }
 
 
 
 .order-reviews-container {
+  color: #121212;
   margin: 0;
   padding: 0;
-  font-family: var(--font-family);
-  color: var(--text-color);
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -25,11 +24,12 @@
 
 
 .header {
+  color: #121212;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #2E2E2E;
 }
 
 .logo {
@@ -83,6 +83,7 @@
 }
 
 .page-title {
+  color: white;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   font-weight: 600;
@@ -90,6 +91,7 @@
 
 
 .filter-section {
+  color: #BBBBBB;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -97,53 +99,63 @@
 }
 
 .filter-dropdown {
+  color: white;
   padding: 0.5rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid #00a896;
   border-radius: 4px;
-  background-color: white;
+  background-color: #00a896;
   min-width: 150px;
 }
 
 
 .reviews-list {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 1rem;
+  justify-content: space-between;
 }
 
 .review-card {
-  border: 1px solid var(--border-color);
+  /* border: 1px solid var(--border-color); */
+  flex: 1 1 calc(50% - 0.5rem);
+  max-width: calc(50% - 0.5rem); /* Prevent full-width stretching */
+  background-color: #1E1E1E;
   border-radius: 8px;
   padding: 1.5rem;
-  background-color: white;
   box-shadow: var(--card-shadow);
+  box-sizing: border-box;
 }
 
 .review-header {
+  color: white;
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
 
 .item-details {
+  color: white;
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
 .item-image {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   border-radius: 4px;
+  border-color: #2E2E2E;
   object-fit: cover;
 }
 
 .item-info {
+  color: white;
   display: flex;
   flex-direction: column;
 }
 
 .item-name {
+  color: white;
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0 0 0.25rem 0;
@@ -151,11 +163,12 @@
 
 .item-category {
   font-size: 0.9rem;
-  color: #666;
+  color: #BBBBBB;
   margin: 0;
 }
 
 .review-meta {
+  color: white;
   text-align: right;
 }
 
@@ -171,8 +184,8 @@
 }
 
 .star.filled {
-  fill: var(--primary-color);
-  stroke: var(--primary-color);
+  fill: #ffc107;
+  stroke: #ffc107;
 }
 
 .star.empty {
@@ -181,7 +194,7 @@
 
 .review-date {
   font-size: 0.8rem;
-  color: #666;
+  color: #BBBBBB;
   margin: 0;
 }
 
@@ -191,11 +204,13 @@
 }
 
 .review-text {
+  color: white;
   margin: 0 0 1rem 0;
   line-height: 1.5;
 }
 
 .reviewer-name {
+  color: #00a896;
   text-align: right;
   font-style: italic;
   margin: 0;
@@ -218,5 +233,11 @@
 
   .rating {
     justify-content: flex-start;
+  }
+
+  /* 🛠️ Stack review cards vertically on small screens */
+  .review-card {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }

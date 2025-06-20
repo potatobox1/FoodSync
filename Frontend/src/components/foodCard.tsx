@@ -35,7 +35,6 @@ export default function FoodCard({ item }: FoodCardProps) {
 
       const result = await addDonationRequest(donation);
       setIsClaimed(true);
-      alert("Donation claimed successfully!"); 
       const fullFoodItem = await fetchFoodItemById(item._id);
       const restaurant = await fetchRestaurantById(fullFoodItem.restaurant_id);
       const restaurantUser = await fetchUserById(restaurant.user_id);

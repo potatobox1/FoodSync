@@ -3,7 +3,7 @@ import styles from "../styles/restaurantInventory.module.css";
 import AddItemModal from "../components/addItemModal";
 import { fetchFoodItemsByRestaurant } from "../services/foodItems";
 import { useAppSelector } from "../redux/hooks";
-import Navbar from "../components/navBar";
+import Navbar from "../components/NavBar";
 import AIAssistant from '../components/aiAssistant'
 
 export default function Dashboard() {

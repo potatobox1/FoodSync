@@ -150,7 +150,7 @@ export default function MainInventory() {
       <FNavbar active="inventory" />
       <main className="min-h-screen" style={{ marginTop: 0 }}> 
         <div className="container main-content" style={{ paddingTop: 0 }}> 
-          <h1 className="page-title">Available Food Donations</h1>
+          <h1 className="page-title-inv" >Available Food Donations</h1>
 
           <div className="flex flex-col md-flex-row gap-6">
             {isFilterOpen && (

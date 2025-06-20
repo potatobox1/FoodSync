@@ -2,3 +2,11 @@
 html {
     overflow-y: scroll;
   }
+
+  body {
+   
+    /* margin: 0;
+    padding: 0; */
+    background-color: #121212;
+    font-family: Roboto
+  }

@@ -5,29 +5,36 @@ body {
 }
 
 .aboutPage {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
-  background-color: white;
+  background-color: #121212;
   min-height: 100vh;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .header {
+  color: #1A1A1A;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 30px 20px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid #1A1A1A;
   position: relative;
 }
 
 .logo {
-  color: #0078a0;
-  font-size: 32px;
-  font-weight: bold;
-  position: static;
-  transform: none;
+  font-size: 2rem;
+  font-weight: 700;
 }
+
+.logoText {
+  color: #00a896;
+}
+
+.logoHighlight {
+  color: #ffffff;
+}
+
 
 .homeLink {
   position: absolute;
@@ -38,8 +45,8 @@ body {
 
 .homeIcon {
   font-size: 24px;
-  color: #0078a0;
-  background-color: #e6f7fb;
+  color: #00a896;
+  background-color: #00a896;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -60,14 +67,14 @@ body {
 
 .pageTitle {
   font-size: 32px;
-  color: #0078a0;
+  color: #00a896;
   margin-bottom: 20px;
   text-align: center;
 }
 
 .sectionTitle {
   font-size: 24px;
-  color: #0078a0;
+  color: #00a896;
   margin: 40px 0 20px;
   text-align: center;
 }
@@ -81,11 +88,11 @@ body {
 .heroText {
   font-size: 18px;
   margin-bottom: 20px;
-  color: #555;
+  color: #ffffff;
 }
 
 .whySection {
-  background-color: #f8f9fa;
+  background-color: #1E1E1E;
   padding: 40px;
   border-radius: 8px;
   margin-bottom: 60px;
@@ -100,7 +107,7 @@ body {
 }
 
 .statCard {
-  background-color: white;
+  background-color: #373737;
   border-radius: 8px;
   padding: 30px;
   text-align: center;
@@ -122,12 +129,12 @@ body {
 .statNumber {
   font-size: 36px;
   font-weight: bold;
-  color: #0078a0;
+  color: #00a896;
   margin-bottom: 10px;
 }
 
 .statDescription {
-  color: #666;
+  color: #BBBBBB;
 }
 
 .conclusionText {
@@ -135,7 +142,7 @@ body {
   font-size: 20px;
   font-weight: bold;
   margin-top: 30px;
-  color: #0078a0;
+  color: #00a896;
 }
 
 .whatSection {
@@ -147,7 +154,7 @@ body {
   max-width: 800px;
   margin: 0 auto 30px;
   font-size: 18px;
-  color: #555;
+  color: #ffffff;
 }
 
 .featuresContainer {
@@ -159,7 +166,7 @@ body {
 }
 
 .featureCard {
-  background-color: #e6f7fb;
+  background-color: #1E1E1E;
   border-radius: 8px;
   padding: 30px;
   text-align: center;
@@ -169,7 +176,7 @@ body {
 }
 
 .featureCard:hover {
-  background-color: #d0f0f7;
+  background-color: #313131;
 }
 
 .featureIcon {
@@ -180,16 +187,16 @@ body {
 .featureTitle {
   font-size: 20px;
   font-weight: bold;
-  color: #0078a0;
+  color: #00a896;
   margin-bottom: 10px;
 }
 
 .featureDescription {
-  color: #555;
+  color: #BBBBBB;
 }
 
 .visionSection {
-  background-color: #f8f9fa;
+  background-color: #1E1E1E;
   padding: 40px;
   border-radius: 8px;
   margin-bottom: 60px;
@@ -222,16 +229,16 @@ body {
 .visionText p {
   margin-bottom: 20px;
   font-size: 18px;
-  color: #555;
+  color: #bbbbbb;
 }
 
 .visionText p:last-child {
   font-weight: bold;
-  color: #0078a0;
+  color: #00a896;
 }
 
 .footer {
-  background-color: #0078a0;
+  background-color: #3f3f3f;
   color: white;
   padding: 40px 20px;
   text-align: center;

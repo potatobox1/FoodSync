@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/loginPage";
+import LoginPage from "./pages/LoginPage";  //
 import Register from "./pages/register";
 import 'leaflet/dist/leaflet.css';
-import RestaurantDashboard from "./pages/restaurantDashboard";
-import LandingPage from "./pages/landingPage";
+import RestaurantDashboard from "./pages/RestaurantDashboard"; //
+import LandingPage from "./pages/LandingPage"; // 
 import RestaurantInventory from "./pages/restaurantInventory";
 import Leaderboard from "./pages/leaderboard";
 import AvailableItems from "./pages/availableItems";
-import OrdersPage from "./pages/ordersPage";
+import OrdersPage from "./pages/OrdersPage"; //
 import IncomingOrders from "./pages/restaurantOrders";
 import AboutUs from "./pages/aboutUs";
 import OrderReviews from "./pages/restaurantReviews";

@@ -41,7 +41,7 @@ export const fetchDonationRequestsForFoodbank = async (foodbankId: string) => {
 
 export const getDonationRequestById = async (requestId: string) => {
   try {
-    const response = await API.get(`/api/donation-requests/getReq/${requestId}`);
+    const response = await API.get(`/api/donation-requests/${requestId}`);
     return response.data; 
   } catch (error) {
     console.error("Error fetching donation request by ID:", error);

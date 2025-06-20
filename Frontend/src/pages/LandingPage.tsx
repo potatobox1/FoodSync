@@ -1,6 +1,6 @@
 import type React from "react"
 import { Package } from "lucide-react"
-import styles from "../styles/landingPage.module.css"
+import styles from "../styles/LandingPage.module.css"
 import AIAssistant from '../components/aiAssistant'
 
 const LandingPage: React.FC = () => {

@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { doSignInWithGoogle } from "../../../backend/src/firebase/auth";
+import { doSignInWithGoogle } from "../firebase/auth";
 import {useAppDispatch} from "../redux/hooks"
 import { setUser, setFirebaseUid } from "../redux/userSlice"
 import { getUserByFirebaseUID } from "../services/signUp";
 import {getRestaurantByUserId} from "../services/restaurant"
 import {getFoodBankByUserId } from "../services/foodbank"
 import socket from "../services/socket";
-import "../styles/loginPage.css"; 
+import "../styles/LoginPage.css"
 
 export default function LoginPage() {
   const navigate = useNavigate(); 
@@ -106,7 +106,7 @@ export default function LoginPage() {
           </div>
 
           <p className="create-account">
-            Need an account? <a href="/signup">Create one</a>
+            Need an account? <a onClick={handleGoogleSignIn}>Create one</a>
           </p>
         </div>
       </div>

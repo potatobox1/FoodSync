@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styles from '../styles/viewReviews.module.css'
+import styles from '../styles/ViewReviews.module.css'
 import { Star } from "lucide-react"
-import Navbar from "../components/navBar"
+import Navbar from "../components/NavBar";
 import { useAppSelector } from "../redux/hooks";
 import { fetchReviewsByRestaurant } from "../services/reviews";
 import { fetchFoodItemById } from "../services/foodItems"; 

@@ -5,12 +5,25 @@ import {
   Chart as ChartJS,
   LineElement,
   BarElement,
+  ArcElement, // <-- ADD THIS
   CategoryScale,
   LinearScale,
   PointElement,
   Tooltip,
   Legend,
 } from "chart.js"
+
+// Register ALL elements you're using
+ChartJS.register(
+  LineElement,
+  BarElement,
+  ArcElement, // <-- ADD THIS
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend
+)
 import { useEffect, useState } from "react"
 import styles from "../../styles/reviewChart.module.css"
 import { useAppSelector } from "../../redux/hooks"

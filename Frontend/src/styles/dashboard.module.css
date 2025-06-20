@@ -1,7 +1,7 @@
 .dashboardContainer {
     width: 100%;
     min-height: 100vh;
-    background-color: #f9f9f9;
+    background-color: #121212;
   }
   
   .dashboardContent {
@@ -23,13 +23,13 @@
   
   .dashboardHeader h1 {
     font-size: 28px;
-    color: #333;
+    color: #ffffff ;
     margin: 0;
   }
   
   .timeRangeSelector {
     display: flex;
-    background-color: #f0f0f0;
+    background-color: #2A2A2A;
     border-radius: 8px;
     overflow: hidden;
   }
@@ -40,9 +40,10 @@
     background: none;
     cursor: pointer;
     font-size: 14px;
-    color: #666;
+    color: #888888;
     transition: all 0.2s ease;
   }
+  
   
   .timeRangeSelector button.active {
     background-color: #00a896;
@@ -63,8 +64,9 @@
   }
   
   .chartCard {
-    background-color: white;
+    background-color: #1E1E1E;
     border-radius: 8px;
+    border-color: #2E2E2E;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     overflow: hidden; 
@@ -74,7 +76,7 @@
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 16px;
-    color: #333;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

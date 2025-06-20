@@ -9,11 +9,12 @@
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 16px;
-  color: #333;
+  color: #ffffff;
 }
 
 .tableHeader,
 .tableRow {
+  color: #eee;
   display: grid;
   grid-template-columns: 1fr 100px;
   padding: 12px 0;
@@ -23,7 +24,7 @@
 
 .tableHeader {
   font-weight: bold;
-  color: #666;
+  color: #fefefe;
   font-size: 14px;
 }
 
